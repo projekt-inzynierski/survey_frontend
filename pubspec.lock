@@ -75,6 +75,22 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  get:
+    dependency: "direct main"
+    description:
+      name: get
+      sha256: e4e7335ede17452b391ed3b2ede016545706c01a02292a6c97619705e7d2a85e
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.6.6"
+  getwidget:
+    dependency: "direct main"
+    description:
+      name: getwidget
+      sha256: "91df14a8d80e21f3ec02759295b90cc8badb8a872b90d34ad4aeb4085d833b5c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -107,6 +123,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  logger:
+    dependency: "direct main"
+    description:
+      name: logger
+      sha256: b3ff55aeb08d9d8901b767650285872cb1bb8f508373b3e348d60268b0c7f770
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   matcher:
     dependency: transitive
     description:
@@ -210,3 +234,4 @@ packages:
     version: "13.0.0"
 sdks:
   dart: ">=3.3.0 <4.0.0"
+  flutter: ">=3.13.0"
