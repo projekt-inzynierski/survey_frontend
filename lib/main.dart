@@ -1,45 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:survey_frontend/presentation/app_styles.dart';
+import 'package:survey_frontend/presentation/bindings/login_bindings.dart';
+import 'package:survey_frontend/presentation/screens/home_screen.dart';
+import 'package:survey_frontend/presentation/screens/login_screen.dart';
 
 void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+  runApp(GetMaterialApp(
+    theme: AppStyles.lightTheme,
+    initialRoute: '/login',
+    getPages: [
+      GetPage(
+        name: '/login',
+        page: () => const LoginScreen(),
+        binding: LoginBindings()
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: const Center(
-      ),
-    );
-  }
+      GetPage(
+        name: '/home', 
+        page: () => const HomeScreen()
+      )
+    ],
+  ));
 }
