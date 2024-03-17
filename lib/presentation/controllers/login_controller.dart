@@ -35,6 +35,11 @@ class LoginController extends GetxController{
     if (value == null || value == ''){
       return 'Password must not be empty';
     }
+
+    if (value.length > 255){
+      return 'Password must not be longer than 255 characters';
+    }
+
     return null;
   }
 
@@ -42,6 +47,11 @@ class LoginController extends GetxController{
     if (value == null || value == ''){
       return 'Username must not be empty';
     }
+
+    if (value.length > 255){
+      return 'Username must not be longer than 255 characters';
+    }
+
     return null;
   }
 }

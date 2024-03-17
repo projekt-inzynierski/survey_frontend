@@ -5,7 +5,6 @@ class AppStyles{
 
   static ThemeData lightTheme = ThemeData(
     primaryColor: Colors.green,
-    fontSize: 20,
     fontFamily: 'Roboto',
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
