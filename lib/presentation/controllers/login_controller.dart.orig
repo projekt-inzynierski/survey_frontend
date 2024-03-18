@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/data/models/login_dto.dart';
-import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 
-class LoginController extends ControllerBase{
+class LoginController extends GetxController{
   final Rx<LoginDto> model = LoginDto().obs;
   final formKey = GlobalKey<FormState>();
   bool isBusy = false;
@@ -23,7 +22,10 @@ class LoginController extends ControllerBase{
         await Get.offNamed("/home");
       }
     } catch (e){
-      await handleSomethingWentWrong(e);
+      await Get.defaultDialog(
+        title: "Error",
+        middleText: "Something went wrong. Try again later",
+      );
     } finally{
       isBusy = false;
     }
@@ -33,11 +35,14 @@ class LoginController extends ControllerBase{
     if (value == null || value == ''){
       return 'Password must not be empty';
     }
+<<<<<<< HEAD
 
     if (value.length > 255){
       return 'Password must not be longer than 255 characters';
     }
 
+=======
+>>>>>>> 5a6eb33 (#6: add login page mocked)
     return null;
   }
 
@@ -45,11 +50,14 @@ class LoginController extends ControllerBase{
     if (value == null || value == ''){
       return 'Username must not be empty';
     }
+<<<<<<< HEAD
 
     if (value.length > 255){
       return 'Username must not be longer than 255 characters';
     }
 
+=======
+>>>>>>> 5a6eb33 (#6: add login page mocked)
     return null;
   }
 }
