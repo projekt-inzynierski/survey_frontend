@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/data/models/login_dto.dart';
+import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 
-class LoginController extends GetxController{
+class LoginController extends ControllerBase{
   final Rx<LoginDto> model = LoginDto().obs;
   final formKey = GlobalKey<FormState>();
   bool isBusy = false;
@@ -22,10 +23,7 @@ class LoginController extends GetxController{
         await Get.offNamed("/home");
       }
     } catch (e){
-      await Get.defaultDialog(
-        title: "Error",
-        middleText: "Something went wrong. Try again later",
-      );
+      await handleSomethingWentWrong(e);
     } finally{
       isBusy = false;
     }
