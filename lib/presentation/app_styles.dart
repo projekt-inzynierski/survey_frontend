@@ -2,10 +2,21 @@ import 'package:flutter/material.dart';
 
 class AppStyles{
   static const MaterialColor _primaryColor = Colors.green;
-
   static ThemeData lightTheme = ThemeData(
     primaryColor: Colors.green,
     fontFamily: 'Roboto',
+    textTheme: const TextTheme(
+      bodyLarge: TextStyle(
+        fontSize: 20
+      )
+    ),
+    appBarTheme: const AppBarTheme(
+      color: Colors.green,
+      titleTextStyle: TextStyle(
+        color: Colors.white,
+        fontSize: 25,
+      )
+    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.resolveWith((states){
