@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:survey_frontend/core/usecases/token_validity_checker_impl.dart';
 import 'package:survey_frontend/presentation/app_styles.dart';
 import 'package:survey_frontend/presentation/bindings/initial_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/insert_demographic_information_bindings.dart';
@@ -12,11 +14,13 @@ import 'package:survey_frontend/presentation/screens/insert_health_status_inform
 import 'package:survey_frontend/presentation/screens/insert_well_being_information_screen.dart';
 import 'package:survey_frontend/presentation/screens/login_screen.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
+  String startScreenPath = _getStartScreenPath();
   runApp(GetMaterialApp(
     initialBinding: InitialBindings(),
     theme: AppStyles.lightTheme,
-    initialRoute: '/insertdemograficinformation',
+    initialRoute: startScreenPath,
     getPages: [
       GetPage(
         name: '/login',
@@ -44,4 +48,14 @@ void main() {
       ),
     ],
   ));
+}
+
+String _getStartScreenPath() {
+  String? savedToken = GetStorage().read<String>("apiToken");
+  if (savedToken == null){
+    return '/login';
+  }
+
+  var validityChecker = TokenValidityCheckerImpl();
+  return !validityChecker.isValid(savedToken) ? '/login' : '/insertdemograficinformation';
 }
