@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/app_styles.dart';
+import 'package:survey_frontend/presentation/bindings/initial_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/insert_demografic_information_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/insert_health_status_information_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/insert_well_being_information_bindings.dart';
@@ -13,8 +14,9 @@ import 'package:survey_frontend/presentation/screens/login_screen.dart';
 
 void main() {
   runApp(GetMaterialApp(
+    initialBinding: InitialBindings(),
     theme: AppStyles.lightTheme,
-    initialRoute: '/insertdemograficinformation',
+    initialRoute: '/login',
     getPages: [
       GetPage(
         name: '/login',

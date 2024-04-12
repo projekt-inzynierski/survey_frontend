@@ -20,7 +20,7 @@ class LoginController extends ControllerBase{
 
       if (isValid) {
         formKey.currentState!.save();
-        await Get.offNamed("/home");
+        await Get.offNamed("/insertdemograficinformation");
       }
     } catch (e){
       await handleSomethingWentWrong(e);

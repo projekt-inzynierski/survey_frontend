@@ -38,6 +38,7 @@ dependencies:
   get: ^4.6.6
   getwidget: ^4.0.0
   logger: ^2.1.0
+  font_awesome_flutter: ^10.7.0
 
 dev_dependencies:
   flutter_test:
