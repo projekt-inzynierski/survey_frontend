@@ -18,7 +18,7 @@ class InsertWellBeingInformationScreen
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Health status information",
+              Text("Well being",
                   style: Theme.of(context).textTheme.bodyLarge),
               const SizedBox(
                 height: 20,

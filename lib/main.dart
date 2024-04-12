@@ -16,7 +16,7 @@ void main() {
   runApp(GetMaterialApp(
     initialBinding: InitialBindings(),
     theme: AppStyles.lightTheme,
-    initialRoute: '/login',
+    initialRoute: '/insertdemograficinformation',
     getPages: [
       GetPage(
         name: '/login',
