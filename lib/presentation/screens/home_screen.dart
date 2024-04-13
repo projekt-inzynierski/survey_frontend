@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:survey_frontend/presentation/controllers/archived_surveys_controller.dart';
 import 'package:survey_frontend/presentation/tab_views/archived_surveys_tab_view.dart';
 import 'package:survey_frontend/presentation/tab_views/pedning_surveys_tab_view.dart';
 import 'package:survey_frontend/presentation/tab_views/respondent_data_tab_view.dart';
@@ -55,15 +54,21 @@ class _HomeStreenState extends State<HomeScreen> with TickerProviderStateMixin{
         tabs: const [
           Tab(
             icon: Icon(FontAwesomeIcons.user),
-            child: Text("Repondent data"),
+            child: FittedBox(
+              child: Text("Repondent data")
+              ),
           ),
           Tab(
             icon: Icon(FontAwesomeIcons.clipboardList),
-            child: Text("Pending surveys"),
+            child: FittedBox(
+              child: Text("Pending surveys")
+              ),
           ),
           Tab(
             icon: Icon(FontAwesomeIcons.boxArchive),
-            child: Text("Archive"),
+            child: FittedBox(
+              child: Text("Archive")
+              ),
           ),
         ],
       )
