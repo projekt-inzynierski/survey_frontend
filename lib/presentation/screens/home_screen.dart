@@ -4,6 +4,7 @@ import 'package:getwidget/getwidget.dart';
 import 'package:survey_frontend/presentation/tab_views/archived_surveys_tab_view.dart';
 import 'package:survey_frontend/presentation/tab_views/pedning_surveys_tab_view.dart';
 import 'package:survey_frontend/presentation/tab_views/respondent_data_tab_view.dart';
+import 'package:survey_frontend/presentation/tab_views/survey_tab.dart';
 
 class HomeScreen extends StatefulWidget{
   
@@ -52,23 +53,17 @@ class _HomeStreenState extends State<HomeScreen> with TickerProviderStateMixin{
         unselectedLabelColor: Theme.of(context).unselectedWidgetColor,
         indicatorColor: Theme.of(context).indicatorColor,
         tabs: const [
-          Tab(
-            icon: Icon(FontAwesomeIcons.user),
-            child: FittedBox(
-              child: Text("Repondent data")
-              ),
+          SurveyTab(
+            iconData: FontAwesomeIcons.user,
+            label: "Respondent data"
           ),
-          Tab(
-            icon: Icon(FontAwesomeIcons.clipboardList),
-            child: FittedBox(
-              child: Text("Pending surveys")
-              ),
+          SurveyTab(
+            iconData: FontAwesomeIcons.clipboardList,
+            label: "Pending surveys"
           ),
-          Tab(
-            icon: Icon(FontAwesomeIcons.boxArchive),
-            child: FittedBox(
-              child: Text("Archive")
-              ),
+          SurveyTab(
+            iconData: FontAwesomeIcons.boxArchive,
+            label: "Archive"
           ),
         ],
       )

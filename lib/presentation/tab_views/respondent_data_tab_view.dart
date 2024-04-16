@@ -9,68 +9,72 @@ class RespondentDataTabView extends GetView<RespondentDataController>{
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(15),
-      child: Expanded(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children:[
-              const SizedBox(height: 10,),
-              Obx(() => TextFormField(
-                readOnly: true,
-                decoration: const InputDecoration(labelText: "Gender"),
-                initialValue: controller.gender.value,
-              )),
-                const SizedBox(height: 20),
-                Obx(() => TextFormField(
-                  readOnly: true,
-                  decoration: const InputDecoration(labelText: "Age category"),
-                  initialValue: controller.ageCategory.value,
-                )),
-                const SizedBox(height: 20),
-                Obx(() => TextFormField(
-                  readOnly: true,
-                  decoration: const InputDecoration(labelText: "Occupation"),
-                  initialValue: controller.occupationCategory.value,
-                )),
-                const SizedBox(height: 20),
-                Obx(() => TextFormField(
-                  readOnly: true,
-                  decoration: const InputDecoration(labelText: "Education"),
-                  initialValue: controller.educationCategory.value,
-                )),
-                const SizedBox(height: 20),
-                Obx(() => TextFormField(
-                readOnly: true,
-                decoration: const InputDecoration(labelText: "Health condition"),
-                initialValue: controller.healthCondition.value,
-              )),
-                const SizedBox(height: 20),
-                Obx(() => TextFormField(
-                  readOnly: true,
-                  decoration: const InputDecoration(labelText: "Medication use"),
-                  initialValue: controller.medicationUse.value,
-                )),
-                const SizedBox(height: 20),
-                Obx(() => TextFormField(
-                  readOnly: true,
-                  decoration: const InputDecoration(labelText: "Life satisfaction"),
-                  initialValue: controller.lifeSatisfaction.value,
-                )),
-                const SizedBox(height: 20),
-                Obx(() => TextFormField(
-                  readOnly: true,
-                  decoration: const InputDecoration(labelText: "Stress level"),
-                  initialValue: controller.stressLevel.value,
-                )),
-                const SizedBox(height: 20),
-                Obx(() => TextFormField(
-                  readOnly: true,
-                  decoration: const InputDecoration(labelText: "Quality of sleep"),
-                  initialValue: controller.qualityOfSleep.value,
-                ))
-            ],
-            ),
-        )
+      child: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children:[
+                  const SizedBox(height: 10,),
+                  Obx(() => TextFormField(
+                    readOnly: true,
+                    decoration: const InputDecoration(labelText: "Gender"),
+                    initialValue: controller.gender.value,
+                  )),
+                    const SizedBox(height: 20),
+                    Obx(() => TextFormField(
+                      readOnly: true,
+                      decoration: const InputDecoration(labelText: "Age category"),
+                      initialValue: controller.ageCategory.value,
+                    )),
+                    const SizedBox(height: 20),
+                    Obx(() => TextFormField(
+                      readOnly: true,
+                      decoration: const InputDecoration(labelText: "Occupation"),
+                      initialValue: controller.occupationCategory.value,
+                    )),
+                    const SizedBox(height: 20),
+                    Obx(() => TextFormField(
+                      readOnly: true,
+                      decoration: const InputDecoration(labelText: "Education"),
+                      initialValue: controller.educationCategory.value,
+                    )),
+                    const SizedBox(height: 20),
+                    Obx(() => TextFormField(
+                    readOnly: true,
+                    decoration: const InputDecoration(labelText: "Health condition"),
+                    initialValue: controller.healthCondition.value,
+                  )),
+                    const SizedBox(height: 20),
+                    Obx(() => TextFormField(
+                      readOnly: true,
+                      decoration: const InputDecoration(labelText: "Medication use"),
+                      initialValue: controller.medicationUse.value,
+                    )),
+                    const SizedBox(height: 20),
+                    Obx(() => TextFormField(
+                      readOnly: true,
+                      decoration: const InputDecoration(labelText: "Life satisfaction"),
+                      initialValue: controller.lifeSatisfaction.value,
+                    )),
+                    const SizedBox(height: 20),
+                    Obx(() => TextFormField(
+                      readOnly: true,
+                      decoration: const InputDecoration(labelText: "Stress level"),
+                      initialValue: controller.stressLevel.value,
+                    )),
+                    const SizedBox(height: 20),
+                    Obx(() => TextFormField(
+                      readOnly: true,
+                      decoration: const InputDecoration(labelText: "Quality of sleep"),
+                      initialValue: controller.qualityOfSleep.value,
+                    ))
+                ],
+                ),
+            )
+          ),
+        ],
       ),
     );
   }
