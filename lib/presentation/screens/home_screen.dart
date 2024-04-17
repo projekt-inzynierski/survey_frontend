@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:survey_frontend/presentation/tab_views/archived_surveys_tab_view.dart';
-import 'package:survey_frontend/presentation/tab_views/pedning_surveys_tab_view.dart';
+import 'package:survey_frontend/presentation/tab_views/pendning_surveys_tab_view.dart';
 import 'package:survey_frontend/presentation/tab_views/respondent_data_tab_view.dart';
 import 'package:survey_frontend/presentation/tab_views/survey_tab.dart';
 

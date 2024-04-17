@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:survey_frontend/presentation/controllers/resondent_data_controller.dart';
+import 'package:survey_frontend/presentation/controllers/respondent_data_controller.dart';
 
 class RespondentDataTabView extends GetView<RespondentDataController>{
   const RespondentDataTabView({super.key});
