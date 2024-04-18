@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 
-class InsertDemograficInformationController extends ControllerBase{
+class InsertDemographicInformationController extends ControllerBase{
   final RxList<String> genders = ["Male", "Female"].obs;
   final RxList<String> ageCategories = ["50-59", "60-69", "70 and more"].obs;
   final RxList<String> occupationCategories = ["option 1", "option 2", "option 3"].obs;
