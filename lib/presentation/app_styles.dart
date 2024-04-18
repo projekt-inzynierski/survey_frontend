@@ -4,6 +4,9 @@ class AppStyles{
   static const MaterialColor _primaryColor = Colors.green;
   static ThemeData lightTheme = ThemeData(
     primaryColor: Colors.green,
+    secondaryHeaderColor: const Color.fromARGB(255, 4, 90, 161),
+    indicatorColor: const Color.fromARGB(255, 4, 90, 161),
+    unselectedWidgetColor: Colors.white,
     fontFamily: 'Roboto',
     textTheme: const TextTheme(
       bodyLarge: TextStyle(

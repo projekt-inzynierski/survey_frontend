@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:survey_frontend/presentation/controllers/insert_demografic_information_controller.dart';
+import 'package:survey_frontend/presentation/controllers/insert_demographic_information_controller.dart';
 
-class InsertDemograficInformationDataScreen
-    extends GetView<InsertDemograficInformationController> {
-  const InsertDemograficInformationDataScreen({super.key});
+class InsertDemographicInformationDataScreen
+    extends GetView<InsertDemographicInformationController> {
+  const InsertDemographicInformationDataScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
