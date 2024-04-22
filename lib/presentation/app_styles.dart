@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 class AppStyles{
-  static const MaterialColor _primaryColor = Colors.green;
+  static final MaterialColor _primaryColor = MaterialColor(const Color.fromARGB(255, 165, 214, 35).value, const {});
+  static const Color _btnFontColor = const Color.fromARGB(255, 61, 68, 79);
   static ThemeData lightTheme = ThemeData(
-    primaryColor: Colors.green,
+    primaryColor: const Color.fromARGB(255, 165, 214, 35),
     secondaryHeaderColor: const Color.fromARGB(255, 4, 90, 161),
     indicatorColor: const Color.fromARGB(255, 4, 90, 161),
     unselectedWidgetColor: Colors.white,
@@ -23,7 +25,12 @@ class AppStyles{
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.resolveWith((states){
-          return Colors.green;
+          return _primaryColor;
+        }),
+        textStyle: MaterialStateProperty.resolveWith((states) {
+          return const TextStyle(color: _btnFontColor, 
+          fontWeight: FontWeight.bold,
+          fontSize: 18);
         })
       )
     ),
@@ -33,7 +40,7 @@ class AppStyles{
         borderRadius: BorderRadius.circular(10)
         ),
       focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(
+        borderSide: BorderSide(
           color: AppStyles._primaryColor,
           width: 2,
         ),

@@ -13,6 +13,7 @@ import 'package:survey_frontend/presentation/screens/insert_demographic_informat
 import 'package:survey_frontend/presentation/screens/insert_health_status_information_screen.dart';
 import 'package:survey_frontend/presentation/screens/insert_well_being_information_screen.dart';
 import 'package:survey_frontend/presentation/screens/login_screen.dart';
+import 'package:survey_frontend/presentation/screens/welcome_screen.dart';
 
 void main() async {
   await GetStorage.init();
@@ -46,16 +47,21 @@ void main() async {
         page: () => const InsertWellBeingInformationScreen(),
         binding: InsertWellBeingInformationBindings()
       ),
+      GetPage(
+        name: '/welcome',
+        page: () => const WelcomeScreen()
+        )
     ],
   ));
 }
 
 String _getStartScreenPath() {
+  return '/welcome';
   String? savedToken = GetStorage().read<String>("apiToken");
   if (savedToken == null){
     return '/login';
   }
 
   var validityChecker = TokenValidityCheckerImpl();
-  return !validityChecker.isValid(savedToken) ? '/login' : '/insertdemograficinformation';
+  return !validityChecker.isValid(savedToken) ? '/login' : '/welcome';
 }
