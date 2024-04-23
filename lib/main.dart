@@ -21,7 +21,7 @@ void main() async {
   runApp(GetMaterialApp(
     initialBinding: InitialBindings(),
     theme: AppStyles.lightTheme,
-    initialRoute: startScreenPath,
+    initialRoute: '/welcome',
     getPages: [
       GetPage(
         name: '/login',
@@ -56,7 +56,6 @@ void main() async {
 }
 
 String _getStartScreenPath() {
-  return '/welcome';
   String? savedToken = GetStorage().read<String>("apiToken");
   if (savedToken == null){
     return '/login';

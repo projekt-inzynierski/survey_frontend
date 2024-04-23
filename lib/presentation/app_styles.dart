@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class AppStyles{
   static final MaterialColor _primaryColor = MaterialColor(const Color.fromARGB(255, 165, 214, 35).value, const {});
-  static const Color _btnFontColor = const Color.fromARGB(255, 61, 68, 79);
+  static const Color _btnFontColor = Color.fromARGB(255, 68, 99, 55);
+  static const Color _appNameColor = Color.fromARGB(255, 61, 68, 79);
   static ThemeData lightTheme = ThemeData(
+    scaffoldBackgroundColor: Colors.white,
     primaryColor: const Color.fromARGB(255, 165, 214, 35),
     secondaryHeaderColor: const Color.fromARGB(255, 4, 90, 161),
     indicatorColor: const Color.fromARGB(255, 4, 90, 161),
@@ -16,9 +19,9 @@ class AppStyles{
       )
     ),
     appBarTheme: const AppBarTheme(
-      color: Colors.green,
+      color: Colors.white,
       titleTextStyle: TextStyle(
-        color: Colors.white,
+        color: _appNameColor,
         fontSize: 25,
       )
     ),
@@ -59,7 +62,13 @@ class AppStyles{
           width: 2,
         ),
         borderRadius: BorderRadius.circular(10),
-      ) 
-    )
+      )
+    ),
+    dropdownMenuTheme: DropdownMenuThemeData(
+      menuStyle: MenuStyle( 
+        backgroundColor: MaterialStateProperty.resolveWith((states){
+          return Colors.white;
+        })
+      ))
   );
 }
