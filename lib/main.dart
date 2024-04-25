@@ -39,12 +39,12 @@ void main() async {
         binding: InsertDemographicInformationBindings()
       ),
       GetPage(
-        name: '/insertdemograficinformation/inserthealthstatusinformation', 
+        name: '/inserthealthstatusinformation', 
         page: () => const InsertHealthStatusInformationScreen(),
         binding: InsertHealthStatusInformationBindings()
       ),
       GetPage(
-        name: '/insertdemograficinformation/inserthealthstatusinformation/insertwellbeinginformation', 
+        name: '/insertwellbeinginformation', 
         page: () => const InsertWellBeingInformationScreen(),
         binding: InsertWellBeingInformationBindings()
       ),

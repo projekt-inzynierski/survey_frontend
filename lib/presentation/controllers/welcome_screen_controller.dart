@@ -15,7 +15,6 @@ class WelcomeScreenConroller extends ControllerBase {
   final OccupationCategoryService _occupationCategoryService;
   final EducationCategoryService _educationCategoryService;
   final GreeneryAreaCategoryService _greeneryAreaCategoryService;
-  bool dropdownItemsLoaded = false;
 
   WelcomeScreenConroller(this._ageCategoryService, 
   this._occupationCategoryService, 
@@ -23,10 +22,6 @@ class WelcomeScreenConroller extends ControllerBase {
   this._greeneryAreaCategoryService);
 
   void letsGo() async{
-    if (dropdownItemsLoaded){
-      Get.toNamed('/insertdemograficinformation');
-    }
-
     Future<APIResponse<List<AgeCategoryDto>>> ageCategoriesFuture = _ageCategoryService.getAgeCategories();
     Future<APIResponse<List<EducationCategoryDto>>> educationCategoriesFuture = _educationCategoryService.getEducationCategories();
     Future<APIResponse<List<OccupationCategoryDto>>> occupationCategoriesFuture = _occupationCategoryService.getOccupationCategories();
@@ -51,7 +46,6 @@ class WelcomeScreenConroller extends ControllerBase {
       return;
     }
 
-    dropdownItemsLoaded = true;
     Get.toNamed('/insertdemograficinformation', arguments: {
       'ageCategories': ageCategoriesResult.body!,
       'educationCategories': educationCategoriesResult.body!,

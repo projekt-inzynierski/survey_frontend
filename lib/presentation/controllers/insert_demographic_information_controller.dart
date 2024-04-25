@@ -29,7 +29,6 @@ class InsertDemographicInformationController extends ControllerBase{
 
   final formKey = GlobalKey<FormState>();
   bool isBusy = false;
-  bool dropdownItemsLoaded = false;
 
   InsertDemographicInformationController(this._healthConditionService, this._medicationUseService);
 
@@ -64,10 +63,6 @@ class InsertDemographicInformationController extends ControllerBase{
   }
 
   Future _loadDropdownsAndNext() async{
-    if (dropdownItemsLoaded){
-      await Get.toNamed("/insertdemograficinformation/inserthealthstatusinformation");
-    }
-
     Future<APIResponse<List<MedicationUseDto>>> medicationUseFuture = _medicationUseService.getMedicationUses();
     Future<APIResponse<List<HealthConditionDto>>> healthConditionFuture = _healthConditionService.getHealthConditions();
 
@@ -85,8 +80,7 @@ class InsertDemographicInformationController extends ControllerBase{
         return;
       }
 
-      dropdownItemsLoaded = true;
-      await Get.toNamed("/insertdemograficinformation/inserthealthstatusinformation",
+      await Get.toNamed("/inserthealthstatusinformation",
       arguments: {
         'medicationUses': medicationUseResult.body!,
         'healthConditions': healthConditionResult.body!
