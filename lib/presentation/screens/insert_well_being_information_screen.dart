@@ -18,7 +18,7 @@ class InsertWellBeingInformationScreen
               validator: controller.validateNotEmpty,
               decoration: const InputDecoration(labelText: "Zadowolenie z życia"),
               isExpanded: true,
-              value: controller.selectedLifeSatisfactionOption.value,
+              value: controller.createRespondentDataDto?.lifeSatisfactionCategoryId == null ? null : controller.lifeSatisfactionOptions.firstWhere((element) => element.id == controller.createRespondentDataDto?.lifeSatisfactionCategoryId),
               items: controller.lifeSatisfactionOptions
                   .map((val) => DropdownMenuItem(
                         value: val,
@@ -26,14 +26,14 @@ class InsertWellBeingInformationScreen
                       ))
                   .toList(),
               onChanged: (value) {
-                controller.selectedLifeSatisfactionOption.value = value!;
+                controller.createRespondentDataDto?.lifeSatisfactionCategoryId = value?.id;
               })),
           const SizedBox(height: 20),
           Obx(() => DropdownButtonFormField(
               validator: controller.validateNotEmpty,
               decoration: const InputDecoration(labelText: "Poziom stresu"),
               isExpanded: true,
-              value: controller.selectedStressLevelOption.value,
+              value: controller.createRespondentDataDto?.stressLevelCategoryId == null ? null : controller.stressLevelOptions.firstWhere((element) => element.id == controller.createRespondentDataDto?.stressLevelCategoryId),
               items: controller.stressLevelOptions
                   .map((val) => DropdownMenuItem(
                         value: val,
@@ -41,14 +41,14 @@ class InsertWellBeingInformationScreen
                       ))
                   .toList(),
               onChanged: (value) {
-                controller.selectedStressLevelOption.value = value!;
+                controller.createRespondentDataDto?.stressLevelCategoryId = value?.id;
               })),
           const SizedBox(height: 20),
           Obx(() => DropdownButtonFormField(
               validator: controller.validateNotEmpty,
               decoration: const InputDecoration(labelText: "Jakość snu"),
               isExpanded: true,
-              value: controller.selectedQualityOfSleepOption.value,
+              value: controller.createRespondentDataDto?.qualityOfSleepCategoryId == null ? null : controller.qualityOfSleepOptions.firstWhere((element) => element.id == controller.createRespondentDataDto?.qualityOfSleepCategoryId),
               items: controller.qualityOfSleepOptions
                   .map((val) => DropdownMenuItem(
                         value: val,
@@ -56,7 +56,7 @@ class InsertWellBeingInformationScreen
                       ))
                   .toList(),
               onChanged: (value) {
-                controller.selectedQualityOfSleepOption.value = value!;
+                controller.createRespondentDataDto?.qualityOfSleepCategoryId = value?.id;
               }))
         ]);
   }

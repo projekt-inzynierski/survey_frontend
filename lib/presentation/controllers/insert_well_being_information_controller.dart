@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:survey_frontend/domain/models/create_respondent_data_dto.dart';
 import 'package:survey_frontend/domain/models/life_satisfaction_dto.dart';
 import 'package:survey_frontend/domain/models/quality_of_sleep_dto.dart';
 import 'package:survey_frontend/domain/models/stress_level_dto.dart';
@@ -10,10 +11,7 @@ class InsertWellBeingInformationController extends ControllerBase{
   final RxList<StressLevelDto> stressLevelOptions = <StressLevelDto>[].obs;
   final RxList<QualityOfSleepDto> qualityOfSleepOptions = <QualityOfSleepDto>[].obs;
 
-
-  Rx<LifeSatisfactionDto?> selectedLifeSatisfactionOption = Rx(null);
-  Rx<StressLevelDto?> selectedStressLevelOption = Rx(null); 
-  Rx<QualityOfSleepDto?> selectedQualityOfSleepOption = Rx(null); 
+  CreateRespondentDataDto? createRespondentDataDto;
 
   final formKey = GlobalKey<FormState>();
   bool isBusy = false;
@@ -47,6 +45,8 @@ class InsertWellBeingInformationController extends ControllerBase{
   }
 
   void fillDropdownsFromGet(){
+    createRespondentDataDto ??= Get.arguments['dto'];
+
     if (lifeSatisfactionOptions.isEmpty){
       lifeSatisfactionOptions
         .addAll(Get.arguments['lifeSatisfactions']);

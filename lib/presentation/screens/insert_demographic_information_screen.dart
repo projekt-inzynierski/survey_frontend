@@ -19,8 +19,8 @@ class InsertDemographicInformationDataScreen
           Obx(() => DropdownButtonFormField(
               validator: controller.validateNotEmpty,
               decoration: const InputDecoration(labelText: "Płeć"),
+              value: controller.createRespondentDataDto?.gender,
               isExpanded: true,
-              value: controller.selectedGender.value,
               items: controller.genders
                   .map((val) => DropdownMenuItem(
                         value: val,
@@ -28,14 +28,14 @@ class InsertDemographicInformationDataScreen
                       ))
                   .toList(),
               onChanged: (value) {
-                controller.selectedGender.value = value;
+                controller.createRespondentDataDto?.gender = value;
               })),
           const SizedBox(height: 20),
           Obx(() => DropdownButtonFormField<AgeCategoryDto>(
               validator: controller.validateNotEmpty,
               decoration: const InputDecoration(labelText: "Kategoria wiekowa"),
+              value: controller.createRespondentDataDto?.ageCategoryId == null ? null : controller.ageCategories.firstWhere((element) => element.id == controller.createRespondentDataDto?.ageCategoryId),
               isExpanded: true,
-              value: controller.selectedAgeCategory.value,
               items: controller.ageCategories
                   .map((val) => DropdownMenuItem(
                         value: val,
@@ -43,14 +43,14 @@ class InsertDemographicInformationDataScreen
                       ))
                   .toList(),
               onChanged: (value) {
-                controller.selectedAgeCategory.value = value;
+                controller.createRespondentDataDto?.ageCategoryId = value?.id;
               })),
           const SizedBox(height: 20),
           Obx(() => DropdownButtonFormField(
               validator: controller.validateNotEmpty,
               decoration: const InputDecoration(labelText: "Zatrudnienie"),
+              value: controller.createRespondentDataDto?.occupationCategoryId == null ? null : controller.occupationCategories.firstWhere((element) => element.id == controller.createRespondentDataDto?.occupationCategoryId),
               isExpanded: true,
-              value: controller.selectedOccupationCategory.value,
               items: controller.occupationCategories
                   .map((val) => DropdownMenuItem(
                         value: val,
@@ -58,14 +58,14 @@ class InsertDemographicInformationDataScreen
                       ))
                   .toList(),
               onChanged: (value) {
-                controller.selectedOccupationCategory.value = value;
+                controller.createRespondentDataDto?.occupationCategoryId = value?.id;
               })),
           const SizedBox(height: 20),
           Obx(() => DropdownButtonFormField(
               validator: controller.validateNotEmpty,
               decoration: const InputDecoration(labelText: "Wykształcenie"),
+              value: controller.createRespondentDataDto?.educationCategoryId == null ? null : controller.educationCategories.firstWhere((element) => element.id == controller.createRespondentDataDto?.educationCategoryId),
               isExpanded: true,
-              value: controller.selectedEducationCategory.value,
               items: controller.educationCategories
                   .map((val) => DropdownMenuItem(
                         value: val,
@@ -73,14 +73,14 @@ class InsertDemographicInformationDataScreen
                       ))
                   .toList(),
               onChanged: (value) {
-                controller.selectedEducationCategory.value = value;
+                controller.createRespondentDataDto?.educationCategoryId = value?.id;
               })),
           const SizedBox(height: 20),
           Obx(() => DropdownButtonFormField(
               validator: controller.validateNotEmpty,
               decoration: const InputDecoration(labelText: "Greenery area"),
+              value: controller.createRespondentDataDto?.greeneryAreaCategoryId == null ? null : controller.greeneryAreaCategories.firstWhere((element) => element.id == controller.createRespondentDataDto?.greeneryAreaCategoryId),
               isExpanded: true,
-              value: controller.selectedGreeneryAreaCategory.value,
               items: controller.greeneryAreaCategories
                   .map((val) => DropdownMenuItem(
                         value: val,
@@ -88,7 +88,7 @@ class InsertDemographicInformationDataScreen
                       ))
                   .toList(),
               onChanged: (value) {
-                controller.selectedGreeneryAreaCategory.value = value;
+                controller.createRespondentDataDto?.greeneryAreaCategoryId = value?.id;
               }))
         ]);
   }

@@ -20,7 +20,7 @@ class InsertHealthStatusInformationScreen
               validator: controller.validateNotEmpty,
               decoration: const InputDecoration(labelText: "Stan zdrowia"),
               isExpanded: true,
-              value: controller.selectedHealthConditionOption.value,
+              value: controller.createRespondentDataDto?.healthConditionCategoryId == null ? null : controller.healthConditionOptions.firstWhere((element) => element.id == controller.createRespondentDataDto?.healthConditionCategoryId),
               items: controller.healthConditionOptions
                   .map((val) => DropdownMenuItem(
                         value: val,
@@ -28,14 +28,14 @@ class InsertHealthStatusInformationScreen
                       ))
                   .toList(),
               onChanged: (value) {
-                controller.selectedHealthConditionOption.value = value!;
+                controller.createRespondentDataDto?.healthConditionCategoryId = value?.id;
               })),
           const SizedBox(height: 20),
           Obx(() => DropdownButtonFormField<MedicationUseDto>(
               validator: controller.validateNotEmpty,
               decoration: const InputDecoration(labelText: "Leki"),
               isExpanded: true,
-              value: controller.selectedMedicationUseOption.value,
+              value: controller.createRespondentDataDto?.medicationUseCategoryId == null ? null : controller.medicationUseOptions.firstWhere((element) => element.id == controller.createRespondentDataDto?.medicationUseCategoryId),
               items: controller.medicationUseOptions
                   .map((val) => DropdownMenuItem(
                         value: val,
@@ -43,7 +43,7 @@ class InsertHealthStatusInformationScreen
                       ))
                   .toList(),
               onChanged: (value) {
-                controller.selectedMedicationUseOption.value = value!;
+                controller.createRespondentDataDto?.medicationUseCategoryId = value?.id;
               }))
         ]);
   }

@@ -9,6 +9,7 @@ import 'package:survey_frontend/domain/models/greenery_area_category_dto.dart';
 import 'package:survey_frontend/domain/models/health_condition_dto.dart';
 import 'package:survey_frontend/domain/models/medication_use_dto.dart';
 import 'package:survey_frontend/domain/models/occupation_category_dto.dart';
+import 'package:survey_frontend/domain/models/create_respondent_data_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 
 class InsertDemographicInformationController extends ControllerBase{
@@ -21,11 +22,8 @@ class InsertDemographicInformationController extends ControllerBase{
   final RxList<EducationCategoryDto> educationCategories = <EducationCategoryDto>[].obs;
   final RxList<GreeneryAreaCategoryDto> greeneryAreaCategories = <GreeneryAreaCategoryDto>[].obs;
 
-  Rx<String?> selectedGender = Rx(null);
-  Rx<AgeCategoryDto?> selectedAgeCategory = Rx(null);
-  Rx<OccupationCategoryDto?> selectedOccupationCategory = Rx(null);
-  Rx<EducationCategoryDto?> selectedEducationCategory = Rx(null);
-  Rx<GreeneryAreaCategoryDto?> selectedGreeneryAreaCategory = Rx(null);
+  CreateRespondentDataDto? createRespondentDataDto;
+  
 
   final formKey = GlobalKey<FormState>();
   bool isBusy = false;
@@ -83,11 +81,14 @@ class InsertDemographicInformationController extends ControllerBase{
       await Get.toNamed("/inserthealthstatusinformation",
       arguments: {
         'medicationUses': medicationUseResult.body!,
-        'healthConditions': healthConditionResult.body!
+        'healthConditions': healthConditionResult.body!,
+        'dto': createRespondentDataDto
       });
   }
 
   void fillDropdownsFromGet(){
+    createRespondentDataDto ??= Get.arguments['dto'];
+    
     if (ageCategories.isEmpty){
       ageCategories
       .addAll(Get.arguments['ageCategories']);

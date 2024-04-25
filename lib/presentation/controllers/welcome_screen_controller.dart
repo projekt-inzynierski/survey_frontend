@@ -5,6 +5,7 @@ import 'package:survey_frontend/domain/external_services/education_category_serv
 import 'package:survey_frontend/domain/external_services/greenery_area_category_service.dart';
 import 'package:survey_frontend/domain/external_services/occupation_category_service.dart';
 import 'package:survey_frontend/domain/models/age_category_dto.dart';
+import 'package:survey_frontend/domain/models/create_respondent_data_dto.dart';
 import 'package:survey_frontend/domain/models/education_category_dto.dart';
 import 'package:survey_frontend/domain/models/greenery_area_category_dto.dart';
 import 'package:survey_frontend/domain/models/occupation_category_dto.dart';
@@ -15,6 +16,8 @@ class WelcomeScreenConroller extends ControllerBase {
   final OccupationCategoryService _occupationCategoryService;
   final EducationCategoryService _educationCategoryService;
   final GreeneryAreaCategoryService _greeneryAreaCategoryService;
+
+  final CreateRespondentDataDto _dto = CreateRespondentDataDto();
 
   WelcomeScreenConroller(this._ageCategoryService, 
   this._occupationCategoryService, 
@@ -47,6 +50,7 @@ class WelcomeScreenConroller extends ControllerBase {
     }
 
     Get.toNamed('/insertdemograficinformation', arguments: {
+      'dto' : _dto,
       'ageCategories': ageCategoriesResult.body!,
       'educationCategories': educationCategoriesResult.body!,
       'occupationCategories': occupationCategoriesResult.body!,

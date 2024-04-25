@@ -9,6 +9,7 @@ import 'package:survey_frontend/domain/models/life_satisfaction_dto.dart';
 import 'package:survey_frontend/domain/models/medication_use_dto.dart';
 import 'package:survey_frontend/domain/models/quality_of_sleep_dto.dart';
 import 'package:survey_frontend/domain/models/stress_level_dto.dart';
+import 'package:survey_frontend/domain/models/create_respondent_data_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 
 class InsertHealthStatusInformationController  extends ControllerBase{
@@ -19,8 +20,7 @@ class InsertHealthStatusInformationController  extends ControllerBase{
   final RxList<HealthConditionDto> healthConditionOptions = <HealthConditionDto>[].obs;
   final RxList<MedicationUseDto> medicationUseOptions = <MedicationUseDto>[].obs;
 
-  Rx<HealthConditionDto?> selectedHealthConditionOption = Rx(null);
-  Rx<MedicationUseDto?> selectedMedicationUseOption = Rx(null); 
+  CreateRespondentDataDto? createRespondentDataDto;
 
   final formKey = GlobalKey<FormState>();
   bool isBusy = false;
@@ -87,10 +87,13 @@ class InsertHealthStatusInformationController  extends ControllerBase{
         'lifeSatisfactions': lifeSatisfactionResult.body!,
         'stressLevels': stressLevelsResult.body!,
         'qualityOfSleeps': qualityOfSleepResult.body!,
+        'dto' : createRespondentDataDto
       });
   }
 
   void fillDropdownsFromGet(){
+    createRespondentDataDto ??= Get.arguments['dto'];
+
     if (healthConditionOptions.isEmpty){
       healthConditionOptions
       .addAll(Get.arguments['healthConditions']);
