@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:survey_frontend/domain/models/health_condition_dto.dart';
+import 'package:survey_frontend/domain/models/medication_use_dto.dart';
 import 'package:survey_frontend/presentation/controllers/insert_health_status_information_controller.dart';
 import 'package:survey_frontend/presentation/screens/insert_respondent_data_content.dart';
 
@@ -9,11 +11,12 @@ class InsertHealthStatusInformationScreen
 
   @override
   Widget build(BuildContext context) {
+    controller.fillDropdownsFromGet();
     return InsertRespondentDataContent(
         formKey: controller.formKey,
         onPressed: controller.next,
         children: [
-          Obx(() => DropdownButtonFormField(
+          Obx(() => DropdownButtonFormField<HealthConditionDto>(
               validator: controller.validateNotEmpty,
               decoration: const InputDecoration(labelText: "Stan zdrowia"),
               isExpanded: true,
@@ -21,14 +24,14 @@ class InsertHealthStatusInformationScreen
               items: controller.healthConditionOptions
                   .map((val) => DropdownMenuItem(
                         value: val,
-                        child: Text(val),
+                        child: Text(val.display),
                       ))
                   .toList(),
               onChanged: (value) {
                 controller.selectedHealthConditionOption.value = value!;
               })),
           const SizedBox(height: 20),
-          Obx(() => DropdownButtonFormField(
+          Obx(() => DropdownButtonFormField<MedicationUseDto>(
               validator: controller.validateNotEmpty,
               decoration: const InputDecoration(labelText: "Leki"),
               isExpanded: true,
@@ -36,7 +39,7 @@ class InsertHealthStatusInformationScreen
               items: controller.medicationUseOptions
                   .map((val) => DropdownMenuItem(
                         value: val,
-                        child: Text(val),
+                        child: Text(val.display),
                       ))
                   .toList(),
               onChanged: (value) {

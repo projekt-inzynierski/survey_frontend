@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:survey_frontend/domain/models/health_condition_dto.dart';
+import 'package:survey_frontend/domain/models/medication_use_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 
 class InsertHealthStatusInformationController  extends ControllerBase{
-  final RxList<String> healthConditionOptions = ["good", "bad"].obs;
-  final RxList<String> medicationUseOptions = ["yes", "no"].obs;
+  final RxList<HealthConditionDto> healthConditionOptions = <HealthConditionDto>[].obs;
+  final RxList<MedicationUseDto> medicationUseOptions = <MedicationUseDto>[].obs;
 
-  Rx<String?> selectedHealthConditionOption = Rx(null);
-  Rx<String?> selectedMedicationUseOption = Rx(null); 
+  Rx<HealthConditionDto?> selectedHealthConditionOption = Rx(null);
+  Rx<MedicationUseDto?> selectedMedicationUseOption = Rx(null); 
 
   final formKey = GlobalKey<FormState>();
   bool isBusy = false;
 
-  String? validateNotEmpty(String? value){
+  String? validateNotEmpty(Object? value){
     if (value == null){
       return "Value must not be empty";
     }
@@ -40,7 +42,15 @@ class InsertHealthStatusInformationController  extends ControllerBase{
     }
   }
 
-  void back(){
-    Get.back();
+  void fillDropdownsFromGet(){
+    if (healthConditionOptions.isEmpty){
+      healthConditionOptions
+      .addAll(Get.arguments['healthConditions']);
+    }
+
+    if (medicationUseOptions.isEmpty){
+      medicationUseOptions
+      .addAll(Get.arguments['medicationUses']);
+    }
   }
 }
