@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:survey_frontend/presentation/controllers/welcome_screen_controller.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends GetView<WelcomeScreenConroller> {
   const WelcomeScreen({super.key});
   
   @override
@@ -23,9 +24,7 @@ class WelcomeScreen extends StatelessWidget {
           textAlign: TextAlign.center,),
           const SizedBox(height: 10,),
           ElevatedButton(
-            onPressed: (){
-              Get.toNamed('/insertdemograficinformation');
-            }, 
+            onPressed: controller.letsGo, 
             child: const Text('Zaczynamy'))
         ],),
       ),

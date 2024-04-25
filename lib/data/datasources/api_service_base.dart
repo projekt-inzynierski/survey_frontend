@@ -7,17 +7,20 @@ abstract class APIServiceBase{
   
   APIServiceBase(this._dio);
 
-  Future<APIResponse<T>> get<T>(String url) async{
-    try{
-      Response<T> response = await _dio.get<T>(url);
-      return APIResponse<T>(statusCode: response.statusCode!, body: response.data);
-    } catch (error){
-      if (error is DioException){
-        return _fromDioException(error);
-      }
-      return APIResponse<T>(error: error);
+  Future<APIResponse<T>> get<T>(String url, T Function(dynamic json) deserialize) async {
+  try {
+    Response response = await _dio.get(url);
+    dynamic jsonData = response.data;
+    T data = deserialize(jsonData);
+    return APIResponse<T>(statusCode: response.statusCode!, body: data);
+  } catch (error) {
+    if (error is DioException) {
+      return _fromDioException(error);
     }
+    return APIResponse<T>(error: error);
   }
+}
+
 
   APIResponse<T> _fromDioException<T>(DioException de){
     var response = de.response;

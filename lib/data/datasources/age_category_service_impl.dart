@@ -7,5 +7,5 @@ class AgeCategoryServiceImpl extends APIServiceBase implements AgeCategoryServic
   AgeCategoryServiceImpl(super.dio);
 
   @override
-  Future<APIResponse<List<AgeCategoryDto>>> getAgeCategories() => get<List<AgeCategoryDto>>('/api/agecategories');
+  Future<APIResponse<List<AgeCategoryDto>>> getAgeCategories() => get<List<AgeCategoryDto>>('/api/agecategories', (dynamic items) => items.map<AgeCategoryDto>((e) => AgeCategoryDto.fromJson(e)).toList());
 }

@@ -7,5 +7,5 @@ class EducationCategoryServiceImpl extends APIServiceBase implements EducationCa
   EducationCategoryServiceImpl(super.dio);
 
   @override
-  Future<APIResponse<List<EducationCategoryDto>>> getEducationCategories() => get<List<EducationCategoryDto>>('/api/educationcategories');
+  Future<APIResponse<List<EducationCategoryDto>>> getEducationCategories() => get<List<EducationCategoryDto>>('/api/educationcategories',  (dynamic items) => items.map<EducationCategoryDto>((e) => EducationCategoryDto.fromJson(e)).toList());
 }

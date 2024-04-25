@@ -7,5 +7,5 @@ class MedicationUseServiceImpl extends APIServiceBase implements MedicationUseSe
   MedicationUseServiceImpl(super.dio);
 
   @override
-  Future<APIResponse<List<MedicationUseDto>>> getMedicationUses() => get<List<MedicationUseDto>>('/api/medicationuse');
+  Future<APIResponse<List<MedicationUseDto>>> getMedicationUses() => get<List<MedicationUseDto>>('/api/medicationuse',  (dynamic items) => items.map<MedicationUseDto>((e) => MedicationUseDto.fromJson(e)).toList());
 }

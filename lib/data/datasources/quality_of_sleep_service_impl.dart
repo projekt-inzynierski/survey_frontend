@@ -7,5 +7,5 @@ class QualityOfSleepServiceImpl extends APIServiceBase implements QualityOfSleep
   QualityOfSleepServiceImpl(super.dio);
 
   @override
-  Future<APIResponse<List<QualityOfSleepDto>>> getQualityOfSleeps() => get<List<QualityOfSleepDto>>('/api/qualityofsleep');
+  Future<APIResponse<List<QualityOfSleepDto>>> getQualityOfSleeps() => get<List<QualityOfSleepDto>>('/api/qualityofsleep',  (dynamic items) => items.map<QualityOfSleepDto>((e) => QualityOfSleepDto.fromJson(e)).toList());
 }

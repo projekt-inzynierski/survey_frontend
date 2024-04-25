@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:survey_frontend/domain/models/age_category_dto.dart';
+import 'package:survey_frontend/domain/models/education_category_dto.dart';
+import 'package:survey_frontend/domain/models/greenery_area_category_dto.dart';
+import 'package:survey_frontend/domain/models/occupation_category_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 
 class InsertDemographicInformationController extends ControllerBase{
-  final RxList<String> genders = ["Male", "Female"].obs;
-  final RxList<String> ageCategories = ["50-59", "60-69", "70 and more"].obs;
-  final RxList<String> occupationCategories = ["option 1", "option 2", "option 3"].obs;
-  final RxList<String> educationCategories = ["option 1", "option 2", "option 3"].obs;
+  final RxList<String> genders = ["kobieta", "mężczyzna"].obs;
+  final RxList<AgeCategoryDto> ageCategories = <AgeCategoryDto>[].obs;
+  final RxList<OccupationCategoryDto> occupationCategories = <OccupationCategoryDto>[].obs;
+  final RxList<EducationCategoryDto> educationCategories = <EducationCategoryDto>[].obs;
+  final RxList<GreeneryAreaCategoryDto> greeneryAreaCategories = <GreeneryAreaCategoryDto>[].obs;
 
   Rx<String?> selectedGender = Rx(null);
-  Rx<String?> selectedAgeCategory = Rx(null);
-  Rx<String?> selectedOccupationCategory = Rx(null);
-  Rx<String?> selectedEducationCategory = Rx(null);
+  Rx<AgeCategoryDto?> selectedAgeCategory = Rx(null);
+  Rx<OccupationCategoryDto?> selectedOccupationCategory = Rx(null);
+  Rx<EducationCategoryDto?> selectedEducationCategory = Rx(null);
+  Rx<GreeneryAreaCategoryDto?> selectedGreeneryAreaCategory = Rx(null);
 
   final formKey = GlobalKey<FormState>();
   bool isBusy = false;
 
-  String? validateNotEmpty(String? value){
+  String? validateNotEmpty(Object? value){
     if (value == null){
-      return "Value must not be empty";
+      return "Wartość nie może być pusta";
     }
     return null;
   }
@@ -41,6 +47,28 @@ class InsertDemographicInformationController extends ControllerBase{
       await handleSomethingWentWrong(e);
     }finally{
       isBusy = false;
+    }
+  }
+
+  void fillDropdownsFromGet(){
+    if (ageCategories.isEmpty){
+      ageCategories
+      .addAll(Get.arguments['ageCategories']);
+    }
+    
+    if (occupationCategories.isEmpty){
+      occupationCategories
+      .addAll(Get.arguments['occupationCategories']);
+    }
+
+    if (educationCategories.isEmpty){
+      educationCategories
+      .addAll(Get.arguments['educationCategories']);
+    }
+
+    if (greeneryAreaCategories.isEmpty){
+      greeneryAreaCategories
+      .addAll(Get.arguments['greeneryAreaCategories']);
     }
   }
 }

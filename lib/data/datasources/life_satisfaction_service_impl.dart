@@ -7,5 +7,5 @@ class LifeSatisfactionServiceImpl extends APIServiceBase implements LifeSatisfac
   LifeSatisfactionServiceImpl(super.dio);
 
   @override
-  Future<APIResponse<List<LifeSatisfactionDto>>> getLifeSatisfactions() => get<List<LifeSatisfactionDto>>("/api/lifesatisfaction");
+  Future<APIResponse<List<LifeSatisfactionDto>>> getLifeSatisfactions() => get<List<LifeSatisfactionDto>>("/api/lifesatisfaction",  (dynamic items) => items.map<LifeSatisfactionDto>((e) => LifeSatisfactionDto.fromJson(e)).toList());
 }

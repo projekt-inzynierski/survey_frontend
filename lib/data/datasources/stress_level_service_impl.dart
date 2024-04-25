@@ -7,5 +7,5 @@ class StressLevelServiceImpl extends APIServiceBase implements StressLevelServic
   StressLevelServiceImpl(super.dio);
 
   @override
-  Future<APIResponse<List<StressLevelDto>>> getStressLevels() => get<List<StressLevelDto>>('/api/stresslevels');
+  Future<APIResponse<List<StressLevelDto>>> getStressLevels() => get<List<StressLevelDto>>('/api/stresslevels',  (dynamic items) => items.map<StressLevelDto>((e) => StressLevelDto.fromJson(e)).toList());
 }

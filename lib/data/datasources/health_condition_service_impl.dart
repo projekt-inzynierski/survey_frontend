@@ -7,5 +7,5 @@ class HealthConditionServiceImpl extends APIServiceBase implements HealthConditi
   HealthConditionServiceImpl(super.dio);
 
   @override
-  Future<APIResponse<List<HealthConditionDto>>> getHealthConditions()  => get<List<HealthConditionDto>>('/api/healthconditions');
+  Future<APIResponse<List<HealthConditionDto>>> getHealthConditions()  => get<List<HealthConditionDto>>('/api/healthconditions',  (dynamic items) => items.map<HealthConditionDto>((e) => HealthConditionDto.fromJson(e)).toList());
 }

@@ -7,6 +7,6 @@ class GreeneryAreaCategoryServiceImpl extends APIServiceBase implements Greenery
   GreeneryAreaCategoryServiceImpl(super.dio);
 
   @override
-  Future<APIResponse<List<GreeneryAreaCategoryDto>>> getCategories() => get<List<GreeneryAreaCategoryDto>>('/api/greeneryareacategories');
+  Future<APIResponse<List<GreeneryAreaCategoryDto>>> getCategories() => get<List<GreeneryAreaCategoryDto>>('/api/greeneryareacategories', (dynamic items) => items.map<GreeneryAreaCategoryDto>((e) => GreeneryAreaCategoryDto.fromJson(e)).toList());
 
 }
