@@ -22,7 +22,7 @@ void main() async {
   runApp(GetMaterialApp(
     initialBinding: InitialBindings(),
     theme: AppStyles.lightTheme,
-    initialRoute: '/welcome',
+    initialRoute: startScreenPath,
     getPages: [
       GetPage(
         name: '/login',

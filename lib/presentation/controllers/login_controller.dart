@@ -93,7 +93,7 @@ class LoginController extends ControllerBase{
       return;
     }
     saveToken(apiResponse.body!);
-    await Get.offNamed("/insertdemograficinformation");
+    await Get.offNamed("/welcome");
   }
   
   void showInvalidCredentialsError() {
