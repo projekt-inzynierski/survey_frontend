@@ -11,16 +11,16 @@ class RespondentDataDto{
   int occupationCategoryId;
   int educationCategoryId;
   int greeneryAreaCategoryId;
-  int medicationUseCategoryId;
-  int healthConditionCategoryId;
-  int stressLevelCategoryId;
-  int lifeSatisfactionCategoryId;
-  int qualityOfSleepCategoryId;
+  int medicationUseId;
+  int healthConditionId;
+  int stressLevelId;
+  int lifeSatisfactionId;
+  int qualityOfSleepId;
 
   RespondentDataDto(this.id, this.identityUserId, this.gender, this.ageCategoryId, this.occupationCategoryId,
-  this.educationCategoryId, this.greeneryAreaCategoryId, this.medicationUseCategoryId,
-  this.healthConditionCategoryId, this.stressLevelCategoryId, this.lifeSatisfactionCategoryId,
-  this.qualityOfSleepCategoryId);
+  this.educationCategoryId, this.greeneryAreaCategoryId, this.medicationUseId,
+  this.healthConditionId, this.stressLevelId, this.lifeSatisfactionId,
+  this.qualityOfSleepId);
 
   factory RespondentDataDto.fromJson(Map<String, dynamic> json) => _$RespondentDataDtoFromJson(json);
   Map<String, dynamic> toJson() => _$RespondentDataDtoToJson(this);

@@ -20,7 +20,7 @@ class InsertHealthStatusInformationScreen
               validator: controller.validateNotEmpty,
               decoration: const InputDecoration(labelText: "Stan zdrowia"),
               isExpanded: true,
-              value: controller.createRespondentDataDto?.healthConditionCategoryId == null ? null : controller.healthConditionOptions.firstWhere((element) => element.id == controller.createRespondentDataDto?.healthConditionCategoryId),
+              value: controller.createRespondentDataDto?.healthConditionId == null ? null : controller.healthConditionOptions.firstWhere((element) => element.id == controller.createRespondentDataDto?.healthConditionId),
               items: controller.healthConditionOptions
                   .map((val) => DropdownMenuItem(
                         value: val,
@@ -28,14 +28,14 @@ class InsertHealthStatusInformationScreen
                       ))
                   .toList(),
               onChanged: (value) {
-                controller.createRespondentDataDto?.healthConditionCategoryId = value?.id;
+                controller.createRespondentDataDto?.healthConditionId = value?.id;
               })),
           const SizedBox(height: 20),
           Obx(() => DropdownButtonFormField<MedicationUseDto>(
               validator: controller.validateNotEmpty,
               decoration: const InputDecoration(labelText: "Leki"),
               isExpanded: true,
-              value: controller.createRespondentDataDto?.medicationUseCategoryId == null ? null : controller.medicationUseOptions.firstWhere((element) => element.id == controller.createRespondentDataDto?.medicationUseCategoryId),
+              value: controller.createRespondentDataDto?.medicationUseId == null ? null : controller.medicationUseOptions.firstWhere((element) => element.id == controller.createRespondentDataDto?.medicationUseId),
               items: controller.medicationUseOptions
                   .map((val) => DropdownMenuItem(
                         value: val,
@@ -43,7 +43,7 @@ class InsertHealthStatusInformationScreen
                       ))
                   .toList(),
               onChanged: (value) {
-                controller.createRespondentDataDto?.medicationUseCategoryId = value?.id;
+                controller.createRespondentDataDto?.medicationUseId = value?.id;
               }))
         ]);
   }

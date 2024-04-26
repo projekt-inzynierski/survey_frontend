@@ -19,7 +19,11 @@ class InsertDemographicInformationDataScreen
           Obx(() => DropdownButtonFormField(
               validator: controller.validateNotEmpty,
               decoration: const InputDecoration(labelText: "Płeć"),
-              value: controller.createRespondentDataDto?.gender,
+              value: switch (controller.createRespondentDataDto?.gender){
+                'male' => 'kobieta',
+                'female' => 'mężczyzna',
+                _ => null
+              },
               isExpanded: true,
               items: controller.genders
                   .map((val) => DropdownMenuItem(
@@ -28,7 +32,12 @@ class InsertDemographicInformationDataScreen
                       ))
                   .toList(),
               onChanged: (value) {
-                controller.createRespondentDataDto?.gender = value;
+                String? actualValue = switch (value) {
+                  'kobieta' => 'male',
+                  'mężczyzna' => 'female',
+                  _ => null
+                };
+                controller.createRespondentDataDto?.gender = actualValue;
               })),
           const SizedBox(height: 20),
           Obx(() => DropdownButtonFormField<AgeCategoryDto>(

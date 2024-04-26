@@ -15,11 +15,11 @@ RespondentDataDto _$RespondentDataDtoFromJson(Map<String, dynamic> json) =>
       json['occupationCategoryId'] as int,
       json['educationCategoryId'] as int,
       json['greeneryAreaCategoryId'] as int,
-      json['medicationUseCategoryId'] as int,
-      json['healthConditionCategoryId'] as int,
-      json['stressLevelCategoryId'] as int,
-      json['lifeSatisfactionCategoryId'] as int,
-      json['qualityOfSleepCategoryId'] as int,
+      json['medicationUseId'] as int,
+      json['healthConditionId'] as int,
+      json['stressLevelId'] as int,
+      json['lifeSatisfactionId'] as int,
+      json['qualityOfSleepId'] as int,
     );
 
 Map<String, dynamic> _$RespondentDataDtoToJson(RespondentDataDto instance) =>
@@ -31,9 +31,9 @@ Map<String, dynamic> _$RespondentDataDtoToJson(RespondentDataDto instance) =>
       'occupationCategoryId': instance.occupationCategoryId,
       'educationCategoryId': instance.educationCategoryId,
       'greeneryAreaCategoryId': instance.greeneryAreaCategoryId,
-      'medicationUseCategoryId': instance.medicationUseCategoryId,
-      'healthConditionCategoryId': instance.healthConditionCategoryId,
-      'stressLevelCategoryId': instance.stressLevelCategoryId,
-      'lifeSatisfactionCategoryId': instance.lifeSatisfactionCategoryId,
-      'qualityOfSleepCategoryId': instance.qualityOfSleepCategoryId,
+      'medicationUseId': instance.medicationUseId,
+      'healthConditionId': instance.healthConditionId,
+      'stressLevelId': instance.stressLevelId,
+      'lifeSatisfactionId': instance.lifeSatisfactionId,
+      'qualityOfSleepId': instance.qualityOfSleepId,
     };
