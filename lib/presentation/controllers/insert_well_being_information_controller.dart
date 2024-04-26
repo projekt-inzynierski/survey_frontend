@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:survey_frontend/domain/external_services/respondent_date_service.dart';
 import 'package:survey_frontend/domain/models/create_respondent_data_dto.dart';
 import 'package:survey_frontend/domain/models/life_satisfaction_dto.dart';
 import 'package:survey_frontend/domain/models/quality_of_sleep_dto.dart';
@@ -7,6 +8,8 @@ import 'package:survey_frontend/domain/models/stress_level_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 
 class InsertWellBeingInformationController extends ControllerBase{
+  final RespondentDataService _respondentDataService;
+
   final RxList<LifeSatisfactionDto> lifeSatisfactionOptions = <LifeSatisfactionDto>[].obs;
   final RxList<StressLevelDto> stressLevelOptions = <StressLevelDto>[].obs;
   final RxList<QualityOfSleepDto> qualityOfSleepOptions = <QualityOfSleepDto>[].obs;
@@ -15,6 +18,8 @@ class InsertWellBeingInformationController extends ControllerBase{
 
   final formKey = GlobalKey<FormState>();
   bool isBusy = false;
+
+  InsertWellBeingInformationController(this._respondentDataService);
 
   String? validateNotEmpty(Object? value){
     if (value == null){
@@ -42,6 +47,16 @@ class InsertWellBeingInformationController extends ControllerBase{
     }finally{
       isBusy = false;
     }
+  }
+
+  Future saveAndGoHome() async{
+    var result = await _respondentDataService.create(createRespondentDataDto!);
+
+    if (result.error != null || result.statusCode != 201){
+      await handleSomethingWentWrong(null);
+    }
+
+    //_storage.
   }
 
   void fillDropdownsFromGet(){

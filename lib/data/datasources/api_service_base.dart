@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:survey_frontend/domain/external_services/api_response.dart';
+import 'package:survey_frontend/domain/usecases/token_provider.dart';
 
 abstract class APIServiceBase{
   final Dio _dio;
+  TokenProvider? tokenProvider;
   
-  APIServiceBase(this._dio);
+  APIServiceBase(this._dio, {this.tokenProvider});
 
   Future<APIResponse<T>> get<T>(String url, T Function(dynamic json) deserialize) async {
   try {
@@ -33,7 +35,10 @@ abstract class APIServiceBase{
 
   Future<APIResponse<T>> post<T>(String url, Map<String, dynamic> body) async{
     try{
-      Response<T> response = await _dio.post(url, data: body);
+      Options? options = _getOptionsWithAuthorization();
+      Response<T> response = await _dio.post(url, 
+      options: options, 
+      data: body);
       return APIResponse<T>(statusCode: response.statusCode!, body: response.data);
     } catch (error){
       if (error is DioException){
@@ -41,5 +46,19 @@ abstract class APIServiceBase{
       }
       return APIResponse<T>(error: error);
     }
+  }
+  
+  Options? _getOptionsWithAuthorization() {
+    if (tokenProvider == null){
+      return null;
+    }
+
+    String? token = tokenProvider?.getToken();
+
+    if (token == null){
+      return null;
+    }
+
+    return Options(headers: {"Authorization": "Bearer $token"});
   }
 }
