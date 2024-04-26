@@ -10,6 +10,6 @@ class InsertWellBeingInformationBindings extends Bindings {
       Get.find(), 
       tokenProvider: Get.find()
       ));
-    Get.lazyPut(() => InsertWellBeingInformationController(Get.find()));
+    Get.lazyPut(() => InsertWellBeingInformationController(Get.find(), Get.find()));
   }
 }

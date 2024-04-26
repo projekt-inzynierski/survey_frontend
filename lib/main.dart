@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/core/usecases/token_validity_checker_impl.dart';
+import 'package:survey_frontend/domain/models/respondent_data_dto.dart';
 import 'package:survey_frontend/presentation/app_styles.dart';
 import 'package:survey_frontend/presentation/bindings/initial_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/insert_demographic_information_bindings.dart';
@@ -58,11 +59,16 @@ void main() async {
 }
 
 String _getStartScreenPath() {
-  String? savedToken = GetStorage().read<String>("apiToken");
+  var storage = GetStorage();
+  String? savedToken = storage.read<String>("apiToken");
   if (savedToken == null){
     return '/login';
   }
 
   var validityChecker = TokenValidityCheckerImpl();
-  return !validityChecker.isValid(savedToken) ? '/login' : '/welcome';
+  if (!validityChecker.isValid(savedToken)){
+    return '/login';
+  }
+  var respondentData = storage.read<RespondentDataDto>("respondentData");
+  return respondentData == null ? '/welcome' : '/home';
 }

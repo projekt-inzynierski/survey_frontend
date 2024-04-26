@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/domain/external_services/respondent_date_service.dart';
 import 'package:survey_frontend/domain/models/create_respondent_data_dto.dart';
 import 'package:survey_frontend/domain/models/life_satisfaction_dto.dart';
@@ -9,6 +10,7 @@ import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 
 class InsertWellBeingInformationController extends ControllerBase{
   final RespondentDataService _respondentDataService;
+  final GetStorage _storage;
 
   final RxList<LifeSatisfactionDto> lifeSatisfactionOptions = <LifeSatisfactionDto>[].obs;
   final RxList<StressLevelDto> stressLevelOptions = <StressLevelDto>[].obs;
@@ -19,7 +21,7 @@ class InsertWellBeingInformationController extends ControllerBase{
   final formKey = GlobalKey<FormState>();
   bool isBusy = false;
 
-  InsertWellBeingInformationController(this._respondentDataService);
+  InsertWellBeingInformationController(this._respondentDataService, this._storage);
 
   String? validateNotEmpty(Object? value){
     if (value == null){
@@ -40,7 +42,7 @@ class InsertWellBeingInformationController extends ControllerBase{
 
       if (isValid) {
         formKey.currentState!.save();
-        await Get.offAllNamed("/home");
+        await saveAndGoHome();
       }
     } catch (e){
       await handleSomethingWentWrong(e);
@@ -56,7 +58,8 @@ class InsertWellBeingInformationController extends ControllerBase{
       await handleSomethingWentWrong(null);
     }
 
-    //_storage.
+    _storage.write('respondentData', result.body!);
+    await Get.offAllNamed("/home");
   }
 
   void fillDropdownsFromGet(){
