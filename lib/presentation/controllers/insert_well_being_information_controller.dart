@@ -56,6 +56,7 @@ class InsertWellBeingInformationController extends ControllerBase{
 
     if (result.error != null || result.statusCode != 201){
       await handleSomethingWentWrong(null);
+      return;
     }
 
     _storage.write('respondentData', result.body!);

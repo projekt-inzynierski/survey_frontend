@@ -69,6 +69,6 @@ String _getStartScreenPath() {
   if (!validityChecker.isValid(savedToken)){
     return '/login';
   }
-  var respondentData = storage.read<RespondentDataDto>("respondentData");
+  var respondentData = storage.read<Map<String, dynamic>>("respondentData");
   return respondentData == null ? '/welcome' : '/home';
 }

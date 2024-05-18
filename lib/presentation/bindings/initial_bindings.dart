@@ -15,7 +15,9 @@ class InitialBindings extends Bindings{
     Get.lazyPut(() => ArchivedSurveysController());
     Get.put(_getDio());
     Get.put(GetStorage());
-    Get.put<TokenProvider>(TokenProviderImpl(Get.find()));
+    TokenProvider tp = TokenProviderImpl(Get.find());
+    Get.put<TokenProvider>(tp);
+    Get.put<TokenProvider?>(tp);
   }
 
   Dio _getDio(){
