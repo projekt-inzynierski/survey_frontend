@@ -1,5 +1,3 @@
-import 'package:dio/dio.dart';
-
 class APIResponse<T>{
   final Object? error;
   final int? statusCode;

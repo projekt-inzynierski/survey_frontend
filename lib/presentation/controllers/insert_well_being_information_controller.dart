@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:survey_frontend/domain/external_services/respondent_date_service.dart';
+import 'package:survey_frontend/domain/models/create_respondent_data_dto.dart';
+import 'package:survey_frontend/domain/models/life_satisfaction_dto.dart';
+import 'package:survey_frontend/domain/models/quality_of_sleep_dto.dart';
+import 'package:survey_frontend/domain/models/stress_level_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 
 class InsertWellBeingInformationController extends ControllerBase{
-  final RxList<String> lifeSatisfactionOptions = ["good", "bad"].obs;
-  final RxList<String> stressLevelOptions = ["high", "medium", "low"].obs;
-  final RxList<String> qualityOfSleepOptions = ["high", "medium", "low"].obs;
+  final RespondentDataService _respondentDataService;
+  final GetStorage _storage;
 
+  final RxList<LifeSatisfactionDto> lifeSatisfactionOptions = <LifeSatisfactionDto>[].obs;
+  final RxList<StressLevelDto> stressLevelOptions = <StressLevelDto>[].obs;
+  final RxList<QualityOfSleepDto> qualityOfSleepOptions = <QualityOfSleepDto>[].obs;
 
-  Rx<String?> selectedLifeSatisfactionOption = Rx(null);
-  Rx<String?> selectedStressLevelOption = Rx(null); 
-  Rx<String?> selectedQualityOfSleepOption = Rx(null); 
+  CreateRespondentDataDto? createRespondentDataDto;
 
   final formKey = GlobalKey<FormState>();
   bool isBusy = false;
 
-  String? validateNotEmpty(String? value){
+  InsertWellBeingInformationController(this._respondentDataService, this._storage);
+
+  String? validateNotEmpty(Object? value){
     if (value == null){
       return "Value must not be empty";
     }
@@ -34,7 +42,7 @@ class InsertWellBeingInformationController extends ControllerBase{
 
       if (isValid) {
         formKey.currentState!.save();
-        await Get.offAllNamed("/home");
+        await saveAndGoHome();
       }
     } catch (e){
       await handleSomethingWentWrong(e);
@@ -43,7 +51,34 @@ class InsertWellBeingInformationController extends ControllerBase{
     }
   }
 
-  void back(){
-    Get.back();
+  Future saveAndGoHome() async{
+    var result = await _respondentDataService.create(createRespondentDataDto!);
+
+    if (result.error != null || result.statusCode != 201){
+      await handleSomethingWentWrong(null);
+      return;
+    }
+
+    _storage.write('respondentData', result.body!);
+    await Get.offAllNamed("/home");
+  }
+
+  void fillDropdownsFromGet(){
+    createRespondentDataDto ??= Get.arguments['dto'];
+
+    if (lifeSatisfactionOptions.isEmpty){
+      lifeSatisfactionOptions
+        .addAll(Get.arguments['lifeSatisfactions']);
+    }
+
+    if (stressLevelOptions.isEmpty){
+      stressLevelOptions
+        .addAll(Get.arguments['stressLevels']);
+    }
+
+    if (qualityOfSleepOptions.isEmpty){
+      qualityOfSleepOptions
+        .addAll(Get.arguments['qualityOfSleeps']);
+    }
   }
 }
