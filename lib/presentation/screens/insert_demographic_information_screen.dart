@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
+import 'package:survey_frontend/domain/models/age_category_dto.dart';
+import 'package:survey_frontend/domain/models/greenery_area_category_dto.dart';
 import 'package:survey_frontend/presentation/controllers/insert_demographic_information_controller.dart';
+import 'package:survey_frontend/presentation/screens/insert_respondent_data_content.dart';
 
 class InsertDemographicInformationDataScreen
     extends GetView<InsertDemographicInformationController> {
@@ -9,95 +11,94 @@ class InsertDemographicInformationDataScreen
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(25.0),
-        child: Form(
-          key: controller.formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Demografic information",
-                  style: Theme.of(context).textTheme.bodyLarge),
-              const SizedBox(
-                height: 20,
-              ),
-              Obx(() => DropdownButtonFormField(
-                  validator: controller.validateNotEmpty,
-                  decoration: const InputDecoration(labelText: "Gender"),
-                  isExpanded: true,
-                  value: controller.selectedGender.value,
-                  items: controller.genders
-                      .map((val) => DropdownMenuItem(
-                            value: val,
-                            child: Text(val),
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    controller.selectedGender.value = value;
-                  })),
-              const SizedBox(height: 20),
-              Obx(() => DropdownButtonFormField(
-                  validator: controller.validateNotEmpty,
-                  decoration: const InputDecoration(labelText: "Age category"),
-                  isExpanded: true,
-                  value: controller.selectedAgeCategory.value,
-                  items: controller.ageCategories
-                      .map((val) => DropdownMenuItem(
-                            value: val,
-                            child: Text(val),
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    controller.selectedAgeCategory.value = value;
-                  })),
-              const SizedBox(height: 20),
-              Obx(() => DropdownButtonFormField(
-                  validator: controller.validateNotEmpty,
-                  decoration:
-                      const InputDecoration(labelText: "Occupation category"),
-                  isExpanded: true,
-                  value: controller.selectedOccupationCategory.value,
-                  items: controller.occupationCategories
-                      .map((val) => DropdownMenuItem(
-                            value: val,
-                            child: Text(val),
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    controller.selectedOccupationCategory.value = value;
-                  })),
-              const SizedBox(height: 20),
-              Obx(() => DropdownButtonFormField(
-                  validator: controller.validateNotEmpty,
-                  decoration: const InputDecoration(labelText: "Age category"),
-                  isExpanded: true,
-                  value: controller.selectedEducationCategory.value,
-                  items: controller.educationCategories
-                      .map((val) => DropdownMenuItem(
-                            value: val,
-                            child: Text(val),
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    controller.selectedEducationCategory.value = value;
-                  })),
-              const SizedBox(
-                height: 20,
-              ),
-              GFButton(
-                onPressed: controller.next,
-                text: "Next (1/3)",
-                textStyle: const TextStyle(fontSize: 20),
-                type: GFButtonType.solid,
-                color: Theme.of(context).primaryColor,
-                blockButton: true,
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+    controller.fillDropdownsFromGet();
+    return InsertRespondentDataContent(
+        formKey: controller.formKey,
+        onPressed: controller.next,
+        children: [
+          Obx(() => DropdownButtonFormField(
+              validator: controller.validateNotEmpty,
+              decoration: const InputDecoration(labelText: "Płeć"),
+              value: switch (controller.createRespondentDataDto?.gender){
+                'male' => 'kobieta',
+                'female' => 'mężczyzna',
+                _ => null
+              },
+              isExpanded: true,
+              items: controller.genders
+                  .map((val) => DropdownMenuItem(
+                        value: val,
+                        child: Text(val),
+                      ))
+                  .toList(),
+              onChanged: (value) {
+                String? actualValue = switch (value) {
+                  'kobieta' => 'male',
+                  'mężczyzna' => 'female',
+                  _ => null
+                };
+                controller.createRespondentDataDto?.gender = actualValue;
+              })),
+          const SizedBox(height: 20),
+          Obx(() => DropdownButtonFormField<AgeCategoryDto>(
+              validator: controller.validateNotEmpty,
+              decoration: const InputDecoration(labelText: "Kategoria wiekowa"),
+              value: controller.createRespondentDataDto?.ageCategoryId == null ? null : controller.ageCategories.firstWhere((element) => element.id == controller.createRespondentDataDto?.ageCategoryId),
+              isExpanded: true,
+              items: controller.ageCategories
+                  .map((val) => DropdownMenuItem(
+                        value: val,
+                        child: Text(val.display),
+                      ))
+                  .toList(),
+              onChanged: (value) {
+                controller.createRespondentDataDto?.ageCategoryId = value?.id;
+              })),
+          const SizedBox(height: 20),
+          Obx(() => DropdownButtonFormField(
+              validator: controller.validateNotEmpty,
+              decoration: const InputDecoration(labelText: "Zatrudnienie"),
+              value: controller.createRespondentDataDto?.occupationCategoryId == null ? null : controller.occupationCategories.firstWhere((element) => element.id == controller.createRespondentDataDto?.occupationCategoryId),
+              isExpanded: true,
+              items: controller.occupationCategories
+                  .map((val) => DropdownMenuItem(
+                        value: val,
+                        child: Text(val.display),
+                      ))
+                  .toList(),
+              onChanged: (value) {
+                controller.createRespondentDataDto?.occupationCategoryId = value?.id;
+              })),
+          const SizedBox(height: 20),
+          Obx(() => DropdownButtonFormField(
+              validator: controller.validateNotEmpty,
+              decoration: const InputDecoration(labelText: "Wykształcenie"),
+              value: controller.createRespondentDataDto?.educationCategoryId == null ? null : controller.educationCategories.firstWhere((element) => element.id == controller.createRespondentDataDto?.educationCategoryId),
+              isExpanded: true,
+              items: controller.educationCategories
+                  .map((val) => DropdownMenuItem(
+                        value: val,
+                        child: Text(val.display),
+                      ))
+                  .toList(),
+              onChanged: (value) {
+                controller.createRespondentDataDto?.educationCategoryId = value?.id;
+              })),
+          const SizedBox(height: 20),
+          Obx(() => DropdownButtonFormField(
+              validator: controller.validateNotEmpty,
+              decoration: const InputDecoration(labelText: "Greenery area"),
+              value: controller.createRespondentDataDto?.greeneryAreaCategoryId == null ? null : controller.greeneryAreaCategories.firstWhere((element) => element.id == controller.createRespondentDataDto?.greeneryAreaCategoryId),
+              isExpanded: true,
+              items: controller.greeneryAreaCategories
+                  .map((val) => DropdownMenuItem(
+                        value: val,
+                        child: Text(val.display),
+                      ))
+                  .toList(),
+              onChanged: (value) {
+                controller.createRespondentDataDto?.greeneryAreaCategoryId = value?.id;
+              }))
+        ]);
   }
 }
