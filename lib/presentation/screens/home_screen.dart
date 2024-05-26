@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:survey_frontend/presentation/tab_views/archived_surveys_tab_view.dart';
-import 'package:survey_frontend/presentation/tab_views/pendning_surveys_tab_view.dart';
-import 'package:survey_frontend/presentation/tab_views/respondent_data_tab_view.dart';
-import 'package:survey_frontend/presentation/tab_views/survey_tab.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:async';
+import 'package:get/get.dart';
+import 'package:survey_frontend/presentation/controllers/pending_surveys_controller.dart';
 
 class HomeScreen extends StatefulWidget{
   
@@ -55,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 // Define the action when the user icon is pressed
               },
             ),
-            Text(
+            const Text(
               'UrBEaT',
               style: TextStyle(fontWeight: FontWeight.w900),
             ),
@@ -83,25 +78,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               style: TextStyle(fontSize: 14),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _buildTimeCard(hours, 'Godzin'),
-                SizedBox(width: 40),
+                const SizedBox(width: 40),
                 _buildTimeCard(minutes, 'Minut'),
               ],
             ),
-            Center(
-              child: Column(
-                children: [
-                  SizedBox(height: 40),
-                  _buildSurveyButton(),
-                  SizedBox(height: 10),
-                  _buildSurveyButton(),
-                ],
-              ),
-            ),
+            const SizedBox(height: 40),
+            Expanded(child: _buildSurveyList()),
           ],
         ),
       ),
@@ -118,8 +105,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           child: CircularProgressIndicator(
             value: time / (unit == 'Godzin' ? 24 : 60),
             strokeWidth: 8,
-            backgroundColor: Color.fromARGB(117, 166, 214, 35),
-            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF75A100)),
+            backgroundColor: const Color.fromARGB(117, 166, 214, 35),
+            valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF75A100)),
             strokeCap: StrokeCap.round,
           ),
         ),
@@ -128,11 +115,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           children: [
             Text(
               time.toString(),
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
             ),
             Text(
               unit,
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
           ],
         ),
@@ -140,7 +127,25 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildSurveyButton() {
+Widget _buildSurveyList() {
+    return GetBuilder<PendingSurveysController>(
+      init: PendingSurveysController(),
+      builder: (controller) {
+        return ListView.builder(
+          itemCount: controller.pendingSurveys.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 5.0), // Add padding here
+              child: _buildSurveyButton(controller.pendingSurveys[index]),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildSurveyButton(String surveyTitle) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
@@ -148,15 +153,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
             blurRadius: 2,
-            offset: Offset(0, 5),
+            offset: const Offset(0, 5),
           ),
         ],
       ),
       child: Card(
-        color: Color(0xFFFCB040),
+        color: const Color(0xFFFCB040),
         elevation: 0,
         shape: RoundedRectangleBorder(
-          side: BorderSide(
+          side: const BorderSide(
             color: Color(0xFFE6A648),
             width: 1,
           ),
@@ -167,13 +172,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           trailing: SvgPicture.asset(
             'assets/bell.svg',
             height: 32, // Adjust the height as needed
-            color: Color(0xFFCE7B00), // Ensure the bell icon is white
+            colorFilter:
+                const ColorFilter.mode(Color(0xFFCE7B00), BlendMode.srcIn), 
           ),
           title: Text(
-            'Ankieta',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            surveyTitle,
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold),
           ),
-          subtitle: Text(
+          subtitle: const Text(
             'Szczegóły ankiety',
             style: TextStyle(color: Colors.white70),
           ),
