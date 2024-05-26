@@ -15,7 +15,6 @@ class HomeScreen extends StatefulWidget{
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  late TabController _tabController;
   Timer? timer;
   int hours = 5;
   int minutes = 13;
@@ -25,7 +24,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this, initialIndex: 1);
   }
 
   @override
