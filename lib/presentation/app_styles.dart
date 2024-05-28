@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class AppStyles{
   static final MaterialColor _primaryColor = MaterialColor(const Color.fromARGB(255, 165, 214, 35).value, const {});
@@ -9,10 +7,15 @@ class AppStyles{
   static ThemeData lightTheme = ThemeData(
     scaffoldBackgroundColor: Colors.white,
     primaryColor: const Color.fromARGB(255, 165, 214, 35),
-    secondaryHeaderColor: const Color.fromARGB(255, 4, 90, 161),
+      primaryColorLight: const Color.fromARGB(117, 166, 214, 35),
+      primaryColorDark: const Color.fromARGB(255, 117, 161, 0),
+      cardColor: const Color.fromARGB(255, 252, 176, 64),
     indicatorColor: const Color.fromARGB(255, 4, 90, 161),
+      hintColor: const Color.fromARGB(255, 230, 166, 72),
+      highlightColor: const Color(0xFFCE7B00),
     unselectedWidgetColor: Colors.white,
     fontFamily: 'Roboto',
+      shadowColor: Colors.black,
     textTheme: const TextTheme(
       bodyLarge: TextStyle(
         fontSize: 20

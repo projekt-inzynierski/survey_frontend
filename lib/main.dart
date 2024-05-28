@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/core/usecases/token_validity_checker_impl.dart';
-import 'package:survey_frontend/domain/models/respondent_data_dto.dart';
 import 'package:survey_frontend/presentation/app_styles.dart';
+import 'package:survey_frontend/presentation/bindings/home_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/initial_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/insert_demographic_information_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/insert_health_status_information_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/insert_well_being_information_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/login_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/welcome_screen_bindings.dart';
-import 'package:survey_frontend/presentation/screens/home_screen.dart';
+import 'package:survey_frontend/presentation/screens/home/home_screen.dart';
 import 'package:survey_frontend/presentation/screens/insert_demographic_information_screen.dart';
 import 'package:survey_frontend/presentation/screens/insert_health_status_information_screen.dart';
 import 'package:survey_frontend/presentation/screens/insert_well_being_information_screen.dart';
@@ -32,7 +32,8 @@ void main() async {
       ),
       GetPage(
         name: '/home', 
-        page: () => const HomeScreen()
+          page: () => const HomeScreen(),
+          binding: HomeBindings()
       ),
       GetPage(
         name: '/insertdemograficinformation', 
