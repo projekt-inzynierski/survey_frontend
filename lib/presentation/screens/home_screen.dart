@@ -2,35 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:async';
 import 'package:get/get.dart';
-import 'package:survey_frontend/presentation/controllers/pending_surveys_controller.dart';
+import 'package:survey_frontend/presentation/controllers/home_controller.dart';
 
-class HomeScreen extends StatefulWidget{
-  
+
+
+class HomeScreen extends GetView<HomeController> {
+  final int hours = 5;
+  final int minutes = 13;
+
   const HomeScreen({super.key});
-
-  @override
-  State<StatefulWidget> createState() {
-    return _HomeScreenState();
-  }
-}
-
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  Timer? timer;
-  int hours = 5;
-  int minutes = 13;
-  
-  _HomeScreenState();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,9 +60,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _buildTimeCard(hours, 'Godzin'),
+                _buildTimeCircle(hours, 'Godzin'),
                 const SizedBox(width: 40),
-                _buildTimeCard(minutes, 'Minut'),
+                _buildTimeCircle(minutes, 'Minut'),
               ],
             ),
             const SizedBox(height: 40),
@@ -93,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildTimeCard(int time, String unit) {
+  Widget _buildTimeCircle(int time, String unit) {
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -126,10 +106,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
 Widget _buildSurveyList() {
-    return GetBuilder<PendingSurveysController>(
-      init: PendingSurveysController(),
-      builder: (controller) {
-        return ListView.builder(
+    return Obx(() => ListView.builder(
           itemCount: controller.pendingSurveys.length,
           itemBuilder: (context, index) {
             return Padding(
@@ -138,9 +115,7 @@ Widget _buildSurveyList() {
               child: _buildSurveyButton(controller.pendingSurveys[index]),
             );
           },
-        );
-      },
-    );
+        ));
   }
 
   Widget _buildSurveyButton(String surveyTitle) {
