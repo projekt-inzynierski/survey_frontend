@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class TimeCircle extends StatelessWidget {
   final int time;
   final String unit;
@@ -21,8 +20,9 @@ class TimeCircle extends StatelessWidget {
           child: CircularProgressIndicator(
             value: time / timeUnit,
             strokeWidth: 8,
-            backgroundColor: const Color.fromARGB(117, 166, 214, 35),
-            valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF75A100)),
+            backgroundColor: Theme.of(context).primaryColorLight,
+            valueColor: AlwaysStoppedAnimation<Color>(
+                Theme.of(context).primaryColorDark),
             strokeCap: StrokeCap.round,
           ),
         ),

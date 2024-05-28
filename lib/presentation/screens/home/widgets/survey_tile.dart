@@ -15,18 +15,18 @@ class SurveyTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
+            color: Theme.of(context).shadowColor.withOpacity(0.2),
             blurRadius: 2,
             offset: const Offset(0, 5),
           ),
         ],
       ),
       child: Card(
-        color: const Color(0xFFFCB040),
+        color: Theme.of(context).cardColor,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          side: const BorderSide(
-            color: Color(0xFFE6A648),
+          side: BorderSide(
+            color: Theme.of(context).hintColor,
             width: 1,
           ),
           borderRadius: BorderRadius.circular(10),
@@ -37,7 +37,8 @@ class SurveyTile extends StatelessWidget {
             'assets/bell.svg',
             height: 32, // Adjust the height as needed
             colorFilter:
-                const ColorFilter.mode(Color(0xFFCE7B00), BlendMode.srcIn),
+                ColorFilter.mode(
+                Theme.of(context).highlightColor, BlendMode.srcIn),
           ),
           title: Text(
             surveyTitle,
