@@ -11,7 +11,7 @@ import 'package:survey_frontend/presentation/bindings/insert_health_status_infor
 import 'package:survey_frontend/presentation/bindings/insert_well_being_information_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/login_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/welcome_screen_bindings.dart';
-import 'package:survey_frontend/presentation/screens/home_screen.dart';
+import 'package:survey_frontend/presentation/screens/home/home_screen.dart';
 import 'package:survey_frontend/presentation/screens/insert_demographic_information_screen.dart';
 import 'package:survey_frontend/presentation/screens/insert_health_status_information_screen.dart';
 import 'package:survey_frontend/presentation/screens/insert_well_being_information_screen.dart';

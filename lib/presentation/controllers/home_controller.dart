@@ -7,4 +7,6 @@ class HomeController extends ControllerBase {
     "Another pending survey",
     "Yet another pending survey"
   ].obs;
+  final RxInt hours = 5.obs;
+  final RxInt minutes = 13.obs;
 }
