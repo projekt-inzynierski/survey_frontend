@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class AppStyles{
   static final MaterialColor _primaryColor = MaterialColor(const Color.fromARGB(255, 165, 214, 35).value, const {});

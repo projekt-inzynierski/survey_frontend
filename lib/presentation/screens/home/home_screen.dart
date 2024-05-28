@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/controllers/home_controller.dart';
 import 'package:survey_frontend/presentation/screens/home/widgets/survey_tile.dart';

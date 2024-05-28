@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/controllers/login_controller.dart';
 

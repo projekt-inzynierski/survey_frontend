@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/core/usecases/token_validity_checker_impl.dart';
-import 'package:survey_frontend/domain/models/respondent_data_dto.dart';
 import 'package:survey_frontend/presentation/app_styles.dart';
 import 'package:survey_frontend/presentation/bindings/home_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/initial_bindings.dart';
