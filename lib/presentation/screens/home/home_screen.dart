@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/controllers/home_controller.dart';
+import 'package:survey_frontend/presentation/screens/home/widgets/survey_tile.dart';
 import 'package:survey_frontend/presentation/screens/home/widgets/time_circle.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -11,34 +13,31 @@ class HomeScreen extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              icon: SvgPicture.asset(
-                'assets/profile_circle.svg',
-                height: 24, // Adjust the height as needed
-              ),
-              onPressed: () {
-                // Define the action when the user icon is pressed
-              },
-            ),
-            const Text(
-              'UrBEaT',
-              style: TextStyle(fontWeight: FontWeight.w900),
-            ),
-            IconButton(
-              icon: SvgPicture.asset(
-                'assets/settings_circle.svg',
-                height: 24, // Adjust the height as needed
-              ),
-              onPressed: () {
-                // Define the action when the settings icon is pressed
-              },
-            ),
-          ],
+        leading: IconButton(
+          icon: SvgPicture.asset(
+            'assets/profile_circle.svg',
+            height: 24,
+          ),
+          onPressed: () {
+            // Define the action when the user icon is pressed
+          },
         ),
         centerTitle: true,
+        title: const Text(
+          'UrBEaT',
+          style: TextStyle(fontWeight: FontWeight.w900),
+        ),
+        actions: [
+          IconButton(
+            icon: SvgPicture.asset(
+              'assets/settings_circle.svg',
+              height: 24,
+            ),
+            onPressed: () {
+              // Define the action when the settings icon is pressed
+            },
+          ),
+        ],
         backgroundColor: Colors.white,
         elevation: 0,
       ),
@@ -80,57 +79,12 @@ class HomeScreen extends GetView<HomeController> {
           itemBuilder: (context, index) {
             return Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 5.0), // Add padding here
-              child: _buildSurveyButton(controller.pendingSurveys[index]),
+                  const EdgeInsets.symmetric(vertical: 5.0),
+              child: SurveyTile(
+                  surveyTitle: controller.pendingSurveys[index],
+                  onPressed: () {}),
             );
           },
         ));
-  }
-
-  Widget _buildSurveyButton(String surveyTitle) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 2,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Card(
-        color: const Color(0xFFFCB040),
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(
-            color: Color(0xFFE6A648),
-            width: 1,
-          ),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: ListTile(
-          trailing: SvgPicture.asset(
-            'assets/bell.svg',
-            height: 32, // Adjust the height as needed
-            colorFilter:
-                const ColorFilter.mode(Color(0xFFCE7B00), BlendMode.srcIn),
-          ),
-          title: Text(
-            surveyTitle,
-            style: const TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          subtitle: const Text(
-            'Szczegóły ankiety',
-            style: TextStyle(color: Colors.white70),
-          ),
-          onTap: () {
-            // Define the action when the button is pressed
-          },
-        ),
-      ),
-    );
   }
 }
