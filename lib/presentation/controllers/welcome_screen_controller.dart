@@ -11,7 +11,7 @@ import 'package:survey_frontend/domain/models/greenery_area_category_dto.dart';
 import 'package:survey_frontend/domain/models/occupation_category_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 
-class WelcomeScreenConroller extends ControllerBase {
+class WelcomeScreenController extends ControllerBase {
   final AgeCategoryService _ageCategoryService;
   final OccupationCategoryService _occupationCategoryService;
   final EducationCategoryService _educationCategoryService;
@@ -19,7 +19,8 @@ class WelcomeScreenConroller extends ControllerBase {
 
   final CreateRespondentDataDto _dto = CreateRespondentDataDto();
 
-  WelcomeScreenConroller(this._ageCategoryService, 
+  WelcomeScreenController(
+      this._ageCategoryService, 
   this._occupationCategoryService, 
   this._educationCategoryService,
   this._greeneryAreaCategoryService);

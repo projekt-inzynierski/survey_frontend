@@ -32,7 +32,7 @@ class LoginController extends ControllerBase{
 
       formKey.currentState!.save();
 
-      if (!await hasInternecConnection()){
+      if (!await hasInternetConnection()) {
         return;
       }
 
