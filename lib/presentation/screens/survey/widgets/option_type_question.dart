@@ -14,9 +14,9 @@ class OptionTypeQuestion extends StatelessWidget {
           (option) => RadioListTile(
             title: Text(option['label']),
             value: option['id'],
-            groupValue: question['selectedOption'],
+            groupValue: question['answer'],
             onChanged: (value) {
-              question['selectedOption'] = value;
+              question['answer'] = value;
               refresh();
             },
           ),

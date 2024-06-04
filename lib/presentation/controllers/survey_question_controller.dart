@@ -56,7 +56,12 @@ class SurveyController extends ControllerBase {
   }
 
   void nextQuestion() {
+    if (questions[currentIndex.value]['answer'] == null) {
+      //TODO show snackbar or dialog
+      return;
+    }
     if (currentIndex.value < questions.length - 1) {
+      
       currentIndex.value++;
       Get.to(
         () => const SurveyQuestionScreen(),
@@ -88,6 +93,7 @@ class SurveyController extends ControllerBase {
   void previousQuestion() {
     if (currentIndex.value > 0) {
       currentIndex.value--;
+    } else {
       Get.back();
     }
   }
