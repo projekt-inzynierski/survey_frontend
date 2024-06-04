@@ -27,7 +27,7 @@ class SurveyStartScreen extends GetView<SurveyController> {
               child: Text(
                 'Czy chcesz rozpocząć wypełnianie ankiety?',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 24),
               ),
             ),
             const Spacer(),

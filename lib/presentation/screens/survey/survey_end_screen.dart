@@ -12,29 +12,27 @@ class SurveyEndScreen extends GetView<SurveyController> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {},
+          onPressed: () {
+            Get.back();
+          },
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Spacer(),
+            const Center(
+              child: Text(
                 'Czy na pewno chcesz zakończyć ankietę?\nNie będziesz mógł potem edytować odpowiedzi.',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18,
-                ),
+                style: TextStyle(fontSize: 24),
               ),
-              const SizedBox(height: 20),
-              NextButton(
-                nextAction: controller.endSurvey,
-                text: 'Zakończ',
-              ),
-            ],
-          ),
+            ),
+            const Spacer(),
+            NextButton(nextAction: controller.endSurvey, text: 'Zakończ'),
+          ],
         ),
       ),
     );
