@@ -13,7 +13,7 @@ class ControllerBase extends GetxController{
       );
   }
 
-  Future<bool> hasInternecConnection() async{
+  Future<bool> hasInternetConnection() async {
     var connectivityResult = await _connectivity.checkConnectivity();
     if (connectivityResult == ConnectivityResult.none) {
       await Get.defaultDialog(

@@ -44,3 +44,4 @@ app.*.map.json
 /.vs
 .vscode/settings.json
 ./linux/*
+assets/mocked
