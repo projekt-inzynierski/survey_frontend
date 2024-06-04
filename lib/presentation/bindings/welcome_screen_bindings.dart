@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/get_instance/src/bindings_interface.dart';
 import 'package:survey_frontend/data/datasources/age_category_service_impl.dart';
 import 'package:survey_frontend/data/datasources/education_category_service_impl.dart';
 import 'package:survey_frontend/data/datasources/greenery_area_category_service_impl.dart';
@@ -17,6 +16,7 @@ class WelcomeScreenBindings extends Bindings {
     Get.lazyPut<OccupationCategoryService>(() => OccupationCategoryServiceImpl(Get.find()));
     Get.lazyPut<EducationCategoryService>(() => EducationCategoryServiceImpl(Get.find()));
     Get.lazyPut<GreeneryAreaCategoryService>(() => GreeneryAreaCategoryServiceImpl(Get.find()));
-    Get.lazyPut(() => WelcomeScreenConroller(Get.find(), Get.find(), Get.find(), Get.find()));
+    Get.lazyPut(() => WelcomeScreenController(
+        Get.find(), Get.find(), Get.find(), Get.find()));
   }
 }

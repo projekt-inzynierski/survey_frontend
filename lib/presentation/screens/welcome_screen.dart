@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/controllers/welcome_screen_controller.dart';
 
-class WelcomeScreen extends GetView<WelcomeScreenConroller> {
+class WelcomeScreen extends GetView<WelcomeScreenController> {
   const WelcomeScreen({super.key});
   
   @override
