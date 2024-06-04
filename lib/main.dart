@@ -9,20 +9,20 @@ import 'package:survey_frontend/presentation/bindings/insert_demographic_informa
 import 'package:survey_frontend/presentation/bindings/insert_health_status_information_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/insert_well_being_information_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/login_bindings.dart';
-import 'package:survey_frontend/presentation/bindings/survey_question_bindings.dart';
+import 'package:survey_frontend/presentation/bindings/survey_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/welcome_screen_bindings.dart';
 import 'package:survey_frontend/presentation/screens/home/home_screen.dart';
 import 'package:survey_frontend/presentation/screens/insert_demographic_information_screen.dart';
 import 'package:survey_frontend/presentation/screens/insert_health_status_information_screen.dart';
 import 'package:survey_frontend/presentation/screens/insert_well_being_information_screen.dart';
 import 'package:survey_frontend/presentation/screens/login_screen.dart';
-import 'package:survey_frontend/presentation/screens/survey_question/survey_question_screen.dart';
+import 'package:survey_frontend/presentation/screens/survey/survey_start_screen.dart';
 import 'package:survey_frontend/presentation/screens/welcome_screen.dart';
 
 void main() async {
   await GetStorage.init();
   String startScreenPath =
-      '/surveyquestion'; //FIXME change this to _getStartScreenPath()
+      '/surveystart'; //FIXME change this to _getStartScreenPath()
   runApp(GetMaterialApp(
     initialBinding: InitialBindings(),
     theme: AppStyles.lightTheme,
@@ -39,9 +39,9 @@ void main() async {
           binding: HomeBindings()
       ),
       GetPage(
-        name: '/surveyquestion',
-        page: () => const SurveyQuestionScreen(),
-        binding: SurveyQuestionBindings(),
+        name: '/surveystart',
+        page: () => const SurveyStartScreen(),
+        binding: SurveyBindings(),
       ),
       GetPage(
         name: '/insertdemograficinformation', 

@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/controllers/survey_question_controller.dart';
-import 'package:survey_frontend/presentation/screens/survey_question/widgets/next_button.dart';
+import 'package:survey_frontend/presentation/screens/survey/widgets/next_button.dart';
 
-class SurveyQuestionScreen extends GetView<SurveyQuestionController> {
+class SurveyQuestionScreen extends GetView<SurveyController> {
   const SurveyQuestionScreen({super.key});
 
   @override
@@ -52,7 +52,7 @@ class SurveyQuestionScreen extends GetView<SurveyQuestionController> {
               const SizedBox(height: 20),
               controller.buildQuestion(question),
               const Spacer(),
-              NextButton(nextQuestion: controller.nextQuestion),
+              NextButton(nextAction: controller.nextQuestion, text: 'Dalej'),
             ],
           );
         }),

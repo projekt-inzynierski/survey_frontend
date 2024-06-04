@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
-import 'package:survey_frontend/presentation/screens/survey_question/survey_question_screen.dart';
+import 'package:survey_frontend/presentation/screens/home/home_screen.dart';
+import 'package:survey_frontend/presentation/screens/survey/survey_end_screen.dart';
+import 'package:survey_frontend/presentation/screens/survey/survey_question_screen.dart';
 import 'dart:convert';
-import 'package:survey_frontend/presentation/screens/survey_question/widgets/option_type_question.dart';
+import 'package:survey_frontend/presentation/screens/survey/widgets/option_type_question.dart';
 
-class SurveyQuestionController extends ControllerBase {
+class SurveyController extends ControllerBase {
   var questions = [].obs;
   var currentIndex = 0.obs;
   var surveyName = ''.obs;
@@ -14,7 +16,7 @@ class SurveyQuestionController extends ControllerBase {
   static const int questionTypeSingleChoice = 0;
   static const int questionTypeMultipleChoice = 1;
 
-  SurveyQuestionController() {
+  SurveyController() {
     _loadQuestionsFromAsset();
   }
 
@@ -43,7 +45,7 @@ class SurveyQuestionController extends ControllerBase {
 
   Widget buildQuestion(Map<String, dynamic> question) {
     switch (question['question_type']) {
-      case SurveyQuestionController.questionTypeSingleChoice:
+      case SurveyController.questionTypeSingleChoice:
         return OptionTypeQuestion(
             question: question, refresh: questions.refresh);
       default:
@@ -53,12 +55,34 @@ class SurveyQuestionController extends ControllerBase {
     }
   }
 
-  void nextQuestion() async {
+  void nextQuestion() {
     if (currentIndex.value < questions.length - 1) {
       currentIndex.value++;
-      await Get.to(() => const SurveyQuestionScreen(),
-          transition: Transition.noTransition);
+      Get.to(
+        () => const SurveyQuestionScreen(),
+        transition: Transition.noTransition,
+      );
+    } else {
+      Get.to(
+        () => const SurveyEndScreen(),
+        transition: Transition.noTransition,
+      );
     }
+  }
+
+  void startSurvey() {
+    currentIndex.value = 0;
+    Get.to(
+      () => const SurveyQuestionScreen(),
+      transition: Transition.noTransition,
+    );
+  }
+
+  void endSurvey() {
+    Get.offAll(
+      () => const HomeScreen(),
+      transition: Transition.noTransition,
+    );
   }
 
   void previousQuestion() {

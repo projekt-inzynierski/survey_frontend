@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class NextButton extends StatelessWidget {
-  final VoidCallback nextQuestion;
-  const NextButton({super.key, required this.nextQuestion});
+  final VoidCallback nextAction;
+  final String text;
+  const NextButton({super.key, required this.nextAction, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -10,9 +11,9 @@ class NextButton extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         onPressed: () {
-          nextQuestion();
+          nextAction();
         },
-        child: const Text('Dalej'),
+        child: Text(text),
       ),
     );
   }
