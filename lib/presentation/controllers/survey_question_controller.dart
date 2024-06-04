@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'dart:convert';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
+import 'package:survey_frontend/presentation/screens/survey_question/survey_question_screen.dart';
+import 'dart:convert';
 import 'package:survey_frontend/presentation/screens/survey_question/widgets/option_type_question.dart';
 
 class SurveyQuestionController extends ControllerBase {
@@ -52,15 +53,18 @@ class SurveyQuestionController extends ControllerBase {
     }
   }
 
-  void nextQuestion() {
+  void nextQuestion() async {
     if (currentIndex.value < questions.length - 1) {
       currentIndex.value++;
+      await Get.to(() => const SurveyQuestionScreen(),
+          transition: Transition.noTransition);
     }
   }
 
   void previousQuestion() {
     if (currentIndex.value > 0) {
       currentIndex.value--;
+      Get.back();
     }
   }
 
