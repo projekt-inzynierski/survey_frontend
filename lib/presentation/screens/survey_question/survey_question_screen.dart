@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/controllers/survey_question_controller.dart';
+import 'package:survey_frontend/presentation/screens/survey_question/widgets/next_button.dart';
 
 class SurveyQuestionScreen extends GetView<SurveyQuestionController> {
   const SurveyQuestionScreen({super.key});
@@ -49,54 +50,12 @@ class SurveyQuestionScreen extends GetView<SurveyQuestionController> {
               const SizedBox(height: 10),
               Text(question['content']),
               const SizedBox(height: 20),
-              _buildQuestion(question),
+              controller.buildQuestion(question),
               const Spacer(),
-              _buildNextButton(),
+              NextButton(nextQuestion: controller.nextQuestion),
             ],
           );
         }),
-      ),
-    );
-  }
-
-  _buildNextButton() {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {
-          controller.nextQuestion();
-        },
-        child: const Text('Dalej'),
-      ),
-    );
-  }
-
-  _buildQuestion(Map<String, dynamic> question) {
-    switch (question['question_type']) {
-      case SurveyQuestionController.questionTypeSingleChoice:
-        return _buildOptionType(question);
-
-      default:
-        //TODO go back to previous screen with error
-        throw Exception(
-            'Unsupported question type: ${question['question_type']}');
-    }
-  }
-
-  _buildOptionType(Map<String, dynamic> question) {
-    return Column(
-      children: List<Widget>.from(
-        question['options'].map(
-          (option) => RadioListTile(
-            title: Text(option['label']),
-            value: option['id'],
-            groupValue: question['selectedOption'],
-            onChanged: (value) {
-              question['selectedOption'] = value;
-              controller.questions.refresh();
-            },
-          ),
-        ),
       ),
     );
   }
