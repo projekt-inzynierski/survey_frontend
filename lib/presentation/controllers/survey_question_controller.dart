@@ -1,65 +1,76 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:survey_frontend/domain/external_services/api_response.dart';
+import 'package:survey_frontend/domain/external_services/survey_service.dart';
+import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:survey_frontend/presentation/screens/home/home_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_end_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_question_screen.dart';
-import 'dart:convert';
 import 'package:survey_frontend/presentation/screens/survey/widgets/option_type_question.dart';
 
 class SurveyController extends ControllerBase {
+  final SurveyService _surveyService;
+  var survey = <SurveyDto>[].obs;
   var questions = [].obs;
   var currentIndex = 0.obs;
   var surveyName = ''.obs;
+  RxMap<String, String> answer = <String, String>{}.obs;
 
-  static const int questionTypeSingleChoice = 0;
-  static const int questionTypeMultipleChoice = 1;
+  static const String questionTypeSingleChoice = "single_text_selection";
+  static const String questionTypeMultipleChoice = "discrete_number_selection";
 
-  SurveyController() {
-    _loadQuestionsFromAsset();
+  SurveyController(this._surveyService) {
+    _loadSurvey();
   }
 
-  Future<void> _loadQuestionsFromAsset() async {
-    String jsonString = await rootBundle.loadString('assets/survey.json');
-    _loadQuestions(jsonString);
-  }
-
-  void _loadQuestions(String jsonString) {
-    final data = jsonDecode(jsonString);
-    final sections = data['sections'];
-    surveyName.value = data['survey']['name'];
-    if (sections == null) {
-      //TODO decide what to do if there are no sections
-      throw Exception('No sections found in the survey');
+  Future<void> _loadSurvey() async {
+    APIResponse<List<SurveyDto>> response = await _surveyService.getSurvey();
+    if (response.error == null && response.body != null) {
+      survey.value = response.body!;
+      _loadQuestions(survey[0]);
+    } else {
+      await handleSomethingWentWrong(null);
+      return;
     }
+  }
+
+  // Future<void> _loadQuestionsFromAsset() async {
+  //   String jsonString =
+  //       await rootBundle.loadString('assets/mocked/survey.json');
+  //   _loadQuestions(jsonString);
+  // }
+
+  void _loadQuestions(SurveyDto surveyObj) {
+    final sections = surveyObj.sections;
+    surveyName.value = surveyObj.name;
     for (var section in sections) {
-      var sectionQuestions = section['questions'];
-      if (sectionQuestions == null) {
-        //TODO decide what to do if there are no questions
-        throw Exception('No questions found in the section');
-      }
+      var sectionQuestions = section.questions;
       questions.addAll(sectionQuestions);
     }
   }
 
-  Widget buildQuestion(Map<String, dynamic> question) {
-    switch (question['question_type']) {
+  Widget buildQuestion(Question question) {
+    switch (question.questionType) {
       case SurveyController.questionTypeSingleChoice:
         return OptionTypeQuestion(
-            question: question, refresh: questions.refresh);
+            question: question, answer: answer, refresh: questions.refresh);
       default:
         //TODO go back to previous screen with error
         throw Exception(
-            'Unsupported question type: ${question['question_type']}');
+            'Unsupported question type: ${question.questionType}');
     }
   }
 
   void nextQuestion() {
-    if (questions[currentIndex.value]['answer'] == null) {
-      //TODO show snackbar or dialog
+    if (answer.isEmpty) {
+      Get.defaultDialog(
+          title: "Error",
+          middleText: "Please provide an answer",
+          confirm: const Text("Ok"));
       return;
     }
+
     if (currentIndex.value < questions.length - 1) {
       
       currentIndex.value++;
@@ -98,7 +109,7 @@ class SurveyController extends ControllerBase {
     }
   }
 
-  Map<String, dynamic> getCurrentQuestion() {
+  Question getCurrentQuestion() {
     return questions.isNotEmpty ? questions[currentIndex.value] : {};
   }
 }
