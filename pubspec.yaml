@@ -66,6 +66,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/
+    - assets/mocked/
 
 
   # The following line ensures that the Material Icons font is

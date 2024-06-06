@@ -80,8 +80,12 @@ class HomeScreen extends GetView<HomeController> {
               padding:
                   const EdgeInsets.symmetric(vertical: 5.0),
               child: SurveyTile(
-                  surveyTitle: controller.pendingSurveys[index],
-                  onPressed: () {}),
+                  surveyTitle: controller.pendingSurveys[index].name,
+                  onPressed: () {
+                    Get.toNamed("/surveystart", arguments: {
+                      "surveyID": controller.pendingSurveys[index].id
+                    });
+                  }),
             );
           },
         ));
