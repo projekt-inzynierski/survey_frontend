@@ -11,7 +11,7 @@ import 'package:survey_frontend/presentation/screens/survey/widgets/option_type_
 
 class SurveyController extends ControllerBase {
   final SurveyService _surveyService;
-  var survey = <SurveyDto>[].obs;
+  late SurveyDto survey;
   var questions = [].obs;
   var currentIndex = 0.obs;
   var surveyName = ''.obs;
@@ -25,10 +25,11 @@ class SurveyController extends ControllerBase {
   }
 
   Future<void> _loadSurvey() async {
-    APIResponse<List<SurveyDto>> response = await _surveyService.getSurvey();
+    APIResponse<SurveyDto> response =
+        await _surveyService.getSurvey(Get.arguments['surveyID']);
     if (response.error == null && response.body != null) {
-      survey.value = response.body!;
-      _loadQuestions(survey[0]);
+      survey = response.body!;
+      _loadQuestions(survey);
     } else {
       await handleSomethingWentWrong(null);
       return;
@@ -95,9 +96,8 @@ class SurveyController extends ControllerBase {
   }
 
   void endSurvey() {
-    Get.offAll(
-      () => const HomeScreen(),
-      transition: Transition.noTransition,
+    Get.offAllNamed(
+      "/home",
     );
   }
 

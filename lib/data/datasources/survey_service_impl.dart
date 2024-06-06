@@ -10,10 +10,11 @@ class SurveyServiceImpl extends APIServiceBase implements SurveyService {
   SurveyServiceImpl(super.dio);
 
   @override
-  Future<APIResponse<List<SurveyDto>>> getSurvey() async {
-    final jsonString = await rootBundle.loadString('assets/mocked/survey.json');
-    final json = [jsonDecode(jsonString)];
-    final items = json.map<SurveyDto>((e) => SurveyDto.fromJson(e)).toList();
+  Future<APIResponse<SurveyDto>> getSurvey(String surveyID) async {
+    final jsonString = await rootBundle.loadString(surveyID);
+    final json = jsonDecode(jsonString);
+    final items = SurveyDto.fromJson(json);
+    
     return Future.value(APIResponse(body: items));
   }
 
