@@ -28,9 +28,6 @@ class SurveyQuestionScreen extends GetView<SurveyController> {
         padding: const EdgeInsets.all(16.0),
         child: Obx(() {
           final question = controller.getCurrentQuestion();
-          if (question.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
-          }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -48,7 +45,7 @@ class SurveyQuestionScreen extends GetView<SurveyController> {
                     const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
-              Text(question['content']),
+              Text(question.content),
               const SizedBox(height: 20),
               controller.buildQuestion(question),
               const Spacer(),
