@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:survey_frontend/domain/external_services/api_response.dart';
-import 'package:survey_frontend/domain/external_services/home_service.dart';
+import 'package:survey_frontend/domain/external_services/short_survey_service.dart';
 import 'package:survey_frontend/domain/models/short_survey_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 
 class HomeController extends ControllerBase {
-  final HomeService _homeService;
+  final ShortSurveyService _homeService;
   RxList<ShortSurveyDto> pendingSurveys = <ShortSurveyDto>[].obs;
 
   HomeController(this._homeService) {
