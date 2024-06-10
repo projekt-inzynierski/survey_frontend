@@ -22,7 +22,7 @@ import 'package:survey_frontend/presentation/screens/welcome_screen.dart';
 void main() async {
   await GetStorage.init();
   String startScreenPath =
-      '/home'; 
+      _getStartScreenPath(); 
   runApp(GetMaterialApp(
     initialBinding: InitialBindings(),
     theme: AppStyles.lightTheme,
