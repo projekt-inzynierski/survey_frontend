@@ -23,13 +23,12 @@ class SurveyController extends ControllerBase {
   Future<void> _loadSurvey() async {
     APIResponse<SurveyDto> response =
         await _surveyService.getSurvey(Get.arguments['surveyID']);
-    if (response.error == null && response.body != null) {
-      survey = response.body!;
-      _loadQuestions(survey);
-    } else {
+    if (response.error != null || response.body == null) {
       await handleSomethingWentWrong(null);
       return;
     }
+    survey = response.body!;
+    _loadQuestions(survey);
   }
 
   void _loadQuestions(SurveyDto surveyObj) {

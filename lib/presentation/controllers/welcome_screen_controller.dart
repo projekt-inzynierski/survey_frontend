@@ -21,9 +21,9 @@ class WelcomeScreenController extends ControllerBase {
 
   WelcomeScreenController(
       this._ageCategoryService, 
-  this._occupationCategoryService, 
-  this._educationCategoryService,
-  this._greeneryAreaCategoryService);
+      this._occupationCategoryService,
+      this._educationCategoryService,
+      this._greeneryAreaCategoryService);
 
   void letsGo() async{
     Future<APIResponse<List<AgeCategoryDto>>> ageCategoriesFuture = _ageCategoryService.getAgeCategories();

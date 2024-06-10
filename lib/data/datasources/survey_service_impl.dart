@@ -11,7 +11,8 @@ class SurveyServiceImpl extends APIServiceBase implements SurveyService {
 
   @override
   Future<APIResponse<SurveyDto>> getSurvey(String surveyID) async {
-    final jsonString = await rootBundle.loadString(surveyID);
+    // final jsonString = await rootBundle.loadString(surveyID);
+    final jsonString = await rootBundle.loadString('assets/mocked/survey.json');
     final json = jsonDecode(jsonString);
     final items = SurveyDto.fromJson(json);
     
