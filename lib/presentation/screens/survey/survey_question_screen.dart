@@ -47,7 +47,7 @@ class SurveyQuestionScreen extends GetView<SurveyController> {
               const SizedBox(height: 10),
               Text(question.content),
               const SizedBox(height: 20),
-              controller.buildQuestion(question),
+              controller.buildQuestionFromType(question),
               const Spacer(),
               NextButton(nextAction: controller.nextQuestion, text: 'Dalej'),
             ],
