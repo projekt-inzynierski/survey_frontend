@@ -14,20 +14,41 @@ class DiscreteSingleOptionTypeQuestion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final numberRange = question.numberRange!;
+    final from = numberRange.from;
+    final to = numberRange.to;
+    final fromLabel = numberRange.fromLabel ?? 'low';
+    final toLabel = numberRange.toLabel ?? 'high';
+
     return Column(
-      children: List<Widget>.from(
-        question.options!.map(
-          (option) => RadioListTile(
-            title: Text(option.label),
-            value: option.id,
-            groupValue: answer[question.id],
-            onChanged: (value) {
-              answer[question.id] = value.toString();
-              refresh();
-            },
-          ),
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(fromLabel),
+            Text(toLabel),
+          ],
         ),
-      ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: List<Widget>.generate(to - from + 1, (index) {
+            final value = (from + index).toString();
+            return Column(
+              children: [
+                Text(value),
+                Radio(
+                  value: value,
+                  groupValue: answer[question.id],
+                  onChanged: (dynamic value) {
+                    answer[question.id] = value.toString();
+                    refresh();
+                  },
+                ),
+              ],
+            );
+          }),
+        ),
+      ],
     );
   }
 }
