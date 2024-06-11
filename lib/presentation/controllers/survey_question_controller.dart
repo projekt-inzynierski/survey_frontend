@@ -4,7 +4,6 @@ import 'package:survey_frontend/domain/external_services/api_response.dart';
 import 'package:survey_frontend/domain/external_services/survey_service.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
-import 'package:survey_frontend/presentation/screens/home/home_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_end_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_question_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/option_type_question.dart';
@@ -17,9 +16,6 @@ class SurveyController extends ControllerBase {
   var surveyName = ''.obs;
   RxMap<String, String> answer = <String, String>{}.obs;
 
-  static const String questionTypeSingleChoice = "single_text_selection";
-  static const String questionTypeMultipleChoice = "discrete_number_selection";
-
   SurveyController(this._surveyService) {
     _loadSurvey();
   }
@@ -27,20 +23,13 @@ class SurveyController extends ControllerBase {
   Future<void> _loadSurvey() async {
     APIResponse<SurveyDto> response =
         await _surveyService.getSurvey(Get.arguments['surveyID']);
-    if (response.error == null && response.body != null) {
-      survey = response.body!;
-      _loadQuestions(survey);
-    } else {
+    if (response.error != null || response.body == null) {
       await handleSomethingWentWrong(null);
       return;
     }
+    survey = response.body!;
+    _loadQuestions(survey);
   }
-
-  // Future<void> _loadQuestionsFromAsset() async {
-  //   String jsonString =
-  //       await rootBundle.loadString('assets/mocked/survey.json');
-  //   _loadQuestions(jsonString);
-  // }
 
   void _loadQuestions(SurveyDto surveyObj) {
     final sections = surveyObj.sections;
@@ -53,7 +42,7 @@ class SurveyController extends ControllerBase {
 
   Widget buildQuestion(Question question) {
     switch (question.questionType) {
-      case SurveyController.questionTypeSingleChoice:
+      case QuestionType.singleChoice:
         return OptionTypeQuestion(
             question: question, answer: answer, refresh: questions.refresh);
       default:
@@ -64,7 +53,7 @@ class SurveyController extends ControllerBase {
   }
 
   void nextQuestion() {
-    if (answer.isEmpty) {
+    if (answer[questions[currentIndex.value].id] == null) {
       Get.defaultDialog(
           title: "Error",
           middleText: "Please provide an answer",
@@ -112,4 +101,10 @@ class SurveyController extends ControllerBase {
   Question getCurrentQuestion() {
     return questions.isNotEmpty ? questions[currentIndex.value] : {};
   }
+}
+
+
+class QuestionType {
+  static const String singleChoice = "single_text_selection";
+  static const String multipleChoice = "discrete_number_selection";
 }
