@@ -4,9 +4,10 @@ import 'package:survey_frontend/domain/external_services/api_response.dart';
 import 'package:survey_frontend/domain/external_services/survey_service.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
+import 'package:survey_frontend/presentation/controllers/discrete_single_option_type_question.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_end_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_question_screen.dart';
-import 'package:survey_frontend/presentation/screens/survey/widgets/option_type_question.dart';
+import 'package:survey_frontend/presentation/screens/survey/widgets/text_single_option_type_question.dart';
 
 class SurveyController extends ControllerBase {
   final SurveyService _surveyService;
@@ -40,10 +41,13 @@ class SurveyController extends ControllerBase {
     }
   }
 
-  Widget buildQuestion(Question question) {
+  Widget buildQuestionFromType(Question question) {
     switch (question.questionType) {
-      case QuestionType.singleChoice:
-        return OptionTypeQuestion(
+      case QuestionType.singleChoiceText:
+        return TextSingleOptionTypeQuestion(
+            question: question, answer: answer, refresh: questions.refresh);
+      case QuestionType.singleChoiceDiscreteNumber:
+        return DiscreteSingleOptionTypeQuestion(
             question: question, answer: answer, refresh: questions.refresh);
       default:
         //TODO go back to previous screen with error
@@ -105,6 +109,6 @@ class SurveyController extends ControllerBase {
 
 
 class QuestionType {
-  static const String singleChoice = "single_text_selection";
-  static const String multipleChoice = "discrete_number_selection";
+  static const String singleChoiceText = "single_text_selection";
+  static const String singleChoiceDiscreteNumber = "discrete_number_selection";
 }
