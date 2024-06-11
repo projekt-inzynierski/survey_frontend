@@ -1,7 +1,4 @@
 
-import 'dart:convert';
-
-import 'package:flutter/services.dart';
 import 'package:survey_frontend/data/datasources/api_service_base.dart';
 import 'package:survey_frontend/domain/external_services/api_response.dart';
 import 'package:survey_frontend/domain/external_services/short_survey_service.dart';

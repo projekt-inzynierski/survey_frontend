@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
 
-class OptionTypeQuestion extends StatelessWidget {
+class TextSingleOptionTypeQuestion extends StatelessWidget {
   final Question question;
   final RxMap<String, String> answer;
   final Function refresh;
-  const OptionTypeQuestion(
+  const TextSingleOptionTypeQuestion(
       {super.key,
       required this.question,
       required this.answer,
