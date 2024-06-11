@@ -19,7 +19,7 @@ class HomeController extends ControllerBase {
         await _homeService.getShortSurvey();
     if (response.error != null || response.body == null) {
       // TODO: swap for "response.statusCode != 200"
-      await handleSomethingWentWrong(null);
+      // await handleSomethingWentWrong(null);
       return;
     }
     pendingSurveys.addAll(response.body!);
