@@ -16,8 +16,11 @@ class SurveyDto {
     required this.sections,
   });
 
-  factory SurveyDto.fromJson(Map<String, dynamic> json) =>
-      _$SurveyDtoFromJson(json);
+  factory SurveyDto.fromJson(Map<String, dynamic> json) {
+    final survey = _$SurveyDtoFromJson(json);
+    survey.sections.sort((a, b) => a.order.compareTo(b.order));
+    return survey;
+  }
 
   Map<String, dynamic> toJson() => _$SurveyDtoToJson(this);
 }
@@ -42,8 +45,11 @@ class Section {
     required this.questions,
   });
 
-  factory Section.fromJson(Map<String, dynamic> json) =>
-      _$SectionFromJson(json);
+  factory Section.fromJson(Map<String, dynamic> json) {
+    final section = _$SectionFromJson(json);
+    section.questions.sort((a, b) => a.order.compareTo(b.order));
+    return section;
+  }
 
   Map<String, dynamic> toJson() => _$SectionToJson(this);
 }
@@ -70,8 +76,11 @@ class Question {
     this.numberRange,
   });
 
-  factory Question.fromJson(Map<String, dynamic> json) =>
-      _$QuestionFromJson(json);
+  factory Question.fromJson(Map<String, dynamic> json) {
+    final question = _$QuestionFromJson(json);
+    question.options?.sort((a, b) => a.order.compareTo(b.order));
+    return question;
+  }
 
   Map<String, dynamic> toJson() => _$QuestionToJson(this);
 }
