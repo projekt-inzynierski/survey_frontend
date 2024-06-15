@@ -12,10 +12,14 @@ import 'package:survey_frontend/presentation/screens/survey/widgets/text_single_
 class SurveyController extends ControllerBase {
   final SurveyService _surveyService;
   late SurveyDto survey;
-  var questions = [].obs;
+  final questions = <QuestionWithSection>[].obs;
   var currentIndex = 0.obs;
   var surveyName = ''.obs;
   RxMap<String, String> answer = <String, String>{}.obs;
+  var answeredQuestionIndexStack = <int>[].obs;
+  var showSection = <int>[].obs;
+  
+
 
   SurveyController(this._surveyService) {
     _loadSurvey();
@@ -37,7 +41,10 @@ class SurveyController extends ControllerBase {
     surveyName.value = surveyObj.name;
     for (var section in sections) {
       var sectionQuestions = section.questions;
-      questions.addAll(sectionQuestions);
+      for (var question in sectionQuestions) {
+        questions
+            .add(QuestionWithSection(question: question, section: section));
+      }
     }
   }
 
@@ -57,31 +64,36 @@ class SurveyController extends ControllerBase {
   }
 
   void nextQuestion() {
-    if (answer[questions[currentIndex.value].id] == null) {
+    if (answer[questions[currentIndex.value].getID()] == null) {
       Get.defaultDialog(
           title: "Error",
           middleText: "Please provide an answer",
           confirm: const Text("Ok"));
       return;
     }
+    answeredQuestionIndexStack.add(currentIndex.value);
 
-    if (currentIndex.value < questions.length - 1) {
-      
+
+    while (currentIndex.value < questions.length - 1) {
       currentIndex.value++;
-      Get.to(
-        () => const SurveyQuestionScreen(),
-        transition: Transition.noTransition,
-      );
-    } else {
-      Get.to(
-        () => const SurveyEndScreen(),
-        transition: Transition.noTransition,
-      );
+      if (questions[currentIndex.value].sectionOK()) {
+        Get.to(
+          () => const SurveyQuestionScreen(),
+          transition: Transition.noTransition,
+          preventDuplicates: false,
+        );
+        return;
+      }
     }
+
+    Get.to(
+      () => const SurveyEndScreen(),
+      transition: Transition.noTransition,
+    );
+    return;
   }
 
   void startSurvey() {
-    currentIndex.value = 0;
     Get.to(
       () => const SurveyQuestionScreen(),
       transition: Transition.noTransition,
@@ -95,15 +107,16 @@ class SurveyController extends ControllerBase {
   }
 
   void previousQuestion() {
-    if (currentIndex.value > 0) {
-      currentIndex.value--;
+    if (answeredQuestionIndexStack.isNotEmpty) {
+      currentIndex.value = answeredQuestionIndexStack.removeLast();
+      
     } else {
       Get.back();
     }
   }
 
   Question getCurrentQuestion() {
-    return questions.isNotEmpty ? questions[currentIndex.value] : {};
+    return questions[currentIndex.value].question;
   }
 }
 
@@ -111,4 +124,22 @@ class SurveyController extends ControllerBase {
 class QuestionType {
   static const String singleChoiceText = "single_text_selection";
   static const String singleChoiceDiscreteNumber = "discrete_number_selection";
+}
+
+class QuestionWithSection {
+  final Question question;
+  final Section section;
+  QuestionWithSection({required this.question, required this.section});
+
+  String getID() {
+    return question.id;
+  }
+
+  bool sectionOK() {
+    if (section.visibility == "always") {
+      return true;
+    }
+    //TODO check if user is in "group_specific"
+    return false;
+  }
 }
