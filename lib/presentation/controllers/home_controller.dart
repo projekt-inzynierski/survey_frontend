@@ -5,13 +5,10 @@ import 'package:survey_frontend/domain/external_services/api_response.dart';
 import 'package:survey_frontend/domain/external_services/respondent_group_service.dart';
 import 'package:survey_frontend/domain/external_services/short_survey_service.dart';
 import 'package:survey_frontend/domain/external_services/survey_service.dart';
-import 'package:survey_frontend/domain/models/create_question_answer_dto.dart';
 import 'package:survey_frontend/domain/models/create_survey_resopnse_dto.dart';
-import 'package:survey_frontend/domain/models/question_type.dart';
 import 'package:survey_frontend/domain/models/short_survey_dto.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
-import 'package:survey_frontend/presentation/controllers/survey_question_controller.dart';
 
 class HomeController extends ControllerBase {
   final ShortSurveyService _homeService;
@@ -130,12 +127,11 @@ class QuestionWithSection {
 
   get id => question.id;
 
-  bool sectionOK() {
-    return true;
-    if (section.visibility == "always") {
-      return true;
+  bool canQuestionBeShown(List<String?> groupsIds) {
+    //TODO: make a class with const strings here
+    if (section.visibility == "group_specific") {
+      return groupsIds.contains(section.groupId);
     }
-    //TODO check if user is in "group_specific"
-    return false;
+    return true;
   }
 }
