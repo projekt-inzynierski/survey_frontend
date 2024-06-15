@@ -7,6 +7,6 @@ class HomeBindings extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<ShortSurveyService>(() => ShortSurveyServiceImpl(Get.find()));
-    Get.lazyPut<HomeController>(() => HomeController(Get.find()));
+    Get.lazyPut<HomeController>(() => HomeController(Get.find(), Get.find()));
   }
 }

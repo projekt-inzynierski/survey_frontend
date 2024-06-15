@@ -18,8 +18,6 @@ class SurveyController extends ControllerBase {
   RxMap<String, String> answer = <String, String>{}.obs;
   var answeredQuestionIndexStack = <int>[].obs;
   var showSection = <int>[].obs;
-  
-
 
   SurveyController(this._surveyService) {
     _loadSurvey();
@@ -62,8 +60,9 @@ class SurveyController extends ControllerBase {
             'Unsupported question type: ${question.questionType}');
     }
   }
-
+ int count = 0;
   void nextQuestion() {
+    count ++;
     if (answer[questions[currentIndex.value].getID()] == null) {
       Get.defaultDialog(
           title: "Error",
@@ -136,6 +135,7 @@ class QuestionWithSection {
   }
 
   bool sectionOK() {
+    return true;
     if (section.visibility == "always") {
       return true;
     }
