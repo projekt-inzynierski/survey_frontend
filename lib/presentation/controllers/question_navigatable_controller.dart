@@ -57,7 +57,7 @@ class QuestionNavigatableController extends ControllerBase{
     }
 
     for (int i = questionIndex + 1; i < questions.length; i++) {
-      if (questions[i].sectionOK()) {
+      if (questions[i].canQuestionBeShown(groupsIds)) {
         return i;
       }
     }
