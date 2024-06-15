@@ -11,6 +11,7 @@ class QuestionNavigatableController extends ControllerBase{
   late List<QuestionWithSection> questions;
   int questionIndex = -1;
   late CreateSurveyResponseDto responseModel;
+  late List<String?> groupsIds;
 
   void navigateToNextQuestion(QuestionNavigationMode mode) async{
     if (isBusy){
@@ -36,7 +37,8 @@ class QuestionNavigatableController extends ControllerBase{
         'responseModel': responseModel,
         'survey': survey,
         'questionIndex': nextQuestionIndex,
-        'questions': questions
+        'questions': questions,
+        "groups": groupsIds
       };
 
       if (mode == QuestionNavigationMode.top){
@@ -71,6 +73,7 @@ class QuestionNavigatableController extends ControllerBase{
     survey = Get.arguments['survey'];
     questions = Get.arguments['questions'];
     responseModel = Get.arguments['responseModel'];
+    groupsIds = Get.arguments['groups'];
   }
 }
 

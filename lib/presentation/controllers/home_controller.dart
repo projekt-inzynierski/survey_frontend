@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/core/usecases/create_question_answer_dto_factory.dart';
 import 'package:survey_frontend/domain/external_services/api_response.dart';
+import 'package:survey_frontend/domain/external_services/respondent_group_service.dart';
 import 'package:survey_frontend/domain/external_services/short_survey_service.dart';
 import 'package:survey_frontend/domain/external_services/survey_service.dart';
 import 'package:survey_frontend/domain/models/create_question_answer_dto.dart';
@@ -15,12 +17,17 @@ class HomeController extends ControllerBase {
   final ShortSurveyService _homeService;
   final SurveyService _surveyService;
   final CreateQuestionAnswerDtoFactory _createQuestionAnswerDtoFactory;
+  final RespondentGroupService _respondentGroupService;
+  final GetStorage _storage;
   RxList<ShortSurveyDto> pendingSurveys = <ShortSurveyDto>[].obs;
   final RxInt hours = 5.obs;
   final RxInt minutes = 13.obs;
   bool _isBusy = false;
 
-  HomeController(this._homeService, this._surveyService, this._createQuestionAnswerDtoFactory) {
+  HomeController(this._homeService, this._surveyService, 
+  this._createQuestionAnswerDtoFactory,
+  this._respondentGroupService,
+  this._storage) {
     _loadShortSurveys();
   }
 
@@ -55,8 +62,11 @@ class HomeController extends ControllerBase {
 
     try {
       _isBusy = true;
+      //TODO: run those futures at once
       SurveyDto? survey = await _loadSurvey(surveyId);
-      if (survey == null) {
+      var respondentGroups = await _getGroupsIds();
+
+      if (survey == null || respondentGroups == null) {
         await popup("Błąd", "Nie udało się załadować wybranej ankiety");
         return;
       }
@@ -65,7 +75,8 @@ class HomeController extends ControllerBase {
       await Get.toNamed("/surveystart", arguments: {
         "survey": survey,
         "questions": questions,
-        "responseModel": responseModel
+        "responseModel": responseModel,
+        "groups": respondentGroups
       });
     } catch (e) {
       await popup("Błąd", "Nie udało się załadować wybranej ankiety");
@@ -80,6 +91,14 @@ class HomeController extends ControllerBase {
       return null;
     }
     return response.body!;
+  }
+
+  
+  Future<List<String>?> _getGroupsIds() async{
+    var respondentData = _storage.read<Map<String, dynamic>>("respondentData")!;
+    var groupsResponse = await _respondentGroupService.getAllForRespndent(respondentData["id"]);
+
+    return groupsResponse.body?.map((e) => (e.id)).toList();
   }
 
   List<QuestionWithSection> _getQuestionsFromSurvey(SurveyDto surveyObj) {
