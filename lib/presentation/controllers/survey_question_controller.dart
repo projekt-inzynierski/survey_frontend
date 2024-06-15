@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/domain/external_services/survey_service.dart';
+import 'package:survey_frontend/domain/models/question_type.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/presentation/controllers/discrete_single_option_type_question.dart';
 import 'package:survey_frontend/presentation/controllers/question_navigatable_controller.dart';
@@ -38,10 +39,4 @@ class SurveyQuestionController extends QuestionNavigatableController{
     super.readGetArguments();
     questionIndex = Get.arguments['questionIndex'];
   }
-}
-
-
-class QuestionType {
-  static const String singleChoiceText = "single_text_selection";
-  static const String singleChoiceDiscreteNumber = "discrete_number_selection";
 }
