@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:survey_frontend/presentation/controllers/question_navigatable_controller.dart';
 import 'package:survey_frontend/presentation/controllers/survey_question_controller.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/next_button.dart';
 
-class SurveyStartScreen extends GetView<SurveyController> {
+class SurveyStartScreen extends GetView<QuestionNavigatableController> {
   const SurveyStartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    controller.getSurveyFromGetArgument();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -31,7 +33,10 @@ class SurveyStartScreen extends GetView<SurveyController> {
               ),
             ),
             const Spacer(),
-            NextButton(nextAction: controller.startSurvey, text: "Rozpocznij"),
+            NextButton(nextAction: (){
+              controller.navigateToNextQuestion(QuestionNavigationMode.off);
+            }, 
+            text: "Rozpocznij"),
           ],
         ),
       ),

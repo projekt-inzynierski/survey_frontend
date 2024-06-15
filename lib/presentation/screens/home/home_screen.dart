@@ -82,9 +82,7 @@ class HomeScreen extends GetView<HomeController> {
               child: SurveyTile(
                   surveyTitle: controller.pendingSurveys[index].name,
                   onPressed: () {
-                    Get.toNamed("/surveystart", arguments: {
-                      "surveyID": controller.pendingSurveys[index].id
-                    });
+                    controller.startCompletingSurvey(controller.pendingSurveys[index].id);
                   }),
             );
           },

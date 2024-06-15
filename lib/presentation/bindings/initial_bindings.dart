@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/core/usecases/token_provider_impl.dart';
+import 'package:survey_frontend/data/datasources/survey_service_impl.dart';
+import 'package:survey_frontend/domain/external_services/survey_service.dart';
 import 'package:survey_frontend/domain/usecases/token_provider.dart';
 import 'package:survey_frontend/presentation/controllers/archived_surveys_controller.dart';
 import 'package:survey_frontend/presentation/controllers/respondent_data_controller.dart';
@@ -11,6 +13,7 @@ class InitialBindings extends Bindings{
   void dependencies() {
     Get.lazyPut(() => RespondentDataController());
     Get.lazyPut(() => ArchivedSurveysController());
+    Get.lazyPut<SurveyService>(() => SurveyServiceImpl(Get.find()));
     Get.put(_getDio());
     Get.put(GetStorage());
     TokenProvider tp = TokenProviderImpl(Get.find());
