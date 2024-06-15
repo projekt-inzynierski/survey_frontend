@@ -33,44 +33,52 @@ class HomeController extends ControllerBase {
         return;
       }
       pendingSurveys.addAll(response.body!);
-    } catch (e){
+    } catch (e) {
       //TODO: log the exception
-      await popup("Błąd", "Nie udało się załądować ankiet. Spróbuj ponownie później.");
+      await popup(
+          "Błąd", "Nie udało się załądować ankiet. Spróbuj ponownie później.");
     } finally {
       _isBusy = false;
     }
   }
 
-  void startCompletingSurvey(String surveyId) async{
-    if (_isBusy){
+  void startCompletingSurvey(String surveyId) async {
+    if (_isBusy) {
       return;
     }
 
-    try{
+    try {
       _isBusy = true;
       SurveyDto? survey = await _loadSurvey(surveyId);
-      if (survey == null){
+      if (survey == null) {
         await popup("Błąd", "Nie udało się załadować wybranej ankiety");
         return;
       }
-
+      final questions = _getQuestionsFromSurvey(survey);
       await Get.toNamed("/surveystart", arguments: {
-        "survey": survey
+        "survey": survey,
+        "questions": questions
       });
-    } catch(e){
+    } catch (e) {
       await popup("Błąd", "Nie udało się załadować wybranej ankiety");
-    } finally{
+    } finally {
       _isBusy = false;
     }
   }
 
-  Future<SurveyDto?> _loadSurvey(String surveyId) async{
-    APIResponse<SurveyDto> response =
-        await _surveyService.getSurvey(surveyId);
+  Future<SurveyDto?> _loadSurvey(String surveyId) async {
+    APIResponse<SurveyDto> response = await _surveyService.getSurvey(surveyId);
     if (response.error != null || response.body == null) {
       return null;
     }
-   return response.body!;
+    return response.body!;
+  }
+
+  List<QuestionWithSection> _getQuestionsFromSurvey(SurveyDto surveyObj) {
+    return surveyObj.sections
+        .expand((section) => section.questions.map((question) =>
+            QuestionWithSection(question: question, section: section)))
+        .toList();
   }
 }
 
@@ -78,4 +86,21 @@ class SurveyShortInfo {
   final String name;
   final String id;
   SurveyShortInfo({required this.name, required this.id});
+}
+
+class QuestionWithSection {
+  final Question question;
+  final Section section;
+  QuestionWithSection({required this.question, required this.section});
+
+  get id => question.id;
+
+  bool sectionOK() {
+    return true;
+    if (section.visibility == "always") {
+      return true;
+    }
+    //TODO check if user is in "group_specific"
+    return false;
+  }
 }
