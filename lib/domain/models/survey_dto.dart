@@ -90,7 +90,7 @@ class Option {
   final String id;
   final int order;
   final String label;
-  final String? showSection;
+  final int? showSection;
   final int rowVersion;
 
   Option({
