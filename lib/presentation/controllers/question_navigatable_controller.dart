@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:get/get.dart';
 import 'package:survey_frontend/domain/models/create_survey_resopnse_dto.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
@@ -12,6 +14,7 @@ class QuestionNavigatableController extends ControllerBase{
   int questionIndex = -1;
   late CreateSurveyResponseDto responseModel;
   late List<String?> groupsIds;
+  late Map<int, int> triggerableSectionActivationsCounts;
 
   void navigateToNextQuestion(QuestionNavigationMode mode) async{
     if (isBusy){
@@ -38,7 +41,8 @@ class QuestionNavigatableController extends ControllerBase{
         'survey': survey,
         'questionIndex': nextQuestionIndex,
         'questions': questions,
-        "groups": groupsIds
+        "groups": groupsIds,
+        "triggerableSectionActivationsCounts": triggerableSectionActivationsCounts
       };
 
       if (mode == QuestionNavigationMode.top){
@@ -57,7 +61,7 @@ class QuestionNavigatableController extends ControllerBase{
     }
 
     for (int i = questionIndex + 1; i < questions.length; i++) {
-      if (questions[i].canQuestionBeShown(groupsIds)) {
+      if (questions[i].canQuestionBeShown(groupsIds, triggerableSectionActivationsCounts)) {
         return i;
       }
     }
@@ -74,6 +78,7 @@ class QuestionNavigatableController extends ControllerBase{
     questions = Get.arguments['questions'];
     responseModel = Get.arguments['responseModel'];
     groupsIds = Get.arguments['groups'];
+    triggerableSectionActivationsCounts = Get.arguments['triggerableSectionActivationsCounts'];
   }
 }
 

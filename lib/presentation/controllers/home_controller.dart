@@ -69,11 +69,13 @@ class HomeController extends ControllerBase {
       }
       final questions = _getQuestionsFromSurvey(survey);
       final responseModel = _prepareResponseModel(questions, survey.id);
+      final triggerableSectionActivationsCounts = _getTriggerableSectionActivationsCounts(survey);
       await Get.toNamed("/surveystart", arguments: {
         "survey": survey,
         "questions": questions,
         "responseModel": responseModel,
-        "groups": respondentGroups
+        "groups": respondentGroups,
+        "triggerableSectionActivationsCounts": triggerableSectionActivationsCounts
       });
     } catch (e) {
       await popup("Błąd", "Nie udało się załadować wybranej ankiety");
@@ -112,6 +114,16 @@ class HomeController extends ControllerBase {
 
     return CreateSurveyResponseDto(surveyId: surveyId, answers: questionAnswerDtos);
   } 
+
+  Map<int, int> _getTriggerableSectionActivationsCounts(SurveyDto survey) {
+    Map<int, int> output = {};
+    for (final section in survey.sections){
+      if (section.visibility == "answer_triggered"){
+        output[section.order] = 0;
+      }
+    }
+    return output;
+  }
 }
 
 class SurveyShortInfo {
@@ -127,10 +139,14 @@ class QuestionWithSection {
 
   get id => question.id;
 
-  bool canQuestionBeShown(List<String?> groupsIds) {
+  bool canQuestionBeShown(List<String?> groupsIds, Map<int, int> triggerableSectionActivationsCounts) {
     //TODO: make a class with const strings here
     if (section.visibility == "group_specific") {
       return groupsIds.contains(section.groupId);
+    }
+
+    if (section.visibility == "answer_triggered") {
+      return triggerableSectionActivationsCounts[section.order]! > 0;
     }
     return true;
   }
