@@ -23,7 +23,8 @@ class SurveyQuestionController extends QuestionNavigatableController{
     switch (question.questionType) {
       case QuestionType.singleChoiceText:
         return TextSingleOptionTypeQuestion(
-            question: question, selectedOption: responseModel.answers[questionIndex].selectedOptions![0]);
+            question: question, selectedOption: responseModel.answers[questionIndex].selectedOptions![0],
+            triggerableSectionActivationsCounts: triggerableSectionActivationsCounts);
       case QuestionType.singleChoiceDiscreteNumber:
         return DiscreteSingleOptionTypeQuestion(
             dto: responseModel.answers[questionIndex],
