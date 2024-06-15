@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:survey_frontend/domain/models/create_question_answer_dto.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
 
-class TextSingleOptionTypeQuestion extends StatelessWidget {
+class TextSingleOptionTypeQuestion extends StatefulWidget {
   final Question question;
-  final RxMap<String, String> answer;
-  final Function refresh;
+  final CreateSelectedOptionDto selectedOption;
   const TextSingleOptionTypeQuestion(
       {super.key,
       required this.question,
-      required this.answer,
-      required this.refresh});
+      required this.selectedOption});
+
+  @override
+  State<StatefulWidget> createState() {
+    return _TextSingleOptionTypeQuestionState(question: question, selectedOption: selectedOption);
+  }
+}
+
+class _TextSingleOptionTypeQuestionState
+    extends State<TextSingleOptionTypeQuestion> {
+  final Question question;
+  final CreateSelectedOptionDto selectedOption;
+
+  _TextSingleOptionTypeQuestionState(
+      {required this.question, required this.selectedOption});
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +33,11 @@ class TextSingleOptionTypeQuestion extends StatelessWidget {
           (option) => RadioListTile(
             title: Text(option.label),
             value: option.id,
-            groupValue: answer[question.id],
+            groupValue: selectedOption.optionId,
             onChanged: (value) {
-              answer[question.id] = value.toString();
-              refresh();
+              setState(() {
+                selectedOption.optionId = value;
+              });
             },
           ),
         ),
