@@ -1,20 +1,26 @@
 import 'package:get/get.dart';
+import 'package:survey_frontend/core/usecases/create_question_answer_dto_factory.dart';
 import 'package:survey_frontend/domain/external_services/api_response.dart';
 import 'package:survey_frontend/domain/external_services/short_survey_service.dart';
 import 'package:survey_frontend/domain/external_services/survey_service.dart';
+import 'package:survey_frontend/domain/models/create_question_answer_dto.dart';
+import 'package:survey_frontend/domain/models/create_survey_resopnse_dto.dart';
+import 'package:survey_frontend/domain/models/question_type.dart';
 import 'package:survey_frontend/domain/models/short_survey_dto.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
+import 'package:survey_frontend/presentation/controllers/survey_question_controller.dart';
 
 class HomeController extends ControllerBase {
   final ShortSurveyService _homeService;
   final SurveyService _surveyService;
+  final CreateQuestionAnswerDtoFactory _createQuestionAnswerDtoFactory;
   RxList<ShortSurveyDto> pendingSurveys = <ShortSurveyDto>[].obs;
   final RxInt hours = 5.obs;
   final RxInt minutes = 13.obs;
   bool _isBusy = false;
 
-  HomeController(this._homeService, this._surveyService) {
+  HomeController(this._homeService, this._surveyService, this._createQuestionAnswerDtoFactory) {
     _loadShortSurveys();
   }
 
@@ -55,9 +61,11 @@ class HomeController extends ControllerBase {
         return;
       }
       final questions = _getQuestionsFromSurvey(survey);
+      final responseModel = _prepareResponseModel(questions, survey.id);
       await Get.toNamed("/surveystart", arguments: {
         "survey": survey,
-        "questions": questions
+        "questions": questions,
+        "responseModel": responseModel
       });
     } catch (e) {
       await popup("Błąd", "Nie udało się załadować wybranej ankiety");
@@ -80,6 +88,14 @@ class HomeController extends ControllerBase {
             QuestionWithSection(question: question, section: section)))
         .toList();
   }
+
+  CreateSurveyResponseDto _prepareResponseModel(List<QuestionWithSection> questions, String surveyId){
+    final questionAnswerDtos = questions
+    .map((q) => _createQuestionAnswerDtoFactory.getDto(q.question.questionType))
+    .toList();
+
+    return CreateSurveyResponseDto(surveyId: surveyId, answers: questionAnswerDtos);
+  } 
 }
 
 class SurveyShortInfo {

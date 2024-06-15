@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:survey_frontend/domain/models/create_survey_resopnse_dto.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:survey_frontend/presentation/controllers/home_controller.dart';
@@ -9,6 +10,7 @@ class QuestionNavigatableController extends ControllerBase{
   late SurveyDto survey;
   late List<QuestionWithSection> questions;
   int questionIndex = -1;
+  late CreateSurveyResponseDto responseModel;
 
   void navigateToNextQuestion(QuestionNavigationMode mode) async{
     if (isBusy){
@@ -31,7 +33,7 @@ class QuestionNavigatableController extends ControllerBase{
 
       final screenFactory = () => SurveyQuestionScreen();
       Map<String, dynamic> arguments = {
-        'responseModel': null,
+        'responseModel': responseModel,
         'survey': survey,
         'questionIndex': nextQuestionIndex,
         'questions': questions
@@ -68,6 +70,7 @@ class QuestionNavigatableController extends ControllerBase{
   void readGetArguments(){
     survey = Get.arguments['survey'];
     questions = Get.arguments['questions'];
+    responseModel = Get.arguments['responseModel'];
   }
 }
 
