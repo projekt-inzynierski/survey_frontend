@@ -64,6 +64,9 @@ class QuestionNavigatableController extends ControllerBase{
       if (questions[i].canQuestionBeShown(groupsIds, triggerableSectionActivationsCounts)) {
         return i;
       }
+      //TODO: extend the cleanup when more question types are added
+      responseModel.answers[i].numericAnswer = null;
+      responseModel.answers[i].selectedOptions![0].optionId = null;
     }
 
     return -1;
