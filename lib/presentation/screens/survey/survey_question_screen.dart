@@ -1,15 +1,17 @@
-// File path: lib/presentation/screens/survey_question_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:survey_frontend/presentation/controllers/question_navigatable_controller.dart';
 import 'package:survey_frontend/presentation/controllers/survey_question_controller.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/next_button.dart';
 
-class SurveyQuestionScreen extends GetView<SurveyController> {
-  const SurveyQuestionScreen({super.key});
+class SurveyQuestionScreen extends GetView<SurveyQuestionController> {
+  final SurveyQuestionController _controller;
+
+  SurveyQuestionScreen({super.key}) : _controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
+    _controller.readGetArguments();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -17,42 +19,34 @@ class SurveyQuestionScreen extends GetView<SurveyController> {
           'UrBEaT',
           style: TextStyle(fontWeight: FontWeight.w900),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            controller.previousQuestion();
-          },
-        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Obx(() {
-          final question = controller.getCurrentQuestion();
-          return Column(
+        child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
                 child: Obx(() => Text(
-                      controller.surveyName.value,
+                      _controller.surveyName.value,
                       style: const TextStyle(
                           fontSize: 24, fontWeight: FontWeight.bold),
                     )),
               ),
               const SizedBox(height: 20),
               Text(
-                'Pytanie ${controller.currentIndex.value + 1}',
+                'Pytanie ${_controller.questionIndex + 1}',
                 style:
                     const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
-              Text(question.content),
+              Text(_controller.question.content),
               const SizedBox(height: 20),
-              controller.buildQuestionFromType(question),
+              _controller.buildQuestionFromType(_controller.question),
               const Spacer(),
-              NextButton(nextAction: controller.nextQuestion, text: 'Dalej'),
-            ],
-          );
-        }),
+              NextButton(nextAction: (){
+                _controller.navigateToNextQuestion(QuestionNavigationMode.top);
+              }, text: 'Dalej'),
+            ],),
       ),
     );
   }

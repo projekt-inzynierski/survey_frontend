@@ -5,20 +5,15 @@ import 'package:survey_frontend/presentation/controllers/survey_question_control
 import 'package:survey_frontend/presentation/screens/survey/widgets/next_button.dart';
 
 class SurveyStartScreen extends GetView<QuestionNavigatableController> {
-  const SurveyStartScreen({super.key});
+  final QuestionNavigatableController _controller;
+
+  SurveyStartScreen({super.key}) : _controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    controller.getSurveyFromGetArgument();
+    _controller.readGetArguments();
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Get.back();
-          },
-        ),
-      ),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -34,7 +29,7 @@ class SurveyStartScreen extends GetView<QuestionNavigatableController> {
             ),
             const Spacer(),
             NextButton(nextAction: (){
-              controller.navigateToNextQuestion(QuestionNavigationMode.off);
+              _controller.navigateToNextQuestion(QuestionNavigationMode.off);
             }, 
             text: "Rozpocznij"),
           ],

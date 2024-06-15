@@ -7,13 +7,15 @@ import 'package:survey_frontend/domain/external_services/survey_service.dart';
 import 'package:survey_frontend/domain/usecases/token_provider.dart';
 import 'package:survey_frontend/presentation/controllers/archived_surveys_controller.dart';
 import 'package:survey_frontend/presentation/controllers/respondent_data_controller.dart';
+import 'package:survey_frontend/presentation/controllers/survey_question_controller.dart';
 
 class InitialBindings extends Bindings{
   @override
   void dependencies() {
     Get.lazyPut(() => RespondentDataController());
     Get.lazyPut(() => ArchivedSurveysController());
-    Get.lazyPut<SurveyService>(() => SurveyServiceImpl(Get.find()));
+    Get.create<SurveyService>(() => SurveyServiceImpl(Get.find()));
+    Get.create<SurveyQuestionController>(() => SurveyQuestionController(Get.find()));
     Get.put(_getDio());
     Get.put(GetStorage());
     TokenProvider tp = TokenProviderImpl(Get.find());
