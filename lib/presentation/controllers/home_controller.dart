@@ -1,10 +1,12 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:survey_frontend/core/usecases/create_question_answer_dto_factory.dart';
 import 'package:survey_frontend/domain/external_services/api_response.dart';
 import 'package:survey_frontend/domain/external_services/respondent_group_service.dart';
 import 'package:survey_frontend/domain/external_services/short_survey_service.dart';
 import 'package:survey_frontend/domain/external_services/survey_service.dart';
+import 'package:survey_frontend/domain/local_services/survey_participation_service.dart';
 import 'package:survey_frontend/domain/models/create_survey_resopnse_dto.dart';
 import 'package:survey_frontend/domain/models/short_survey_dto.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
@@ -16,15 +18,19 @@ class HomeController extends ControllerBase {
   final CreateQuestionAnswerDtoFactory _createQuestionAnswerDtoFactory;
   final RespondentGroupService _respondentGroupService;
   final GetStorage _storage;
+  final SurveyParticipationService _participationService;
   RxList<ShortSurveyDto> pendingSurveys = <ShortSurveyDto>[].obs;
   final RxInt hours = 5.obs;
   final RxInt minutes = 13.obs;
   bool _isBusy = false;
 
-  HomeController(this._homeService, this._surveyService, 
-  this._createQuestionAnswerDtoFactory,
-  this._respondentGroupService,
-  this._storage) {
+  HomeController(
+      this._homeService,
+      this._surveyService,
+      this._createQuestionAnswerDtoFactory,
+      this._respondentGroupService,
+      this._storage,
+      this._participationService) {
     _loadShortSurveys();
   }
 
@@ -42,7 +48,14 @@ class HomeController extends ControllerBase {
         await handleSomethingWentWrong(null);
         return;
       }
-      pendingSurveys.addAll(response.body!);
+      final participations = await _participationService.getAllParticipations();
+      final today = DateTime.now();
+      final DateFormat formatter = DateFormat('dd-MM-yyyy');
+      final String todayString = formatter.format(today);
+      final surveysToAdd = response.body!.where((element) =>
+          hasTimeSlotForToday(element) &&
+          !participations.any((p) => p.surveyId == element.id && p.date == todayString));
+      pendingSurveys.addAll(surveysToAdd);
     } catch (e) {
       //TODO: log the exception
       await popup(
@@ -50,6 +63,14 @@ class HomeController extends ControllerBase {
     } finally {
       _isBusy = false;
     }
+  }
+
+  bool hasTimeSlotForToday(ShortSurveyDto survey) {
+    final today = DateTime.now();
+    return survey.dates.any((element) =>
+        element.start.year == today.year &&
+        element.start.month == today.month &&
+        element.start.day == today.day);
   }
 
   void startCompletingSurvey(String surveyId) async {
@@ -69,13 +90,15 @@ class HomeController extends ControllerBase {
       }
       final questions = _getQuestionsFromSurvey(survey);
       final responseModel = _prepareResponseModel(questions, survey.id);
-      final triggerableSectionActivationsCounts = _getTriggerableSectionActivationsCounts(survey);
+      final triggerableSectionActivationsCounts =
+          _getTriggerableSectionActivationsCounts(survey);
       await Get.toNamed("/surveystart", arguments: {
         "survey": survey,
         "questions": questions,
         "responseModel": responseModel,
         "groups": respondentGroups,
-        "triggerableSectionActivationsCounts": triggerableSectionActivationsCounts
+        "triggerableSectionActivationsCounts":
+            triggerableSectionActivationsCounts
       });
     } catch (e) {
       await popup("Błąd", "Nie udało się załadować wybranej ankiety");
@@ -92,10 +115,10 @@ class HomeController extends ControllerBase {
     return response.body!;
   }
 
-  
-  Future<List<String>?> _getGroupsIds() async{
+  Future<List<String>?> _getGroupsIds() async {
     var respondentData = _storage.read<Map<String, dynamic>>("respondentData")!;
-    var groupsResponse = await _respondentGroupService.getAllForRespndent(respondentData["id"]);
+    var groupsResponse =
+        await _respondentGroupService.getAllForRespndent(respondentData["id"]);
 
     return groupsResponse.body?.map((e) => (e.id)).toList();
   }
@@ -107,18 +130,20 @@ class HomeController extends ControllerBase {
         .toList();
   }
 
-  CreateSurveyResponseDto _prepareResponseModel(List<QuestionWithSection> questions, String surveyId){
+  CreateSurveyResponseDto _prepareResponseModel(
+      List<QuestionWithSection> questions, String surveyId) {
     final questionAnswerDtos = questions
-    .map((q) => _createQuestionAnswerDtoFactory.getDto(q.question))
-    .toList();
+        .map((q) => _createQuestionAnswerDtoFactory.getDto(q.question))
+        .toList();
 
-    return CreateSurveyResponseDto(surveyId: surveyId, answers: questionAnswerDtos);
-  } 
+    return CreateSurveyResponseDto(
+        surveyId: surveyId, answers: questionAnswerDtos);
+  }
 
   Map<int, int> _getTriggerableSectionActivationsCounts(SurveyDto survey) {
     Map<int, int> output = {};
-    for (final section in survey.sections){
-      if (section.visibility == "answer_triggered"){
+    for (final section in survey.sections) {
+      if (section.visibility == "answer_triggered") {
         output[section.order] = 0;
       }
     }
@@ -139,7 +164,8 @@ class QuestionWithSection {
 
   get id => question.id;
 
-  bool canQuestionBeShown(List<String?> groupsIds, Map<int, int> triggerableSectionActivationsCounts) {
+  bool canQuestionBeShown(List<String?> groupsIds,
+      Map<int, int> triggerableSectionActivationsCounts) {
     //TODO: make a class with const strings here
     if (section.visibility == "group_specific") {
       return groupsIds.contains(section.groupId);

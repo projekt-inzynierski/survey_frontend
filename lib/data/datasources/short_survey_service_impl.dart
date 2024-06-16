@@ -24,7 +24,7 @@ class ShortSurveyServiceImpl extends APIServiceBase
   @override
   Future<APIResponse<List<ShortSurveyDto>>> getShortSurvey() =>
       get<List<ShortSurveyDto>>(
-          '/api/surveys/short',
+          '/api/surveys/shortsummaries',
           (dynamic items) => items
               .map<ShortSurveyDto>((e) => ShortSurveyDto.fromJson(e))
               .toList());
