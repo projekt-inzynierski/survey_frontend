@@ -21,7 +21,12 @@ class SurveyParticipationServiceImpl implements SurveyParticipationService {
   Future<List<SurveyParticipationDto>> getAllParticipations() {
     return Future.value(_localStorage
             .read<List<dynamic>>('participations')
-            ?.map((e) => SurveyParticipationDto.fromJson(e))
+            ?.map((e) {
+              if (e is SurveyParticipationDto) {
+                return e;
+              }
+              return SurveyParticipationDto.fromJson(e);
+            })
             .toList() ??
         <SurveyParticipationDto>[]);
   }

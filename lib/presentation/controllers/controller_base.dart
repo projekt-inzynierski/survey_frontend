@@ -6,13 +6,13 @@ class ControllerBase extends GetxController {
   final Connectivity _connectivity = Connectivity();
 
   Future<void> handleSomethingWentWrong(Object? error) async {
-    await popup("Błąd", "Coś poszło nie tak, sprobuj ponownie później.");
+    await popup("Błąd", error.toString());
   }
 
   Future<void> popup(String title, String message) async {
     await Get.defaultDialog(
-        title: "Error",
-        middleText: "Something went wrong. Try again later",
+        title: message,
+        middleText: message,
         confirm: ElevatedButton(
           onPressed: () {
             Get.back();

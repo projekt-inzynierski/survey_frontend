@@ -5,11 +5,13 @@ import 'package:survey_frontend/presentation/controllers/home_controller.dart';
 import 'package:survey_frontend/presentation/screens/home/widgets/survey_tile.dart';
 import 'package:survey_frontend/presentation/screens/home/widgets/time_circle.dart';
 
-class HomeScreen extends GetView<HomeController> {
-  const HomeScreen({super.key});
+class HomeScreen extends GetView<HomeController>
+implements RouteAware {
+  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    controller.loadShortSurveys();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -87,5 +89,25 @@ class HomeScreen extends GetView<HomeController> {
             );
           },
         ));
+  }
+  
+  @override
+  void didPop() {
+    return;
+  }
+  
+  @override
+  void didPopNext() {
+    return;
+  }
+  
+  @override
+  void didPush() {
+    controller.loadShortSurveys();
+  }
+  
+  @override
+  void didPushNext() {
+    controller.loadShortSurveys();
   }
 }
