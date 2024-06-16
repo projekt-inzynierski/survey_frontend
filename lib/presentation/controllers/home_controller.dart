@@ -109,7 +109,7 @@ class HomeController extends ControllerBase {
 
   CreateSurveyResponseDto _prepareResponseModel(List<QuestionWithSection> questions, String surveyId){
     final questionAnswerDtos = questions
-    .map((q) => _createQuestionAnswerDtoFactory.getDto(q.question.questionType))
+    .map((q) => _createQuestionAnswerDtoFactory.getDto(q.question))
     .toList();
 
     return CreateSurveyResponseDto(surveyId: surveyId, answers: questionAnswerDtos);
