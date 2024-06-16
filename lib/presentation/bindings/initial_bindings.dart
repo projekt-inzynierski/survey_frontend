@@ -2,8 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/core/usecases/token_provider_impl.dart';
+import 'package:survey_frontend/data/datasources/local/survey_participation_service_impl.dart';
 import 'package:survey_frontend/data/datasources/survey_service_impl.dart';
 import 'package:survey_frontend/domain/external_services/survey_service.dart';
+import 'package:survey_frontend/domain/local_services/survey_participation_service.dart';
 import 'package:survey_frontend/domain/usecases/token_provider.dart';
 import 'package:survey_frontend/presentation/controllers/archived_surveys_controller.dart';
 import 'package:survey_frontend/presentation/controllers/respondent_data_controller.dart';
@@ -21,6 +23,7 @@ class InitialBindings extends Bindings{
     TokenProvider tp = TokenProviderImpl(Get.find());
     Get.put<TokenProvider>(tp);
     Get.put<TokenProvider?>(tp);
+    Get.lazyPut<SurveyParticipationService>(() => SurveyParticipationServiceImpl(Get.find()));
   }
 
   Dio _getDio(){
