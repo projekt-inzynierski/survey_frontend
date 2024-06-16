@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:survey_frontend/domain/models/create_question_answer_dto.dart';
+import 'package:survey_frontend/domain/models/create_selected_option_dto.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
 
 class TextSingleOptionTypeQuestion extends StatefulWidget {

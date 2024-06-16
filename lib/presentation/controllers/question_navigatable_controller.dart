@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:get/get.dart';
 import 'package:survey_frontend/domain/models/create_survey_resopnse_dto.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
@@ -31,7 +29,9 @@ class QuestionNavigatableController extends ControllerBase{
       int nextQuestionIndex = _getNextValidQuestionIndex();
 
       if (nextQuestionIndex == -1){
-        await Get.toNamed('/submitSurvey');
+        await Get.toNamed('/submitSurvey', arguments:{
+          'responseModel': responseModel
+        });
         return;
       }
 

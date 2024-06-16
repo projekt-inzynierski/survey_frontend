@@ -9,6 +9,7 @@ class SurveyEndScreen extends GetView<SurveyEndController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.readGetArgs();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
