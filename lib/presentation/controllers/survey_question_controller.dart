@@ -5,7 +5,6 @@ import 'package:survey_frontend/domain/models/question_type.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/discrete_single_option_type_question.dart';
 import 'package:survey_frontend/presentation/controllers/question_navigatable_controller.dart';
-import 'package:survey_frontend/presentation/screens/survey/survey_question_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/text_single_option_type_question.dart';
 
 class SurveyQuestionController extends QuestionNavigatableController{
@@ -15,7 +14,7 @@ class SurveyQuestionController extends QuestionNavigatableController{
   RxMap<String, String> answer = <String, String>{}.obs;
   var answeredQuestionIndexStack = <int>[].obs;
   var showSection = <int>[].obs;
-  get question => questions[questionIndex].question;
+  Question get question => questions[questionIndex].question;
 
   SurveyQuestionController(this._surveyService);
 
@@ -43,5 +42,25 @@ class SurveyQuestionController extends QuestionNavigatableController{
   void readGetArguments(){
     super.readGetArguments();
     questionIndex = Get.arguments['questionIndex'];
+  }
+
+  @override
+  bool canGoFurther(){
+    //TODO: REMEMBER ABOUT OTHER QUESTION TYPES IN THE FUTURE
+    if (question.questionType == QuestionType.singleChoiceDiscreteNumber){
+      if (responseModel.answers[questionIndex].numericAnswer == null){
+        popup("", 'Wybierz jedną z opcji');
+        return false;
+      }
+
+      return true; 
+    }
+
+    if (responseModel.answers[questionIndex].selectedOptions![0].optionId == null){
+        popup("", 'Wybierz jedną z opcji');
+        return false;
+    }
+
+    return true;
   }
 }

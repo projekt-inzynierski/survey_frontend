@@ -22,7 +22,7 @@ class QuestionNavigatableController extends ControllerBase{
     try{
       isBusy = true;
 
-      if (!_canGoFurther()){
+      if (!canGoFurther()){
         return;
       }
 
@@ -72,7 +72,7 @@ class QuestionNavigatableController extends ControllerBase{
     return -1;
   }
 
-  bool _canGoFurther(){
+  bool canGoFurther(){
     return true;
   }
 
