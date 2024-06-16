@@ -8,6 +8,7 @@ import 'package:survey_frontend/domain/external_services/short_survey_service.da
 import 'package:survey_frontend/domain/external_services/survey_service.dart';
 import 'package:survey_frontend/domain/local_services/survey_participation_service.dart';
 import 'package:survey_frontend/domain/models/create_survey_resopnse_dto.dart';
+import 'package:survey_frontend/domain/models/respondent_data_dto.dart';
 import 'package:survey_frontend/domain/models/short_survey_dto.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
@@ -30,11 +31,9 @@ class HomeController extends ControllerBase {
       this._createQuestionAnswerDtoFactory,
       this._respondentGroupService,
       this._storage,
-      this._participationService) {
-    _loadShortSurveys();
-  }
+      this._participationService);
 
-  Future<void> _loadShortSurveys() async {
+  Future<void> loadShortSurveys() async {
     if (_isBusy) {
       return;
     }
@@ -116,9 +115,10 @@ class HomeController extends ControllerBase {
   }
 
   Future<List<String>?> _getGroupsIds() async {
-    var respondentData = _storage.read<Map<String, dynamic>>("respondentData")!;
+    var respondentData = _storage.read("respondentData")!;
+    final String id = respondentData is RespondentDataDto ? respondentData.id : respondentData['id'];
     var groupsResponse =
-        await _respondentGroupService.getAllForRespndent(respondentData["id"]);
+        await _respondentGroupService.getAllForRespndent(id);
 
     return groupsResponse.body?.map((e) => (e.id)).toList();
   }
