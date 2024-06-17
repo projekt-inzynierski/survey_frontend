@@ -75,20 +75,23 @@ implements RouteAware {
   }
 
   Widget _buildSurveyList() {
-    return Obx(() => ListView.builder(
-          itemCount: controller.pendingSurveys.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 5.0),
-              child: SurveyTile(
-                  surveyTitle: controller.pendingSurveys[index].name,
-                  onPressed: () {
-                    controller.startCompletingSurvey(controller.pendingSurveys[index].id);
-                  }),
-            );
-          },
-        ));
+    return Obx(() => RefreshIndicator(
+      onRefresh: controller.loadShortSurveys,
+      child: ListView.builder(
+            itemCount: controller.pendingSurveys.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5.0),
+                child: SurveyTile(
+                    surveyTitle: controller.pendingSurveys[index].name,
+                    onPressed: () {
+                      controller.startCompletingSurvey(controller.pendingSurveys[index].id);
+                    }),
+              );
+            },
+          ),
+    ));
   }
   
   @override
