@@ -20,7 +20,6 @@ class SurveyServiceImpl extends APIServiceBase implements SurveyService {
   //   return Future.value(APIResponse(body: items));
   // }
 
-  // TODO: implement getSurvey from API
   @override
   Future<APIResponse<SurveyDto>> getSurvey(String surveyID) => get<SurveyDto>(
       "/api/surveys?surveyId=$surveyID",
