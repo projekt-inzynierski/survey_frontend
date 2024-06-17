@@ -23,30 +23,38 @@ class SurveyQuestionScreen extends GetView<SurveyQuestionController> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Obx(() => Text(
-                      _controller.surveyName.value,
-                      style: const TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.bold),
-                    )),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                'Pytanie ${_controller.questionIndex + 1}',
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              Text(_controller.question.content),
-              const SizedBox(height: 20),
-              _controller.buildQuestionFromType(_controller.question),
-              const Spacer(),
-              NextButton(nextAction: (){
-                _controller.navigateToNextQuestion(QuestionNavigationMode.top);
-              }, text: 'Dalej'),
-            ],),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Obx(() => Text(
+                    _controller.surveyName.value,
+                    style: const TextStyle(
+                        fontSize: 24, fontWeight: FontWeight.bold),
+                  )),
+            ),
+            //FIXME wyswietlaj numer rozwiazywanego pytanie (nie indeksu pytania)
+            // const SizedBox(height: 20),
+            // Text(
+            //   'Pytanie ${_controller.questionIndex + 1}',
+            //   style:
+            //       const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            // ),
+            const SizedBox(height: 10),
+            Text(
+              _controller.question.content,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
+            _controller.buildQuestionFromType(_controller.question),
+            const Spacer(),
+            NextButton(
+                nextAction: () {
+                  _controller
+                      .navigateToNextQuestion(QuestionNavigationMode.top);
+                },
+                text: 'Dalej'),
+          ],
+        ),
       ),
     );
   }
