@@ -21,8 +21,8 @@ class HomeController extends ControllerBase {
   final GetStorage _storage;
   final SurveyParticipationService _participationService;
   RxList<ShortSurveyDto> pendingSurveys = <ShortSurveyDto>[].obs;
-  final RxInt hours = 5.obs;
-  final RxInt minutes = 13.obs;
+  final RxInt hours = 20.obs;
+  final RxInt minutes = 30.obs;
   bool _isBusy = false;
 
   HomeController(
@@ -64,6 +64,30 @@ class HomeController extends ControllerBase {
     }
   }
 
+  int hoursLeft() {
+    if (pendingSurveys.isEmpty) {
+      return 0;
+    }
+
+    final today = DateTime.now();
+    final timeFinish = Duration(hours: hours.value, minutes: minutes.value);
+    final timeNow = Duration(hours: today.hour, minutes: today.minute);
+    final timeLeft = timeFinish - timeNow;
+    return timeLeft.inHours;
+  }
+
+  int minutesLeft() {
+    if (pendingSurveys.isEmpty) {
+      return 0;
+    }
+
+    final today = DateTime.now();
+    final timeFinish = Duration(hours: hours.value, minutes: minutes.value);
+    final timeNow = Duration(hours: today.hour, minutes: today.minute);
+    final timeLeft = timeFinish - timeNow;
+    return timeLeft.inMinutes.remainder(60);
+  }
+
   bool hasTimeSlotForToday(ShortSurveyDto survey) {
     final today = DateTime.now();
     return survey.dates.any((element) =>
@@ -71,6 +95,8 @@ class HomeController extends ControllerBase {
         element.start.month == today.month &&
         element.start.day == today.day);
   }
+
+
 
   void startCompletingSurvey(String surveyId) async {
     if (_isBusy) {

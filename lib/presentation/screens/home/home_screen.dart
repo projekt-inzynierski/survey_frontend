@@ -56,12 +56,12 @@ implements RouteAware {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Obx(() => TimeCircle(
-                    time: controller.hours.value,
+                    time: controller.hoursLeft(),
                     unit: 'Godzin',
                     timeUnit: 24)),
                 const SizedBox(width: 40),
                 Obx(() => TimeCircle(
-                    time: controller.minutes.value,
+                    time: controller.minutesLeft(),
                     unit: 'Minut',
                     timeUnit: 60)),
               ],
