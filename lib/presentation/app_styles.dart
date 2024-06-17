@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppStyles{
-  static final MaterialColor _primaryColor = MaterialColor(const Color.fromARGB(255, 165, 214, 35).value, const {});
+  static final MaterialColor _primaryColor =
+      MaterialColor(const Color.fromRGBO(165, 214, 35, 0.46).value, const {});
   static const Color _btnFontColor = Color.fromARGB(255, 68, 99, 55);
   static const Color _appNameColor = Color.fromARGB(255, 61, 68, 79);
   static ThemeData lightTheme = ThemeData(
@@ -33,11 +34,18 @@ class AppStyles{
         backgroundColor: MaterialStateProperty.resolveWith((states){
           return _primaryColor;
         }),
+        foregroundColor: MaterialStateProperty.resolveWith((states) {
+          return _appNameColor; // Text color
+        }),
         textStyle: MaterialStateProperty.resolveWith((states) {
-          return const TextStyle(color: _btnFontColor, 
+          return const TextStyle(
+              color: _appNameColor, 
           fontWeight: FontWeight.bold,
           fontSize: 18);
-        })
+        }),
+        elevation: MaterialStateProperty.resolveWith((states) {
+          return 0;
+        }),
       )
     ),
     inputDecorationTheme: InputDecorationTheme(
