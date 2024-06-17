@@ -86,7 +86,7 @@ class InsertDemographicInformationDataScreen
           const SizedBox(height: 20),
           Obx(() => DropdownButtonFormField(
               validator: controller.validateNotEmpty,
-              decoration: const InputDecoration(labelText: "Greenery area"),
+              decoration: const InputDecoration(labelText: "Tereny zielone"),
               value: controller.createRespondentDataDto?.greeneryAreaCategoryId == null ? null : controller.greeneryAreaCategories.firstWhere((element) => element.id == controller.createRespondentDataDto?.greeneryAreaCategoryId),
               isExpanded: true,
               items: controller.greeneryAreaCategories
