@@ -10,12 +10,15 @@ import 'package:survey_frontend/presentation/bindings/insert_health_status_infor
 import 'package:survey_frontend/presentation/bindings/insert_well_being_information_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/login_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/survey_bindings.dart';
+import 'package:survey_frontend/presentation/bindings/survey_end_bindings.dart';
+import 'package:survey_frontend/presentation/bindings/survey_start_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/welcome_screen_bindings.dart';
 import 'package:survey_frontend/presentation/screens/home/home_screen.dart';
 import 'package:survey_frontend/presentation/screens/insert_demographic_information_screen.dart';
 import 'package:survey_frontend/presentation/screens/insert_health_status_information_screen.dart';
 import 'package:survey_frontend/presentation/screens/insert_well_being_information_screen.dart';
 import 'package:survey_frontend/presentation/screens/login_screen.dart';
+import 'package:survey_frontend/presentation/screens/survey/survey_end_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_start_screen.dart';
 import 'package:survey_frontend/presentation/screens/welcome_screen.dart';
 
@@ -35,13 +38,13 @@ void main() async {
       ),
       GetPage(
           name: '/home',
-          page: () => const HomeScreen(),
+          page: () => HomeScreen(),
           binding: HomeBindings()
       ),
       GetPage(
         name: '/surveystart',
-        page: () => const SurveyStartScreen(),
-        binding: SurveyBindings(),
+        page: () => SurveyStartScreen(),
+        binding: SurveyStartBindings(),
       ),
       GetPage(
         name: '/insertdemograficinformation', 
@@ -62,6 +65,11 @@ void main() async {
         name: '/welcome',
         page: () => const WelcomeScreen(),
         binding: WelcomeScreenBindings()
+        ),
+      GetPage(
+        name: '/submitSurvey', 
+        page: () => const SurveyEndScreen(),
+        binding: SurveyEndBindings() 
         )
     ],
   ));

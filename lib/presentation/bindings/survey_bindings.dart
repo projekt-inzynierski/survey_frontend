@@ -7,6 +7,5 @@ class SurveyBindings extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<SurveyService>(() => SurveyServiceImpl(Get.find()));
-    Get.lazyPut<SurveyController>(() => SurveyController(Get.find()));
   }
 }

@@ -5,11 +5,13 @@ import 'package:survey_frontend/presentation/controllers/home_controller.dart';
 import 'package:survey_frontend/presentation/screens/home/widgets/survey_tile.dart';
 import 'package:survey_frontend/presentation/screens/home/widgets/time_circle.dart';
 
-class HomeScreen extends GetView<HomeController> {
-  const HomeScreen({super.key});
+class HomeScreen extends GetView<HomeController>
+implements RouteAware {
+  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    controller.loadShortSurveys();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -54,12 +56,12 @@ class HomeScreen extends GetView<HomeController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Obx(() => TimeCircle(
-                    time: controller.hours.value,
+                    time: controller.hoursLeft(),
                     unit: 'Godzin',
                     timeUnit: 24)),
                 const SizedBox(width: 40),
                 Obx(() => TimeCircle(
-                    time: controller.minutes.value,
+                    time: controller.minutesLeft(),
                     unit: 'Minut',
                     timeUnit: 60)),
               ],
@@ -73,21 +75,42 @@ class HomeScreen extends GetView<HomeController> {
   }
 
   Widget _buildSurveyList() {
-    return Obx(() => ListView.builder(
-          itemCount: controller.pendingSurveys.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 5.0),
-              child: SurveyTile(
-                  surveyTitle: controller.pendingSurveys[index].name,
-                  onPressed: () {
-                    Get.toNamed("/surveystart", arguments: {
-                      "surveyID": controller.pendingSurveys[index].id
-                    });
-                  }),
-            );
-          },
-        ));
+    return Obx(() => RefreshIndicator(
+      onRefresh: controller.loadShortSurveys,
+      child: ListView.builder(
+            itemCount: controller.pendingSurveys.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5.0),
+                child: SurveyTile(
+                    surveyTitle: controller.pendingSurveys[index].name,
+                    onPressed: () {
+                      controller.startCompletingSurvey(controller.pendingSurveys[index].id);
+                    }),
+              );
+            },
+          ),
+    ));
+  }
+  
+  @override
+  void didPop() {
+    return;
+  }
+  
+  @override
+  void didPopNext() {
+    return;
+  }
+  
+  @override
+  void didPush() {
+    controller.loadShortSurveys();
+  }
+  
+  @override
+  void didPushNext() {
+    controller.loadShortSurveys();
   }
 }

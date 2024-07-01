@@ -1,23 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'short_survey_dto.dart';
+part of 'respondent_group_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ShortSurveyDto _$ShortSurveyDtoFromJson(Map<String, dynamic> json) =>
-    ShortSurveyDto(
+RespondentGroupDto _$RespondentGroupDtoFromJson(Map<String, dynamic> json) =>
+    RespondentGroupDto(
       id: json['id'] as String,
       name: json['name'] as String,
-      dates: (json['dates'] as List<dynamic>)
-          .map((e) => TimeSlotDto.fromJson(e as Map<String, dynamic>))
-          .toList(),
     );
 
-Map<String, dynamic> _$ShortSurveyDtoToJson(ShortSurveyDto instance) =>
+Map<String, dynamic> _$RespondentGroupDtoToJson(RespondentGroupDto instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'dates': instance.dates,
     };

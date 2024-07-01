@@ -74,7 +74,7 @@ Option _$OptionFromJson(Map<String, dynamic> json) => Option(
       id: json['id'] as String,
       order: json['order'] as int,
       label: json['label'] as String,
-      showSection: json['showSection'] as String?,
+      showSection: json['showSection'] as int?,
       rowVersion: json['rowVersion'] as int,
     );
 
