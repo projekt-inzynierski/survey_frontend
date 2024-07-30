@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/controllers/question_navigatable_controller.dart';
 import 'package:survey_frontend/presentation/controllers/survey_question_controller.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/next_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class SurveyStartScreen extends GetView<QuestionNavigatableController> {
   final QuestionNavigatableController _controller;
@@ -20,9 +22,9 @@ class SurveyStartScreen extends GetView<QuestionNavigatableController> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Spacer(),
-            const Center(
+            Center(
               child: Text(
-                'Czy chcesz rozpocząć wypełnianie ankiety?',
+                AppLocalizations.of(context)!.initializeSurveyQuestion,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 24),
               ),
@@ -31,7 +33,7 @@ class SurveyStartScreen extends GetView<QuestionNavigatableController> {
             NextButton(nextAction: (){
               _controller.navigateToNextQuestion(QuestionNavigationMode.off);
             }, 
-            text: "Rozpocznij"),
+                text: AppLocalizations.of(context)!.start),
           ],
         ),
       ),

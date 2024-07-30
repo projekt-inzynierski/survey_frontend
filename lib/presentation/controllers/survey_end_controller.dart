@@ -4,6 +4,8 @@ import 'package:survey_frontend/domain/local_services/survey_participation_servi
 import 'package:survey_frontend/domain/models/create_survey_resopnse_dto.dart';
 import 'package:survey_frontend/domain/models/survey_participation_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class SurveyEndController extends ControllerBase{
   late CreateSurveyResponseDto dto;
@@ -22,7 +24,8 @@ class SurveyEndController extends ControllerBase{
       _isBusy = true;
       final participation = await _submitToServer();
       if (participation == null){
-        popup('Błąd', 'Nie udało się przesłać odpowiedzi');
+        popup(AppLocalizations.of(Get.context!)!.error,
+            AppLocalizations.of(Get.context!)!.answerSubmitError);
       } else{
         await _surveyParticipationService.addParticipation(participation);
       }
@@ -30,7 +33,8 @@ class SurveyEndController extends ControllerBase{
       "/home",
       );
     } catch (e){
-      popup('Błąd', 'Pomyślnie przesłano odpowiedź na serwer, ale wystąpił błąd podczas powrotu na stronę główną. Spróbuj ponownie uruchomić aplikację.');
+      popup(AppLocalizations.of(Get.context!)!.error,
+          AppLocalizations.of(Get.context!)!.mainPageTransitionError);
     } finally{
       _isBusy = false;
     }

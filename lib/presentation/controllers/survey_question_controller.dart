@@ -6,6 +6,8 @@ import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/discrete_single_option_type_question.dart';
 import 'package:survey_frontend/presentation/controllers/question_navigatable_controller.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/text_single_option_type_question.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class SurveyQuestionController extends QuestionNavigatableController{
   final SurveyService _surveyService;
@@ -49,7 +51,7 @@ class SurveyQuestionController extends QuestionNavigatableController{
     //TODO: REMEMBER ABOUT OTHER QUESTION TYPES IN THE FUTURE
     if (question.questionType == QuestionType.singleChoiceDiscreteNumber){
       if (responseModel.answers[questionIndex].numericAnswer == null){
-        popup("", 'Wybierz jedną z opcji');
+        popup("", AppLocalizations.of(Get.context!)!.selectOneOption);
         return false;
       }
 
@@ -57,7 +59,7 @@ class SurveyQuestionController extends QuestionNavigatableController{
     }
 
     if (responseModel.answers[questionIndex].selectedOptions![0].optionId == null){
-        popup("", 'Wybierz jedną z opcji');
+      popup("", AppLocalizations.of(Get.context!)!.selectOneOption);
         return false;
     }
 

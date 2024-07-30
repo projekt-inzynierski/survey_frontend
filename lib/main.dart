@@ -9,7 +9,6 @@ import 'package:survey_frontend/presentation/bindings/insert_demographic_informa
 import 'package:survey_frontend/presentation/bindings/insert_health_status_information_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/insert_well_being_information_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/login_bindings.dart';
-import 'package:survey_frontend/presentation/bindings/survey_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/survey_end_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/survey_start_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/welcome_screen_bindings.dart';
@@ -21,12 +20,19 @@ import 'package:survey_frontend/presentation/screens/login_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_end_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_start_screen.dart';
 import 'package:survey_frontend/presentation/screens/welcome_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 void main() async {
   await GetStorage.init();
   String startScreenPath =
       _getStartScreenPath(); 
   runApp(GetMaterialApp(
+    title: 'Localizations Sample App',
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    locale: const Locale('pl', ''),
+    
     initialBinding: InitialBindings(),
     theme: AppStyles.lightTheme,
     initialRoute: startScreenPath,

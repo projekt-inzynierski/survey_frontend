@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/controllers/insert_well_being_information_controller.dart';
 import 'package:survey_frontend/presentation/screens/insert_respondent_data_content.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class InsertWellBeingInformationScreen
     extends GetView<InsertWellBeingInformationController> {
@@ -16,7 +18,8 @@ class InsertWellBeingInformationScreen
         children: [
           Obx(() => DropdownButtonFormField(
               validator: controller.validateNotEmpty,
-              decoration: const InputDecoration(labelText: "Zadowolenie z życia"),
+              decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.lifeSatisfaction),
               isExpanded: true,
               value: controller.createRespondentDataDto?.lifeSatisfactionId == null ? null : controller.lifeSatisfactionOptions.firstWhere((element) => element.id == controller.createRespondentDataDto?.lifeSatisfactionId),
               items: controller.lifeSatisfactionOptions
@@ -31,7 +34,8 @@ class InsertWellBeingInformationScreen
           const SizedBox(height: 20),
           Obx(() => DropdownButtonFormField(
               validator: controller.validateNotEmpty,
-              decoration: const InputDecoration(labelText: "Poziom stresu"),
+              decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.stressLevel),
               isExpanded: true,
               value: controller.createRespondentDataDto?.stressLevelId == null ? null : controller.stressLevelOptions.firstWhere((element) => element.id == controller.createRespondentDataDto?.stressLevelId),
               items: controller.stressLevelOptions
@@ -46,7 +50,8 @@ class InsertWellBeingInformationScreen
           const SizedBox(height: 20),
           Obx(() => DropdownButtonFormField(
               validator: controller.validateNotEmpty,
-              decoration: const InputDecoration(labelText: "Jakość snu"),
+              decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.qualityOfSleep),
               isExpanded: true,
               value: controller.createRespondentDataDto?.qualityOfSleepId == null ? null : controller.qualityOfSleepOptions.firstWhere((element) => element.id == controller.createRespondentDataDto?.qualityOfSleepId),
               items: controller.qualityOfSleepOptions
