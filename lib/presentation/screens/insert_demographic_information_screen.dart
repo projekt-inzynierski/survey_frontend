@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/domain/models/age_category_dto.dart';
 import 'package:survey_frontend/presentation/controllers/insert_demographic_information_controller.dart';
 import 'package:survey_frontend/presentation/screens/insert_respondent_data_content.dart';
@@ -21,25 +22,16 @@ class InsertDemographicInformationDataScreen
               validator: controller.validateNotEmpty,
               decoration: InputDecoration(
                   labelText: AppLocalizations.of(context)!.gender),
-              value: switch (controller.createRespondentDataDto?.gender){
-                'male' => 'kobieta',
-                'female' => 'mężczyzna',
-                _ => null
-              },
+              value: controller.sexes.firstWhereOrNull((element) => element.identification == controller.createRespondentDataDto?.gender),
               isExpanded: true,
-              items: controller.genders
+              items: controller.sexes
                   .map((val) => DropdownMenuItem(
                         value: val,
-                        child: Text(val),
+                        child: Text(val.display),
                       ))
                   .toList(),
               onChanged: (value) {
-                String? actualValue = switch (value) {
-                  'kobieta' => 'male',
-                  'mężczyzna' => 'female',
-                  _ => null
-                };
-                controller.createRespondentDataDto?.gender = actualValue;
+                controller.createRespondentDataDto?.gender = value?.identification;
               })),
           const SizedBox(height: 20),
           Obx(() => DropdownButtonFormField<AgeCategoryDto>(

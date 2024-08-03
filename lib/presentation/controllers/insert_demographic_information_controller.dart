@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:survey_frontend/core/models/sex_identification.dart';
 import 'package:survey_frontend/domain/external_services/api_response.dart';
 import 'package:survey_frontend/domain/external_services/health_condition_service.dart';
 import 'package:survey_frontend/domain/external_services/medication_use_service.dart';
@@ -18,8 +19,7 @@ class InsertDemographicInformationController extends ControllerBase{
   final HealthConditionService _healthConditionService;
   final MedicationUseService _medicationUseService;
 
-  //TODO: localize gender
-  final RxList<String> genders = ["kobieta", "mężczyzna"].obs;
+  final RxList<SexIdentification> sexes;
   final RxList<AgeCategoryDto> ageCategories = <AgeCategoryDto>[].obs;
   final RxList<OccupationCategoryDto> occupationCategories = <OccupationCategoryDto>[].obs;
   final RxList<EducationCategoryDto> educationCategories = <EducationCategoryDto>[].obs;
@@ -31,7 +31,11 @@ class InsertDemographicInformationController extends ControllerBase{
   final formKey = GlobalKey<FormState>();
   bool isBusy = false;
 
-  InsertDemographicInformationController(this._healthConditionService, this._medicationUseService);
+  InsertDemographicInformationController(this._healthConditionService, this._medicationUseService):
+    sexes = [
+      SexIdentification(identification: 'male', display: AppLocalizations.of(Get.context!)!.man),
+      SexIdentification(identification: 'female', display: AppLocalizations.of(Get.context!)!.woman),
+    ].obs;
 
   String? validateNotEmpty(Object? value){
     if (value == null){
