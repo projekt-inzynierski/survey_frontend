@@ -7,6 +7,8 @@ import 'package:survey_frontend/domain/models/life_satisfaction_dto.dart';
 import 'package:survey_frontend/domain/models/quality_of_sleep_dto.dart';
 import 'package:survey_frontend/domain/models/stress_level_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class InsertWellBeingInformationController extends ControllerBase{
   final RespondentDataService _respondentDataService;
@@ -25,7 +27,7 @@ class InsertWellBeingInformationController extends ControllerBase{
 
   String? validateNotEmpty(Object? value){
     if (value == null){
-      return "Value must not be empty";
+      return AppLocalizations.of(Get.context!)!.valueNotEmpty;
     }
     return null;
   }

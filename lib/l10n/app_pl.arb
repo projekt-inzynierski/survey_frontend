@@ -30,5 +30,13 @@
     "selectOneOption": "Wybierz jedną z opcji",
     "noInternetConnection": "Nie masz połączenia z internetem. Spróbuj ponownie później.",
     "woman": "Kobieta",
-    "man": "Mężczyzna"
+    "man": "Mężczyzna",
+    "invalidCredentials": "Nieprawidłowe dane logowania",
+    "passwordNotEmpty": "Hasło nie może być puste",
+    "passwordTooLong": "Hasło nie może być dłuższe niż 255 znaków",
+    "usernameNotEmpty": "Nazwa użytkownika nie może być pusta",
+    "usernameTooLong": "Nazwa użytkownika nie może być dłuższa niż 255 znaków",
+    "hours": "Godzin",
+    "minutes": "Minut",
+    "valueNotEmpty": "Wartość nie może być pusta"
 }

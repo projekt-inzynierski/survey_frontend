@@ -30,5 +30,13 @@
     "selectOneOption": "Select one of the options",
     "noInternetConnection": "You don't have an internet connection. Try again later",
     "woman": "Woman",
-    "man": "Man"
+    "man": "Man",
+    "invalidCredentials": "Invalid credentials",
+    "passwordNotEmpty": "Password must not be empty",
+    "passwordTooLong": "Password must not be longer than 255 characters",
+    "usernameNotEmpty": "Username must not be empty",
+    "usernameTooLong": "Username must not be longer than 255 characters",
+    "hours": "hours",
+    "minutes": "minutes",
+    "valueNotEmpty": "Value must not be empty"
 }

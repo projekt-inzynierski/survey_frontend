@@ -5,6 +5,8 @@ import 'package:survey_frontend/domain/external_services/api_response.dart';
 import 'package:survey_frontend/domain/external_services/login_service.dart';
 import 'package:survey_frontend/domain/models/login_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class LoginController extends ControllerBase{
   final Rx<LoginDto> model = LoginDto().obs;
@@ -47,15 +49,15 @@ class LoginController extends ControllerBase{
 
   String? passwordValidator(String? value){
     if (_alwaysValidateInvalidCredentials){
-      return 'Invalid credentials';
+      return AppLocalizations.of(Get.context!)!.invalidCredentials;
     }
 
     if (value == null || value == ''){
-      return 'Password must not be empty';
+      return AppLocalizations.of(Get.context!)!.passwordNotEmpty;
     }
 
     if (value.length > 255){
-      return 'Password must not be longer than 255 characters';
+      return AppLocalizations.of(Get.context!)!.passwordTooLong;
     }
 
     return null;
@@ -63,15 +65,15 @@ class LoginController extends ControllerBase{
 
   String? usernameValidator(String? value){
     if (_alwaysValidateInvalidCredentials){
-      return 'Invalid credentials';
+      return AppLocalizations.of(Get.context!)!.invalidCredentials;
     }
 
     if (value == null || value == ''){
-      return 'Username must not be empty';
+      return AppLocalizations.of(Get.context!)!.usernameNotEmpty;
     }
 
     if (value.length > 255){
-      return 'Username must not be longer than 255 characters';
+      return AppLocalizations.of(Get.context!)!.usernameTooLong;
     }
 
     return null;

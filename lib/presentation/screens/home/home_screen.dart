@@ -7,6 +7,7 @@ import 'package:survey_frontend/presentation/screens/home/widgets/time_circle.da
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
+
 class HomeScreen extends GetView<HomeController>
 implements RouteAware {
   HomeScreen({super.key});
@@ -59,12 +60,12 @@ implements RouteAware {
               children: [
                 Obx(() => TimeCircle(
                     time: controller.hoursLeft(),
-                    unit: 'Godzin',
+                    unit: AppLocalizations.of(context)!.hours,
                     timeUnit: 24)),
                 const SizedBox(width: 40),
                 Obx(() => TimeCircle(
                     time: controller.minutesLeft(),
-                    unit: 'Minut',
+                    unit: AppLocalizations.of(context)!.minutes,
                     timeUnit: 60)),
               ],
             ),

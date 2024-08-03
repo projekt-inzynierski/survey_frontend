@@ -31,7 +31,7 @@ void main() async {
     title: 'Localizations Sample App',
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
-    locale: const Locale('pl', ''),
+    locale: const Locale('en', ''),
     
     initialBinding: InitialBindings(),
     theme: AppStyles.lightTheme,
