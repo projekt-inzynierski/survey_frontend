@@ -33,9 +33,25 @@
     "man": "Man",
     "invalidCredentials": "Invalid credentials",
     "passwordNotEmpty": "Password must not be empty",
-    "passwordTooLong": "Password must not be longer than 255 characters",
+    "passwordTooLong": "Password must not be longer than {max} characters",
+    "@passwordTooLong": {
+        "placeholders": {
+            "max": {
+                "type": "int",
+                "example": "255"
+            }
+        }
+    },
     "usernameNotEmpty": "Username must not be empty",
-    "usernameTooLong": "Username must not be longer than 255 characters",
+    "usernameTooLong": "Username must not be longer than {max} characters",
+    "@usernameTooLong": {
+        "placeholders": {
+            "max": {
+                "type": "int",
+                "example": "255"
+            }
+        }
+    },
     "hours": "hours",
     "minutes": "minutes",
     "valueNotEmpty": "Value must not be empty"

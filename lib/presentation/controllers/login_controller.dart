@@ -48,6 +48,8 @@ class LoginController extends ControllerBase{
   }
 
   String? passwordValidator(String? value){
+    const int maxPasswordLength = 255;
+
     if (_alwaysValidateInvalidCredentials){
       return AppLocalizations.of(Get.context!)!.invalidCredentials;
     }
@@ -56,14 +58,17 @@ class LoginController extends ControllerBase{
       return AppLocalizations.of(Get.context!)!.passwordNotEmpty;
     }
 
-    if (value.length > 255){
-      return AppLocalizations.of(Get.context!)!.passwordTooLong;
+    if (value.length > maxPasswordLength) {
+      return AppLocalizations.of(Get.context!)!
+          .passwordTooLong(maxPasswordLength);
     }
 
     return null;
   }
 
   String? usernameValidator(String? value){
+    const int maxUsernameLength = 255;
+
     if (_alwaysValidateInvalidCredentials){
       return AppLocalizations.of(Get.context!)!.invalidCredentials;
     }
@@ -72,8 +77,9 @@ class LoginController extends ControllerBase{
       return AppLocalizations.of(Get.context!)!.usernameNotEmpty;
     }
 
-    if (value.length > 255){
-      return AppLocalizations.of(Get.context!)!.usernameTooLong;
+    if (value.length > maxUsernameLength) {
+      return AppLocalizations.of(Get.context!)!
+          .usernameTooLong(maxUsernameLength);
     }
 
     return null;
