@@ -1,4 +1,6 @@
+import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/core/usecases/token_validity_checker_impl.dart';
@@ -26,12 +28,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 void main() async {
   await GetStorage.init();
   String startScreenPath =
-      _getStartScreenPath(); 
+      _getStartScreenPath();
+
+  String locale = await _getCurrentLocale();
   runApp(GetMaterialApp(
     title: 'UrbEaT',
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
-    locale: const Locale('en', ''),
+    locale: Locale(locale, ''),
     
     initialBinding: InitialBindings(),
     theme: AppStyles.lightTheme,
@@ -94,4 +98,10 @@ String _getStartScreenPath() {
   }
   var respondentData = storage.read<Map<String, dynamic>>("respondentData");
   return respondentData == null ? '/welcome' : '/home';
+}
+
+Future<String> _getCurrentLocale() async {
+  final fullLocale = await Devicelocale.currentLocale;
+  final locale = fullLocale!.split('-')[0];
+  return locale;
 }
