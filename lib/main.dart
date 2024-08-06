@@ -28,7 +28,7 @@ void main() async {
   String startScreenPath =
       _getStartScreenPath(); 
   runApp(GetMaterialApp(
-    title: 'Localizations Sample App',
+    title: 'UrbEaT',
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
     locale: const Locale('en', ''),
