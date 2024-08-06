@@ -1,0 +1,58 @@
+{
+    "@@locale": "en",
+    "username": "Username",
+    "password": "Password",
+    "login": "Login",
+    "weNeedInformation": "We need some information about you",
+    "letsStart": "Let's start",
+    "lifeSatisfaction": "Life satisfaction",
+    "stressLevel": "Stress level",
+    "qualityOfSleep": "Quality of sleep",
+    "next": "Next",
+    "healthCondition": "Health condition",
+    "medicationUse": "Medication use",
+    "gender": "Gender",
+    "ageCategory": "Age category",
+    "employment": "Employment",
+    "education": "Education",
+    "greeneryArea": "Greenery area",
+    "initializeSurveyQuestion": "Do you want to start the survey?",
+    "start": "Start",
+    "endSurveyQuestion": "Do you want to end the survey?\nYou will not be able to edit your answers later.",
+    "finish": "Finish",
+    "error": "Error",
+    "nextSurveyTime": "Remaining time until next scheduled survey",
+    "surveyDetails": "Survey details",
+    "loadingSurveyErrorTryAgainLater": "Failed to load survey. Please try again later.",
+    "loadingSurveyError": "Failed to load selected survey",
+    "answerSubmitError": "Failed to submit answer",
+    "mainPageTransitionError": "The response was successfully sent to the server, but an error occurred while returning to the home page. Try restarting the application.",
+    "selectOneOption": "Select one of the options",
+    "noInternetConnection": "You don't have an internet connection. Try again later",
+    "woman": "Woman",
+    "man": "Man",
+    "invalidCredentials": "Invalid credentials",
+    "passwordNotEmpty": "Password must not be empty",
+    "passwordTooLong": "Password must not be longer than {max} characters",
+    "@passwordTooLong": {
+        "placeholders": {
+            "max": {
+                "type": "int",
+                "example": "255"
+            }
+        }
+    },
+    "usernameNotEmpty": "Username must not be empty",
+    "usernameTooLong": "Username must not be longer than {max} characters",
+    "@usernameTooLong": {
+        "placeholders": {
+            "max": {
+                "type": "int",
+                "example": "255"
+            }
+        }
+    },
+    "hours": "hours",
+    "minutes": "minutes",
+    "valueNotEmpty": "Value must not be empty"
+}

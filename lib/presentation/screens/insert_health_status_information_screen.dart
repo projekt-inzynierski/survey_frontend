@@ -4,6 +4,8 @@ import 'package:survey_frontend/domain/models/health_condition_dto.dart';
 import 'package:survey_frontend/domain/models/medication_use_dto.dart';
 import 'package:survey_frontend/presentation/controllers/insert_health_status_information_controller.dart';
 import 'package:survey_frontend/presentation/screens/insert_respondent_data_content.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class InsertHealthStatusInformationScreen
     extends GetView<InsertHealthStatusInformationController> {
@@ -18,7 +20,8 @@ class InsertHealthStatusInformationScreen
         children: [
           Obx(() => DropdownButtonFormField<HealthConditionDto>(
               validator: controller.validateNotEmpty,
-              decoration: const InputDecoration(labelText: "Stan zdrowia"),
+              decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.healthCondition),
               isExpanded: true,
               value: controller.createRespondentDataDto?.healthConditionId == null ? null : controller.healthConditionOptions.firstWhere((element) => element.id == controller.createRespondentDataDto?.healthConditionId),
               items: controller.healthConditionOptions
@@ -33,7 +36,8 @@ class InsertHealthStatusInformationScreen
           const SizedBox(height: 20),
           Obx(() => DropdownButtonFormField<MedicationUseDto>(
               validator: controller.validateNotEmpty,
-              decoration: const InputDecoration(labelText: "Leki"),
+              decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.medicationUse),
               isExpanded: true,
               value: controller.createRespondentDataDto?.medicationUseId == null ? null : controller.medicationUseOptions.firstWhere((element) => element.id == controller.createRespondentDataDto?.medicationUseId),
               items: controller.medicationUseOptions

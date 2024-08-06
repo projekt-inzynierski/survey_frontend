@@ -12,6 +12,8 @@ import 'package:survey_frontend/domain/models/respondent_data_dto.dart';
 import 'package:survey_frontend/domain/models/short_survey_dto.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class HomeController extends ControllerBase {
   final ShortSurveyService _homeService;
@@ -58,7 +60,8 @@ class HomeController extends ControllerBase {
     } catch (e) {
       //TODO: log the exception
       await popup(
-          "Błąd", "Nie udało się załądować ankiet. Spróbuj ponownie później.");
+          AppLocalizations.of(Get.context!)!.error,
+          AppLocalizations.of(Get.context!)!.loadingSurveyErrorTryAgainLater);
     } finally {
       _isBusy = false;
     }
@@ -110,7 +113,8 @@ class HomeController extends ControllerBase {
       var respondentGroups = await _getGroupsIds();
 
       if (survey == null || respondentGroups == null) {
-        await popup("Błąd", "Nie udało się załadować wybranej ankiety");
+        await popup(AppLocalizations.of(Get.context!)!.error,
+            AppLocalizations.of(Get.context!)!.loadingSurveyError);
         return;
       }
       final questions = _getQuestionsFromSurvey(survey);
@@ -126,7 +130,8 @@ class HomeController extends ControllerBase {
             triggerableSectionActivationsCounts
       });
     } catch (e) {
-      await popup("Błąd", "Nie udało się załadować wybranej ankiety");
+      await popup(AppLocalizations.of(Get.context!)!.error,
+          AppLocalizations.of(Get.context!)!.loadingSurveyError);
     } finally {
       _isBusy = false;
     }

@@ -1,4 +1,6 @@
+import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/core/usecases/token_validity_checker_impl.dart';
@@ -9,7 +11,6 @@ import 'package:survey_frontend/presentation/bindings/insert_demographic_informa
 import 'package:survey_frontend/presentation/bindings/insert_health_status_information_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/insert_well_being_information_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/login_bindings.dart';
-import 'package:survey_frontend/presentation/bindings/survey_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/survey_end_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/survey_start_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/welcome_screen_bindings.dart';
@@ -21,12 +22,21 @@ import 'package:survey_frontend/presentation/screens/login_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_end_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_start_screen.dart';
 import 'package:survey_frontend/presentation/screens/welcome_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 void main() async {
   await GetStorage.init();
   String startScreenPath =
-      _getStartScreenPath(); 
+      _getStartScreenPath();
+
+  String locale = await _getCurrentLocale();
   runApp(GetMaterialApp(
+    title: 'UrbEaT',
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    locale: Locale(locale, ''),
+    
     initialBinding: InitialBindings(),
     theme: AppStyles.lightTheme,
     initialRoute: startScreenPath,
@@ -88,4 +98,10 @@ String _getStartScreenPath() {
   }
   var respondentData = storage.read<Map<String, dynamic>>("respondentData");
   return respondentData == null ? '/welcome' : '/home';
+}
+
+Future<String> _getCurrentLocale() async {
+  final fullLocale = await Devicelocale.currentLocale;
+  final locale = fullLocale!.split('-')[0];
+  return locale;
 }

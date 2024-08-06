@@ -4,6 +4,9 @@ import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/controllers/home_controller.dart';
 import 'package:survey_frontend/presentation/screens/home/widgets/survey_tile.dart';
 import 'package:survey_frontend/presentation/screens/home/widgets/time_circle.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+
 
 class HomeScreen extends GetView<HomeController>
 implements RouteAware {
@@ -46,9 +49,9 @@ implements RouteAware {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            const Text(
-              'Pozostały czas do kolejnej planowej ankiety',
-              style: TextStyle(fontSize: 14),
+            Text(
+              AppLocalizations.of(context)!.nextSurveyTime,
+              style: const TextStyle(fontSize: 14),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
@@ -57,12 +60,12 @@ implements RouteAware {
               children: [
                 Obx(() => TimeCircle(
                     time: controller.hoursLeft(),
-                    unit: 'Godzin',
+                    unit: AppLocalizations.of(context)!.hours,
                     timeUnit: 24)),
                 const SizedBox(width: 40),
                 Obx(() => TimeCircle(
                     time: controller.minutesLeft(),
-                    unit: 'Minut',
+                    unit: AppLocalizations.of(context)!.minutes,
                     timeUnit: 60)),
               ],
             ),

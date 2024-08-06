@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/controllers/login_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends GetView<LoginController> {
   const LoginScreen({super.key});
@@ -22,8 +23,8 @@ class LoginScreen extends GetView<LoginController> {
                 height: 145,
               ),
               TextFormField(
-                decoration: const InputDecoration(
-                  labelText: "Nazwa użytkownika",
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.username,
                 ),
                 validator: controller.usernameValidator,
                 onChanged: (value) {
@@ -34,8 +35,8 @@ class LoginScreen extends GetView<LoginController> {
                 height: 20,
               ),
               TextFormField(
-                decoration: const InputDecoration(
-                  labelText: "Hasło",
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.password,
                 ),
                 validator: controller.passwordValidator,
                 obscureText: true,
@@ -48,7 +49,7 @@ class LoginScreen extends GetView<LoginController> {
               ),
               ElevatedButton(
                 onPressed: controller.login,
-                child: const Text('Zaloguj się'),
+                child: Text(AppLocalizations.of(context)!.login),
               )
             ],
           ),

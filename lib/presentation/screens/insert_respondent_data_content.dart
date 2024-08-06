@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class InsertRespondentDataContent extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -10,7 +12,7 @@ class InsertRespondentDataContent extends StatelessWidget {
   required this.onPressed,
   required this.children});
 
- @override
+  @override
   Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(),
@@ -41,7 +43,7 @@ class InsertRespondentDataContent extends StatelessWidget {
       left: 25, right: 25),
       child: ElevatedButton(
         onPressed: onPressed,
-        child: const Text('Dalej'),
+          child: Text(AppLocalizations.of(context)!.next),
       ),
     ),
   );

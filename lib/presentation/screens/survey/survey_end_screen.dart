@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/controllers/survey_end_controller.dart';
 import 'package:survey_frontend/presentation/controllers/survey_question_controller.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/next_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class SurveyEndScreen extends GetView<SurveyEndController> {
   const SurveyEndScreen({super.key});
@@ -25,15 +27,17 @@ class SurveyEndScreen extends GetView<SurveyEndController> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Spacer(),
-            const Center(
+            Center(
               child: Text(
-                'Czy na pewno chcesz zakończyć ankietę?\nNie będziesz mógł potem edytować odpowiedzi.',
+                AppLocalizations.of(context)!.endSurveyQuestion,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 24),
               ),
             ),
             const Spacer(),
-            NextButton(nextAction: controller.endSurvey, text: 'Zakończ'),
+            NextButton(
+                nextAction: controller.endSurvey,
+                text: AppLocalizations.of(context)!.finish),
           ],
         ),
       ),
