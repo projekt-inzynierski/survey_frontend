@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class SurveyTile extends StatelessWidget {
   final String surveyTitle;
@@ -46,9 +48,9 @@ class SurveyTile extends StatelessWidget {
             style: const TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold),
           ),
-          subtitle: const Text(
+          subtitle: Text(
             overflow: TextOverflow.ellipsis,
-            'Szczegóły ankiety',
+            AppLocalizations.of(context)!.surveyDetails,
             style: TextStyle(color: Colors.white70),
           ),
           onTap: onPressed,

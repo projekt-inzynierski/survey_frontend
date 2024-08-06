@@ -1,12 +1,14 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class ControllerBase extends GetxController {
   final Connectivity _connectivity = Connectivity();
 
   Future<void> handleSomethingWentWrong(Object? error) async {
-    await popup("Błąd", error.toString());
+    await popup(AppLocalizations.of(Get.context!)!.error, error.toString());
   }
 
   Future<void> popup(String title, String message) async {
@@ -25,8 +27,8 @@ class ControllerBase extends GetxController {
     var connectivityResult = await _connectivity.checkConnectivity();
     if (connectivityResult == ConnectivityResult.none) {
       await Get.defaultDialog(
-          title: "Error",
-          middleText: "You don't have an internet connection. Try again later",
+          title: AppLocalizations.of(Get.context!)!.error,
+          middleText: AppLocalizations.of(Get.context!)!.noInternetConnection,
           confirm: const Text("Ok"));
       return false;
     }

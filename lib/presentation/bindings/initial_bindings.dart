@@ -28,7 +28,7 @@ class InitialBindings extends Bindings{
 
   Dio _getDio(){
     var dio = Dio();
-    dio.options.baseUrl = "http://20.215.41.235:8080";
+    dio.options.baseUrl = "http://10.0.2.2:8080";
     return dio;
   }
 }
