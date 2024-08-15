@@ -1,6 +1,5 @@
 import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/core/usecases/token_validity_checker_impl.dart';
@@ -48,7 +47,7 @@ void main() async {
       ),
       GetPage(
           name: '/home',
-          page: () => HomeScreen(),
+          page: () => const HomeScreen(),
           binding: HomeBindings()
       ),
       GetPage(
@@ -102,6 +101,12 @@ String _getStartScreenPath() {
 
 Future<String> _getCurrentLocale() async {
   final fullLocale = await Devicelocale.currentLocale;
-  final locale = fullLocale!.split('-')[0];
+  var locale = fullLocale!.split('-')[0];
+  List<String> supportedLocalesCodes = AppLocalizations.supportedLocales
+      .map((locale) => locale.languageCode)
+      .toList();
+  if (!supportedLocalesCodes.contains(locale)) {
+    locale = 'en';
+  }
   return locale;
 }
