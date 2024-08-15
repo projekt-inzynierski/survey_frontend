@@ -22,7 +22,7 @@ class WelcomeScreen extends GetView<WelcomeScreenController> {
           const SizedBox(height: 10,),
             Text(
               AppLocalizations.of(context)!.weNeedInformation,
-          style: TextStyle(fontSize: 25),
+          style: const TextStyle(fontSize: 25),
           textAlign: TextAlign.center,),
           const SizedBox(height: 10,),
           ElevatedButton(

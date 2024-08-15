@@ -51,7 +51,7 @@ class SurveyTile extends StatelessWidget {
           subtitle: Text(
             overflow: TextOverflow.ellipsis,
             AppLocalizations.of(context)!.surveyDetails,
-            style: TextStyle(color: Colors.white70),
+            style: const TextStyle(color: Colors.white70),
           ),
           onTap: onPressed,
         ),

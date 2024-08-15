@@ -35,7 +35,7 @@ class QuestionNavigatableController extends ControllerBase{
         return;
       }
 
-      final screenFactory = () => SurveyQuestionScreen();
+      screenFactory() => SurveyQuestionScreen();
       Map<String, dynamic> arguments = {
         'responseModel': responseModel,
         'survey': survey,
