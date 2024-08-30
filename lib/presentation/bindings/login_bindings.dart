@@ -18,6 +18,7 @@ class LoginBindings extends Bindings {
     Get.lazyPut<LoginController>(() => LoginController(
       Get.find(),
       Get.find(),
+      Get.find(),
       Get.find()
     ));
   }

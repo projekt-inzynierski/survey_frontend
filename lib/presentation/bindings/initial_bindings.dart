@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecase.dart';
+import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecase_impl.dart';
 import 'package:survey_frontend/core/usecases/token_provider_impl.dart';
 import 'package:survey_frontend/data/datasources/local/survey_participation_service_impl.dart';
 import 'package:survey_frontend/data/datasources/survey_service_impl.dart';
@@ -24,6 +26,10 @@ class InitialBindings extends Bindings{
     Get.put<TokenProvider>(tp);
     Get.put<TokenProvider?>(tp);
     Get.lazyPut<SurveyParticipationService>(() => SurveyParticipationServiceImpl(Get.find()));
+    Get.lazyPut<NeedInsertRespondentDataUseCase>(() => NeedInsertRespondentDataUseCaseImpl(
+      Get.find(), 
+      Get.find())
+      );
   }
 
   Dio _getDio(){

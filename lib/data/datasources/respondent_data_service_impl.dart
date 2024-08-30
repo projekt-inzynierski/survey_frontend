@@ -16,7 +16,5 @@ class RespondentDataServiceImpl extends APIServiceBase implements RespondentData
   Future<APIResponse<RespondentDataDto>> getRespondentData() =>
       get<RespondentDataDto>(
           '/api/respondents',
-          (dynamic json) => json
-              .map<RespondentDataDto>((e) => RespondentDataDto.fromJson(e))
-              .toList());
+          (dynamic json) => RespondentDataDto.fromJson(json));
 }
