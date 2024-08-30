@@ -8,9 +8,9 @@ part of 'stress_level_dto.dart';
 
 StressLevelDto _$StressLevelDtoFromJson(Map<String, dynamic> json) =>
     StressLevelDto(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       display: json['display'] as String,
-      rowVersion: json['rowVersion'] as int,
+      rowVersion: (json['rowVersion'] as num).toInt(),
     );
 
 Map<String, dynamic> _$StressLevelDtoToJson(StressLevelDto instance) =>

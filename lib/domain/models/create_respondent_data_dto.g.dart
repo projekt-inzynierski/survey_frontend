@@ -10,15 +10,15 @@ CreateRespondentDataDto _$CreateRespondentDataDtoFromJson(
         Map<String, dynamic> json) =>
     CreateRespondentDataDto(
       gender: json['gender'] as String?,
-      ageCategoryId: json['ageCategoryId'] as int?,
-      occupationCategoryId: json['occupationCategoryId'] as int?,
-      educationCategoryId: json['educationCategoryId'] as int?,
-      greeneryAreaCategoryId: json['greeneryAreaCategoryId'] as int?,
-      medicationUseId: json['medicationUseId'] as int?,
-      healthConditionId: json['healthConditionId'] as int?,
-      stressLevelId: json['stressLevelId'] as int?,
-      lifeSatisfactionId: json['lifeSatisfactionId'] as int?,
-      qualityOfSleepId: json['qualityOfSleepId'] as int?,
+      ageCategoryId: (json['ageCategoryId'] as num?)?.toInt(),
+      occupationCategoryId: (json['occupationCategoryId'] as num?)?.toInt(),
+      educationCategoryId: (json['educationCategoryId'] as num?)?.toInt(),
+      greeneryAreaCategoryId: (json['greeneryAreaCategoryId'] as num?)?.toInt(),
+      medicationUseId: (json['medicationUseId'] as num?)?.toInt(),
+      healthConditionId: (json['healthConditionId'] as num?)?.toInt(),
+      stressLevelId: (json['stressLevelId'] as num?)?.toInt(),
+      lifeSatisfactionId: (json['lifeSatisfactionId'] as num?)?.toInt(),
+      qualityOfSleepId: (json['qualityOfSleepId'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$CreateRespondentDataDtoToJson(

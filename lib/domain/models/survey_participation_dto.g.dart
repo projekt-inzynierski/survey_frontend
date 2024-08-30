@@ -13,7 +13,7 @@ SurveyParticipationDto _$SurveyParticipationDtoFromJson(
       respondentId: json['respondentId'] as String,
       surveyId: json['surveyId'] as String,
       date: json['date'] as String,
-      rowVersion: json['rowVersion'] as int,
+      rowVersion: (json['rowVersion'] as num).toInt(),
     );
 
 Map<String, dynamic> _$SurveyParticipationDtoToJson(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/controllers/welcome_screen_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:survey_frontend/presentation/widgets/app_logo.dart';
 
 class WelcomeScreen extends GetView<WelcomeScreenController> {
   const WelcomeScreen({super.key});
@@ -15,10 +16,7 @@ class WelcomeScreen extends GetView<WelcomeScreenController> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-          Image.asset(
-            'assets/logo.png',
-            width: 145,
-            height: 145,),
+          const AppLogo(),
           const SizedBox(height: 10,),
             Text(
               AppLocalizations.of(context)!.weNeedInformation,

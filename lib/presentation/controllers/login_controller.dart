@@ -15,7 +15,6 @@ class LoginController extends ControllerBase{
   final Rx<LoginDto> model = LoginDto().obs;
   final formKey = GlobalKey<FormState>();
   final LoginService _loginService;
-  final RespondentDataService _respondentDataService;
   final NeedInsertRespondentDataUseCase _needInsertRespondentDataUseCase;
   final GetStorage _storage;
   bool isBusy = false;
@@ -24,7 +23,6 @@ class LoginController extends ControllerBase{
   LoginController(
       this._loginService, 
       this._storage, 
-      this._respondentDataService,
       this._needInsertRespondentDataUseCase);
 
   void login() async{

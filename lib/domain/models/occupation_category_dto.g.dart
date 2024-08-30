@@ -9,9 +9,9 @@ part of 'occupation_category_dto.dart';
 OccupationCategoryDto _$OccupationCategoryDtoFromJson(
         Map<String, dynamic> json) =>
     OccupationCategoryDto(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       display: json['display'] as String,
-      rowVersion: json['rowVersion'] as int,
+      rowVersion: (json['rowVersion'] as num).toInt(),
     );
 
 Map<String, dynamic> _$OccupationCategoryDtoToJson(

@@ -5,7 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class ControllerBase extends GetxController {
-  final Connectivity _connectivity = Connectivity();
+  final Connectivity connectivity = Connectivity();
 
   Future<void> handleSomethingWentWrong(Object? error) async {
     await popup(AppLocalizations.of(Get.context!)!.error, error.toString());
@@ -24,7 +24,7 @@ class ControllerBase extends GetxController {
   }
 
   Future<bool> hasInternetConnection() async {
-    var connectivityResult = await _connectivity.checkConnectivity();
+    var connectivityResult = await connectivity.checkConnectivity();
     if (connectivityResult == ConnectivityResult.none) {
       await Get.defaultDialog(
           title: AppLocalizations.of(Get.context!)!.error,
