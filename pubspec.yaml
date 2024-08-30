@@ -49,6 +49,7 @@ dependencies:
   flutter_svg: ^2.0.10
   intl: any
   devicelocale: ^0.7.1
+  intl_utils: ^2.8.7
 
 dev_dependencies:
   flutter_test:

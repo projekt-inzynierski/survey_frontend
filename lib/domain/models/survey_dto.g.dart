@@ -9,7 +9,7 @@ part of 'survey_dto.dart';
 SurveyDto _$SurveyDtoFromJson(Map<String, dynamic> json) => SurveyDto(
       id: json['id'] as String,
       name: json['name'] as String,
-      rowVersion: json['rowVersion'] as int,
+      rowVersion: (json['rowVersion'] as num).toInt(),
       sections: (json['sections'] as List<dynamic>)
           .map((e) => Section.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -24,11 +24,11 @@ Map<String, dynamic> _$SurveyDtoToJson(SurveyDto instance) => <String, dynamic>{
 
 Section _$SectionFromJson(Map<String, dynamic> json) => Section(
       id: json['id'] as String,
-      order: json['order'] as int,
+      order: (json['order'] as num).toInt(),
       name: json['name'] as String,
       visibility: json['visibility'] as String,
       groupId: json['groupId'] as String?,
-      rowVersion: json['rowVersion'] as int,
+      rowVersion: (json['rowVersion'] as num).toInt(),
       questions: (json['questions'] as List<dynamic>)
           .map((e) => Question.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -46,11 +46,11 @@ Map<String, dynamic> _$SectionToJson(Section instance) => <String, dynamic>{
 
 Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
       id: json['id'] as String,
-      order: json['order'] as int,
+      order: (json['order'] as num).toInt(),
       content: json['content'] as String,
       questionType: json['questionType'] as String,
       required: json['required'] as bool,
-      rowVersion: json['rowVersion'] as int,
+      rowVersion: (json['rowVersion'] as num).toInt(),
       options: (json['options'] as List<dynamic>?)
           ?.map((e) => Option.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -72,10 +72,10 @@ Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
 
 Option _$OptionFromJson(Map<String, dynamic> json) => Option(
       id: json['id'] as String,
-      order: json['order'] as int,
+      order: (json['order'] as num).toInt(),
       label: json['label'] as String,
-      showSection: json['showSection'] as int?,
-      rowVersion: json['rowVersion'] as int,
+      showSection: (json['showSection'] as num?)?.toInt(),
+      rowVersion: (json['rowVersion'] as num).toInt(),
     );
 
 Map<String, dynamic> _$OptionToJson(Option instance) => <String, dynamic>{
@@ -88,11 +88,11 @@ Map<String, dynamic> _$OptionToJson(Option instance) => <String, dynamic>{
 
 NumberRange _$NumberRangeFromJson(Map<String, dynamic> json) => NumberRange(
       id: json['id'] as String,
-      from: json['from'] as int,
-      to: json['to'] as int,
+      from: (json['from'] as num).toInt(),
+      to: (json['to'] as num).toInt(),
       fromLabel: json['fromLabel'] as String?,
       toLabel: json['toLabel'] as String?,
-      rowVersion: json['rowVersion'] as int,
+      rowVersion: (json['rowVersion'] as num).toInt(),
     );
 
 Map<String, dynamic> _$NumberRangeToJson(NumberRange instance) =>

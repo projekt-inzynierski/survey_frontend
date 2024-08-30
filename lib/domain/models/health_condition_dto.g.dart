@@ -8,9 +8,9 @@ part of 'health_condition_dto.dart';
 
 HealthConditionDto _$HealthConditionDtoFromJson(Map<String, dynamic> json) =>
     HealthConditionDto(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       display: json['display'] as String,
-      rowVersion: json['rowVersion'] as int,
+      rowVersion: (json['rowVersion'] as num).toInt(),
     );
 
 Map<String, dynamic> _$HealthConditionDtoToJson(HealthConditionDto instance) =>

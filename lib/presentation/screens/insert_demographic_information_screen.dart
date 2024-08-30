@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/domain/models/age_category_dto.dart';
 import 'package:survey_frontend/presentation/controllers/insert_demographic_information_controller.dart';
 import 'package:survey_frontend/presentation/screens/insert_respondent_data_content.dart';
