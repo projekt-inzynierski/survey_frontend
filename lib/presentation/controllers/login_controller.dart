@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/domain/external_services/api_response.dart';
 import 'package:survey_frontend/domain/external_services/login_service.dart';
+import 'package:survey_frontend/domain/external_services/respondent_date_service.dart';
 import 'package:survey_frontend/domain/models/login_dto.dart';
+import 'package:survey_frontend/domain/models/respondent_data_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -12,11 +14,13 @@ class LoginController extends ControllerBase{
   final Rx<LoginDto> model = LoginDto().obs;
   final formKey = GlobalKey<FormState>();
   final LoginService _loginService;
+  final RespondentDataService _respondentDataService;
   final GetStorage _storage;
   bool isBusy = false;
   bool _alwaysValidateInvalidCredentials = false;
 
-  LoginController(this._loginService, this._storage);
+  LoginController(
+      this._loginService, this._storage, this._respondentDataService);
 
   void login() async{
     if (isBusy){
@@ -40,6 +44,9 @@ class LoginController extends ControllerBase{
 
       var apiResponse = await _loginService.login(model.value);
       await handleAPIResponse(apiResponse);
+      var personDataApiResponse =
+          await _respondentDataService.getRespondentData();
+      await personalDataAPIStatus(personDataApiResponse);
     } catch (e){
       await handleSomethingWentWrong(e);
     } finally{
@@ -101,7 +108,6 @@ class LoginController extends ControllerBase{
       return;
     }
     saveToken(apiResponse.body!);
-    await Get.offNamed("/welcome");
   }
   
   void showInvalidCredentialsError() {
@@ -116,5 +122,31 @@ class LoginController extends ControllerBase{
   
   void saveToken(String token) {
     _storage.write('apiToken', token);
+  }
+  
+  Future personalDataAPIStatus(
+      APIResponse<RespondentDataDto> personDataApiResponse) async {
+    if (personDataApiResponse.error != null) {
+      await handleSomethingWentWrong(personDataApiResponse.error!);
+      return;
+    }
+
+    if (personDataApiResponse.statusCode == 401) {
+      showInvalidCredentialsError();
+      return;
+    }
+
+    if (personDataApiResponse.statusCode != 200) {
+      await handleSomethingWentWrong(personDataApiResponse.error!);
+      return;
+    }
+
+    if (personDataApiResponse.body == null) {
+      await Get.offNamed("/welcome");
+      return;
+    }
+
+    _storage.write('respondentData', personDataApiResponse.body);
+    await Get.offNamed("/home");
   }
 }

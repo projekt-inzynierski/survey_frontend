@@ -11,7 +11,8 @@ abstract class APIServiceBase{
 
   Future<APIResponse<T>> get<T>(String url, T Function(dynamic json) deserialize) async {
   try {
-    Response response = await _dio.get(url);
+    Options? options = _getOptionsWithAuthorization();
+    Response response = await _dio.get(url, options: options);
     dynamic jsonData = response.data;
     T data = deserialize(jsonData);
     return APIResponse<T>(statusCode: response.statusCode!, body: data);

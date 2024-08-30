@@ -38,7 +38,7 @@ void main() async {
     
     initialBinding: InitialBindings(),
     theme: AppStyles.lightTheme,
-    initialRoute: startScreenPath,
+    initialRoute: '/login',
     getPages: [
       GetPage(
         name: '/login',
