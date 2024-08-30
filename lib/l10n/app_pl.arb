@@ -38,5 +38,6 @@
     "usernameTooLong": "Nazwa użytkownika nie może być dłuższa niż {max} znaków",
     "hours": "Godzin",
     "minutes": "Minut",
-    "valueNotEmpty": "Wartość nie może być pusta"
+    "valueNotEmpty": "Wartość nie może być pusta",
+    "errorRetry": "Error, retry"
 }

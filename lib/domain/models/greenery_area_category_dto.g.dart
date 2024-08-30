@@ -9,9 +9,9 @@ part of 'greenery_area_category_dto.dart';
 GreeneryAreaCategoryDto _$GreeneryAreaCategoryDtoFromJson(
         Map<String, dynamic> json) =>
     GreeneryAreaCategoryDto(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       display: json['display'] as String,
-      rowVersion: json['rowVersion'] as int,
+      rowVersion: (json['rowVersion'] as num).toInt(),
     );
 
 Map<String, dynamic> _$GreeneryAreaCategoryDtoToJson(

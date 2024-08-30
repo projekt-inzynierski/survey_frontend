@@ -14,7 +14,7 @@ CreateQuestionAnswerDto _$CreateQuestionAnswerDtoFromJson(
           ?.map((e) =>
               CreateSelectedOptionDto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      numericAnswer: json['numericAnswer'] as int?,
+      numericAnswer: (json['numericAnswer'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$CreateQuestionAnswerDtoToJson(

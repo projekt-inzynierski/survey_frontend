@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecase.dart';
 import 'package:survey_frontend/domain/external_services/api_response.dart';
 import 'package:survey_frontend/domain/external_services/login_service.dart';
+import 'package:survey_frontend/domain/external_services/respondent_date_service.dart';
 import 'package:survey_frontend/domain/models/login_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:survey_frontend/presentation/functions/handle_need_insert_resondent_data.dart';
 
 
 class LoginController extends ControllerBase{
   final Rx<LoginDto> model = LoginDto().obs;
   final formKey = GlobalKey<FormState>();
   final LoginService _loginService;
+  final NeedInsertRespondentDataUseCase _needInsertRespondentDataUseCase;
   final GetStorage _storage;
   bool isBusy = false;
   bool _alwaysValidateInvalidCredentials = false;
 
-  LoginController(this._loginService, this._storage);
+  LoginController(
+      this._loginService, 
+      this._storage, 
+      this._needInsertRespondentDataUseCase);
 
   void login() async{
     if (isBusy){
@@ -101,7 +108,8 @@ class LoginController extends ControllerBase{
       return;
     }
     saveToken(apiResponse.body!);
-    await Get.offNamed("/welcome");
+    var needInsertRespondentDataRes = await _needInsertRespondentDataUseCase.needInsertRespondentData(); 
+    handle(needInsertRespondentDataRes);
   }
   
   void showInvalidCredentialsError() {
@@ -117,4 +125,5 @@ class LoginController extends ControllerBase{
   void saveToken(String token) {
     _storage.write('apiToken', token);
   }
+
 }

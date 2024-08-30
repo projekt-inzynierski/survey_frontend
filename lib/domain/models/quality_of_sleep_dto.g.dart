@@ -8,9 +8,9 @@ part of 'quality_of_sleep_dto.dart';
 
 QualityOfSleepDto _$QualityOfSleepDtoFromJson(Map<String, dynamic> json) =>
     QualityOfSleepDto(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       display: json['display'] as String,
-      rowVersion: json['rowVersion'] as int,
+      rowVersion: (json['rowVersion'] as num).toInt(),
     );
 
 Map<String, dynamic> _$QualityOfSleepDtoToJson(QualityOfSleepDto instance) =>

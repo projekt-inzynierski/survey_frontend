@@ -54,5 +54,6 @@
     },
     "hours": "hours",
     "minutes": "minutes",
-    "valueNotEmpty": "Value must not be empty"
+    "valueNotEmpty": "Value must not be empty",
+    "errorRetry": "Błąd, spróbuj ponownie"
 }

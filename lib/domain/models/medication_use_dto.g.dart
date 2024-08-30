@@ -8,9 +8,9 @@ part of 'medication_use_dto.dart';
 
 MedicationUseDto _$MedicationUseDtoFromJson(Map<String, dynamic> json) =>
     MedicationUseDto(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       display: json['display'] as String,
-      rowVersion: json['rowVersion'] as int,
+      rowVersion: (json['rowVersion'] as num).toInt(),
     );
 
 Map<String, dynamic> _$MedicationUseDtoToJson(MedicationUseDto instance) =>

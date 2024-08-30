@@ -11,6 +11,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SurveyQuestionController extends QuestionNavigatableController{
   final SurveyService _surveyService;
+  @override
   late SurveyDto survey;
   var surveyName = ''.obs;
   RxMap<String, String> answer = <String, String>{}.obs;
