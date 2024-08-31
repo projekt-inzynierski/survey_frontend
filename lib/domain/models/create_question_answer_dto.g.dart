@@ -15,6 +15,7 @@ CreateQuestionAnswerDto _$CreateQuestionAnswerDtoFromJson(
               CreateSelectedOptionDto.fromJson(e as Map<String, dynamic>))
           .toList(),
       numericAnswer: (json['numericAnswer'] as num?)?.toInt(),
+      yesNoAnswer: json['yesNoAnswer'] as bool?,
     );
 
 Map<String, dynamic> _$CreateQuestionAnswerDtoToJson(
@@ -23,4 +24,5 @@ Map<String, dynamic> _$CreateQuestionAnswerDtoToJson(
       'questionId': instance.questionId,
       'selectedOptions': instance.selectedOptions,
       'numericAnswer': instance.numericAnswer,
+      'yesNoAnswer': instance.yesNoAnswer,
     };

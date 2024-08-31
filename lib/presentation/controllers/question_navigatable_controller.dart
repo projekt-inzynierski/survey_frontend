@@ -69,6 +69,7 @@ class QuestionNavigatableController extends ControllerBase{
       if (responseModel.answers[i].selectedOptions != null){
         responseModel.answers[i].selectedOptions![0].optionId = null;
       }
+      responseModel.answers[i].yesNoAnswer = null;
     }
 
     return -1;
