@@ -8,8 +8,13 @@ class CreateQuestionAnswerDto{
   String questionId;
   final List<CreateSelectedOptionDto>? selectedOptions;
   int? numericAnswer;
+  bool? yesNoAnswer;
 
-  CreateQuestionAnswerDto({required this.questionId, this.selectedOptions, this.numericAnswer});
+  CreateQuestionAnswerDto(
+      {required this.questionId,
+      this.selectedOptions,
+      this.numericAnswer,
+      this.yesNoAnswer});
 
   factory CreateQuestionAnswerDto.fromJson(Map<String, dynamic> json) => _$CreateQuestionAnswerDtoFromJson(json);
   Map<String, dynamic> toJson() => _$CreateQuestionAnswerDtoToJson(this);

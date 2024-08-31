@@ -55,5 +55,7 @@
     "hours": "hours",
     "minutes": "minutes",
     "valueNotEmpty": "Value must not be empty",
-    "errorRetry": "Błąd, spróbuj ponownie"
+    "errorRetry": "Błąd, spróbuj ponownie",
+    "yes": "Tak",
+    "no": "Nie"
 }

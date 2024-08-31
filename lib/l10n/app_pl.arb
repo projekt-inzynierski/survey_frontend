@@ -39,5 +39,7 @@
     "hours": "Godzin",
     "minutes": "Minut",
     "valueNotEmpty": "Wartość nie może być pusta",
-    "errorRetry": "Error, retry"
+    "errorRetry": "Error, retry",
+    "yes": "Yes",
+    "no": "No"
 }

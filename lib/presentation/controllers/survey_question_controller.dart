@@ -7,13 +7,11 @@ import 'package:survey_frontend/presentation/screens/survey/widgets/discrete_sin
 import 'package:survey_frontend/presentation/controllers/question_navigatable_controller.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/text_single_option_type_question.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:survey_frontend/presentation/screens/survey/widgets/yes_no_type_question.dart';
 
 
 class SurveyQuestionController extends QuestionNavigatableController{
   final SurveyService _surveyService;
-  @override
-  late SurveyDto survey;
-  var surveyName = ''.obs;
   RxMap<String, String> answer = <String, String>{}.obs;
   var answeredQuestionIndexStack = <int>[].obs;
   var showSection = <int>[].obs;
@@ -34,6 +32,9 @@ class SurveyQuestionController extends QuestionNavigatableController{
             to: question.numberRange!.to,
             fromLabel: question.numberRange!.fromLabel,
             toLabel: question.numberRange!.toLabel);
+      case QuestionType.yesNo:
+        return YesNoTypeQuestion(
+            createQuestionAnswerDto: responseModel.answers[questionIndex]);
       default:
         //TODO decide what to do in this case (most likely skip this question)
         throw Exception(
@@ -57,6 +58,15 @@ class SurveyQuestionController extends QuestionNavigatableController{
       }
 
       return true; 
+    }
+
+    if (question.questionType == QuestionType.yesNo){
+      if (responseModel.answers[questionIndex].yesNoAnswer == null){
+        popup("", AppLocalizations.of(Get.context!)!.selectOneOption);
+        return false;
+      }
+
+      return true;
     }
 
     if (responseModel.answers[questionIndex].selectedOptions![0].optionId == null){
