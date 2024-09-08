@@ -53,9 +53,7 @@ class HomeController extends ControllerBase {
       final today = DateTime.now();
       final DateFormat formatter = DateFormat('dd-MM-yyyy');
       final String todayString = formatter.format(today);
-      final surveysToAdd = response.body!.where((element) =>
-          hasTimeSlotForToday(element) &&
-          !participations.any((p) => p.surveyId == element.id && p.date == todayString));
+      final surveysToAdd = response.body!;
       pendingSurveys.addAll(surveysToAdd);
     } catch (e) {
       //TODO: log the exception
