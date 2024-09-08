@@ -24,15 +24,19 @@ import 'package:survey_frontend/presentation/screens/survey/survey_start_screen.
 import 'package:survey_frontend/presentation/screens/welcome_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+class StaticVariables {
+  static String lang = 'en';
+}
 
 void main() async {
+  
   await GetStorage.init();
-  String locale = await _getCurrentLocale();
+  StaticVariables.lang = await _getCurrentLocale();
   runApp(GetMaterialApp(
     title: 'UrbEaT',
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
-    locale: Locale(locale, ''),
+    locale: Locale(StaticVariables.lang, ''),
     initialBinding: InitialBindings(),
     theme: AppStyles.lightTheme,
     initialRoute: '/loading',
