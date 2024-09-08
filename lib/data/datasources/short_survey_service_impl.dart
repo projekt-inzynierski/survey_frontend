@@ -6,7 +6,7 @@ import 'package:survey_frontend/domain/models/short_survey_dto.dart';
 
 class ShortSurveyServiceImpl extends APIServiceBase
     implements ShortSurveyService {
-  ShortSurveyServiceImpl(super.dio);
+  ShortSurveyServiceImpl(super.dio, {required super.tokenProvider});
 
   // Mocked Data
   // @override

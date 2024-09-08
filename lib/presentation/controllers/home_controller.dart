@@ -23,8 +23,8 @@ class HomeController extends ControllerBase {
   final GetStorage _storage;
   final SurveyParticipationService _participationService;
   RxList<ShortSurveyDto> pendingSurveys = <ShortSurveyDto>[].obs;
-  final RxInt hours = 20.obs;
-  final RxInt minutes = 30.obs;
+  final RxInt hours = 23.obs;
+  final RxInt minutes = 60.obs;
   bool _isBusy = false;
 
   HomeController(

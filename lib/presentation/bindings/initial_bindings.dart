@@ -13,6 +13,7 @@ import 'package:survey_frontend/domain/external_services/survey_service.dart';
 import 'package:survey_frontend/domain/local_services/survey_participation_service.dart';
 import 'package:survey_frontend/domain/usecases/token_provider.dart';
 import 'package:survey_frontend/domain/usecases/token_validity_checker.dart';
+import 'package:survey_frontend/main.dart';
 import 'package:survey_frontend/presentation/controllers/archived_surveys_controller.dart';
 import 'package:survey_frontend/presentation/controllers/respondent_data_controller.dart';
 import 'package:survey_frontend/presentation/controllers/survey_question_controller.dart';
@@ -44,6 +45,7 @@ class InitialBindings extends Bindings{
   Dio _getDio(){
     var dio = Dio();
     dio.options.baseUrl = "http://10.0.2.2:8080";
+    dio.options.headers["Accept-Lang"] = StaticVariables.lang;
     return dio;
   }
 }
