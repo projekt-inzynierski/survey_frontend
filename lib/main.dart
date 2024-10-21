@@ -6,9 +6,6 @@ import 'package:survey_frontend/presentation/app_styles.dart';
 import 'package:survey_frontend/presentation/bindings/home_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/initial_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/initial_survey_bindings.dart';
-import 'package:survey_frontend/presentation/bindings/insert_demographic_information_bindings.dart';
-import 'package:survey_frontend/presentation/bindings/insert_health_status_information_bindings.dart';
-import 'package:survey_frontend/presentation/bindings/insert_well_being_information_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/loading_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/login_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/survey_end_bindings.dart';
@@ -16,9 +13,6 @@ import 'package:survey_frontend/presentation/bindings/survey_start_bindings.dart
 import 'package:survey_frontend/presentation/bindings/welcome_screen_bindings.dart';
 import 'package:survey_frontend/presentation/screens/home/home_screen.dart';
 import 'package:survey_frontend/presentation/screens/initial_survey/initial_survey_screen.dart';
-import 'package:survey_frontend/presentation/screens/insert_demographic_information_screen.dart';
-import 'package:survey_frontend/presentation/screens/insert_health_status_information_screen.dart';
-import 'package:survey_frontend/presentation/screens/insert_well_being_information_screen.dart';
 import 'package:survey_frontend/presentation/screens/loading_screen.dart';
 import 'package:survey_frontend/presentation/screens/login_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_end_screen.dart';
@@ -58,21 +52,6 @@ void main() async {
         name: '/surveystart',
         page: () => SurveyStartScreen(),
         binding: SurveyStartBindings(),
-      ),
-      GetPage(
-        name: '/insertdemograficinformation', 
-        page: () => const InsertDemographicInformationDataScreen(),
-        binding: InsertDemographicInformationBindings()
-      ),
-      GetPage(
-        name: '/inserthealthstatusinformation', 
-        page: () => const InsertHealthStatusInformationScreen(),
-        binding: InsertHealthStatusInformationBindings()
-      ),
-      GetPage(
-        name: '/insertwellbeinginformation', 
-        page: () => const InsertWellBeingInformationScreen(),
-        binding: InsertWellBeingInformationBindings()
       ),
       GetPage(
         name: Routes.welcome,
