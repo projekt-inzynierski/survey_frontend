@@ -3,22 +3,30 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/core/models/need_insert_respondent_data_result.dart';
 import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecase.dart';
+import 'package:survey_frontend/domain/external_services/initial_survey_service.dart';
+import 'package:survey_frontend/domain/models/initial_survey_response.dart';
 import 'package:survey_frontend/domain/usecases/token_validity_checker.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:survey_frontend/presentation/functions/handle_need_insert_resondent_data.dart';
+import 'package:survey_frontend/presentation/static/routes.dart';
 
 class LoadingController extends ControllerBase {
   final GetStorage _storage;
   final TokenValidityChecker _tokenValidityChecker;
   final NeedInsertRespondentDataUseCase _needInsertRespondentDataUseCase;
+  final InitialSurveyService _initialSurveyService;
+
   Rx<bool> retryButtonVisible = false.obs;
 
   LoadingController(this._storage,
   this._tokenValidityChecker,
-  this._needInsertRespondentDataUseCase);
+  this._needInsertRespondentDataUseCase,
+  this._initialSurveyService);
 
 
   void goToNextPage() async {
+    goToInitialSurvey();
+    return;
     retryButtonVisible.value = false;
     String? savedToken = _storage.read<String>("apiToken");
     if (savedToken == null || !_tokenValidityChecker.isValid(savedToken)){
@@ -44,5 +52,19 @@ class LoadingController extends ControllerBase {
     if (needResult == NeedInsertRespondentDataResult.error){
       retryButtonVisible.value = true;
     }
+  }
+
+  void goToInitialSurvey() async{
+    final questions = (await _initialSurveyService.getInitialSurvey()).body!;
+    //TODO: handle 404 not found AND empty questions collection -> go to home page
+    final responses = {
+      for (var question in questions)
+      question.id: InitialSurveyQuestionResponse(questionId: question.id, optionId: null),
+    };
+
+    Get.offAllNamed(Routes.welcome, arguments: {
+      "questions": questions.obs,
+      "responsesIdMappings": responses,
+    });
   }
 }

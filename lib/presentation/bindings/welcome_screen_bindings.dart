@@ -16,7 +16,6 @@ class WelcomeScreenBindings extends Bindings {
     Get.lazyPut<OccupationCategoryService>(() => OccupationCategoryServiceImpl(Get.find()));
     Get.lazyPut<EducationCategoryService>(() => EducationCategoryServiceImpl(Get.find()));
     Get.lazyPut<GreeneryAreaCategoryService>(() => GreeneryAreaCategoryServiceImpl(Get.find()));
-    Get.lazyPut(() => WelcomeScreenController(
-        Get.find(), Get.find(), Get.find(), Get.find()));
+    Get.lazyPut(() => WelcomeScreenController());
   }
 }
