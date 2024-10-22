@@ -5,24 +5,21 @@ import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/presentation/app_styles.dart';
 import 'package:survey_frontend/presentation/bindings/home_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/initial_bindings.dart';
-import 'package:survey_frontend/presentation/bindings/insert_demographic_information_bindings.dart';
-import 'package:survey_frontend/presentation/bindings/insert_health_status_information_bindings.dart';
-import 'package:survey_frontend/presentation/bindings/insert_well_being_information_bindings.dart';
+import 'package:survey_frontend/presentation/bindings/initial_survey_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/loading_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/login_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/survey_end_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/survey_start_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/welcome_screen_bindings.dart';
 import 'package:survey_frontend/presentation/screens/home/home_screen.dart';
-import 'package:survey_frontend/presentation/screens/insert_demographic_information_screen.dart';
-import 'package:survey_frontend/presentation/screens/insert_health_status_information_screen.dart';
-import 'package:survey_frontend/presentation/screens/insert_well_being_information_screen.dart';
+import 'package:survey_frontend/presentation/screens/initial_survey/initial_survey_screen.dart';
 import 'package:survey_frontend/presentation/screens/loading_screen.dart';
 import 'package:survey_frontend/presentation/screens/login_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_end_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_start_screen.dart';
 import 'package:survey_frontend/presentation/screens/welcome_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:survey_frontend/presentation/static/routes.dart';
 
 class StaticVariables {
   static String lang = 'en';
@@ -57,22 +54,7 @@ void main() async {
         binding: SurveyStartBindings(),
       ),
       GetPage(
-        name: '/insertdemograficinformation', 
-        page: () => const InsertDemographicInformationDataScreen(),
-        binding: InsertDemographicInformationBindings()
-      ),
-      GetPage(
-        name: '/inserthealthstatusinformation', 
-        page: () => const InsertHealthStatusInformationScreen(),
-        binding: InsertHealthStatusInformationBindings()
-      ),
-      GetPage(
-        name: '/insertwellbeinginformation', 
-        page: () => const InsertWellBeingInformationScreen(),
-        binding: InsertWellBeingInformationBindings()
-      ),
-      GetPage(
-        name: '/welcome',
+        name: Routes.welcome,
         page: () => const WelcomeScreen(),
         binding: WelcomeScreenBindings()
         ),
@@ -86,7 +68,12 @@ void main() async {
         name: '/loading', 
         page: () => const LoadingScreen(),
         binding: LoadingBindings() 
-        )
+        ),
+      GetPage(
+        name: Routes.initialSurveyQuestions, 
+        page: () => InitialSurveyScreen(),
+        binding: InitialSurveyBindings()
+        ),
     ],
   ));
 }

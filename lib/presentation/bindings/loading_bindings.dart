@@ -7,6 +7,7 @@ class LoadingBindings extends Bindings{
     Get.lazyPut(() => LoadingController(
       Get.find(), 
       Get.find(),
+      Get.find(),
       Get.find()
     ));
   }

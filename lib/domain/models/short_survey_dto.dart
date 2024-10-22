@@ -3,7 +3,7 @@ import 'package:survey_frontend/domain/models/time_slot_dto.dart';
 
 part 'short_survey_dto.g.dart';
 
-@JsonSerializable()
+  @JsonSerializable()
 class ShortSurveyDto {
   final String id;
   final String name;
