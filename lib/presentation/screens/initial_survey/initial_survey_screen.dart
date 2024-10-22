@@ -11,51 +11,46 @@ class InitialSurveyScreen extends GetView<InitialSurveyController>{
 
   @override
 
-  Widget build(BuildContext context) {
-   _controller.loadGetArguments();
-    return Scaffold(
+ Widget build(BuildContext context) {
+  _controller.loadGetArguments();
+  return Scaffold(
     appBar: AppBar(),
     body: Padding(
       padding: const EdgeInsets.all(25.0),
-          child: Form(
-            key: _controller.formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: MediaQuery.of(context).padding.top), 
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: _controller
-                    .questions
-                    .sublist(_controller.questionIndexFrom, _controller.questionIndexTo + 1)
-                    .map<Widget>((e) {
-                      return Column(
-                        children: [
-                          const SizedBox(height: 30),
-                          InitialSurveyQuestionWidget(
-                            question: e.content,
-                             possibleOptions: e.options, 
-                             questionResponse: _controller.responsesIdMappings[e.id]!
-                          ),
-                        ],
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ],
+      child: Form(
+        key: _controller.formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: MediaQuery.of(context).padding.top),
+            Expanded(
+              child: ListView.builder(
+                itemCount: _controller.questionIndexTo - _controller.questionIndexFrom + 1,
+                itemBuilder: (context, index) {
+                  final question = _controller.questions[_controller.questionIndexFrom + index];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15.0),
+                    child: InitialSurveyQuestionWidget(
+                      question: question.content,
+                      possibleOptions: question.options,
+                      questionResponse: _controller.responsesIdMappings[question.id]!,
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
+          ],
+        ),
+      ),
     ),
     bottomNavigationBar: Padding(
-      padding: const EdgeInsets.only(bottom: 50.0,
-      left: 25, right: 25),
+      padding: const EdgeInsets.only(bottom: 50.0, left: 25, right: 25),
       child: ElevatedButton(
         onPressed: _controller.next,
-         child: Text(AppLocalizations.of(context)!.next),
+        child: Text(AppLocalizations.of(context)!.next),
       ),
     ),
   );
-  } 
+}
+
 }
