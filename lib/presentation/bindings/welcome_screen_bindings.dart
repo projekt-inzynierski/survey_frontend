@@ -4,6 +4,6 @@ import 'package:survey_frontend/presentation/controllers/welcome_screen_controll
 class WelcomeScreenBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => WelcomeScreenController());
+    Get.lazyPut(() => WelcomeScreenController(Get.find()));
   }
 }

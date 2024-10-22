@@ -9,7 +9,6 @@ class WelcomeScreen extends GetView<WelcomeScreenController> {
   
   @override
   Widget build(BuildContext context) {
-    controller.loadGetArguments();
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(left: 50, right: 50),
