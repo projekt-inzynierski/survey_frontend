@@ -5,7 +5,6 @@ import 'package:survey_frontend/presentation/controllers/survey_question_control
 import 'package:survey_frontend/presentation/screens/survey/widgets/next_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class SurveyQuestionScreen extends GetView<SurveyQuestionController> {
   final SurveyQuestionController _controller;
 
@@ -24,42 +23,36 @@ class SurveyQuestionScreen extends GetView<SurveyQuestionController> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 20),
-                Center(
-                  child: Text(
-                        _controller.survey.name,
-                        style: const TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
-                ),
-                //FIXME wyswietlaj numer rozwiazywanego pytanie (nie indeksu pytania)
-                // const SizedBox(height: 20),
-                // Text(
-                //   'Pytanie ${_controller.questionIndex + 1}',
-                //   style:
-                //       const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                // ),
-                const SizedBox(height: 30),
-                Center(
-                  child: Text(
-                    _controller.question.content,
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                _controller.buildQuestionFromType(_controller.question),
-                const Spacer(),
-                NextButton(
-                    nextAction: () {
-                      _controller
-                          .navigateToNextQuestion(QuestionNavigationMode.top);
-                    },
-                    text: AppLocalizations.of(context)!.next),
-              ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 20),
+            Center(
+              child: Text(
+                _controller.survey.name,
+                style:
+                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
             ),
+            //FIXME wyswietlaj numer rozwiazywanego pytanie (nie indeksu pytania)
+            const SizedBox(height: 30),
+            Center(
+              child: Text(
+                _controller.question.content,
+                style: const TextStyle(fontSize: 18),
+              ),
+            ),
+            const SizedBox(height: 30),
+            _controller.buildQuestionFromType(_controller.question),
+            const Spacer(),
+            NextButton(
+                nextAction: () {
+                  _controller
+                      .navigateToNextQuestion(QuestionNavigationMode.top);
+                },
+                text: AppLocalizations.of(context)!.next),
+          ],
+        ),
       ),
     );
   }
