@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:survey_frontend/domain/models/create_selected_option_dto.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
 
-class TextSingleOptionTypeQuestion extends StatefulWidget {
+class TextSingleChoiceTypeQuestion extends StatefulWidget {
   final Question question;
   final CreateSelectedOptionDto selectedOption;
   final Map<int, int> triggerableSectionActivationsCounts;
-  const TextSingleOptionTypeQuestion(
+  const TextSingleChoiceTypeQuestion(
       {super.key,
       required this.question,
       required this.selectedOption,
@@ -15,20 +15,23 @@ class TextSingleOptionTypeQuestion extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _TextSingleOptionTypeQuestionState(question: question, selectedOption: selectedOption,
-        triggerableSectionActivationsCounts: triggerableSectionActivationsCounts);
+    return _TextSingleChoiceTypeQuestionState(
+        question: question,
+        selectedOption: selectedOption,
+        triggerableSectionActivationsCounts:
+            triggerableSectionActivationsCounts);
   }
 }
 
-class _TextSingleOptionTypeQuestionState
-    extends State<TextSingleOptionTypeQuestion> {
+class _TextSingleChoiceTypeQuestionState
+    extends State<TextSingleChoiceTypeQuestion> {
   final Question question;
   final CreateSelectedOptionDto selectedOption;
   final Map<int, int> triggerableSectionActivationsCounts;
 
-
-  _TextSingleOptionTypeQuestionState(
-      {required this.question, required this.selectedOption,
+  _TextSingleChoiceTypeQuestionState(
+      {required this.question,
+      required this.selectedOption,
       required this.triggerableSectionActivationsCounts});
 
   @override
@@ -45,8 +48,12 @@ class _TextSingleOptionTypeQuestionState
                 Option? currentOption = question.options!.firstWhereOrNull(
                   (element) => element.id == selectedOption.optionId,
                 );
-                if (currentOption != null && currentOption.showSection != null){
-                  triggerableSectionActivationsCounts[currentOption.showSection!] = triggerableSectionActivationsCounts[currentOption.showSection!]! - 1;
+                if (currentOption != null &&
+                    currentOption.showSection != null) {
+                  triggerableSectionActivationsCounts[currentOption
+                      .showSection!] = triggerableSectionActivationsCounts[
+                          currentOption.showSection!]! -
+                      1;
                 }
 
                 selectedOption.optionId = value;
@@ -54,8 +61,12 @@ class _TextSingleOptionTypeQuestionState
                 currentOption = question.options!.firstWhereOrNull(
                   (element) => element.id == selectedOption.optionId,
                 );
-                if (currentOption != null && currentOption.showSection != null){
-                  triggerableSectionActivationsCounts[currentOption.showSection!] = triggerableSectionActivationsCounts[currentOption.showSection!]! + 1;
+                if (currentOption != null &&
+                    currentOption.showSection != null) {
+                  triggerableSectionActivationsCounts[currentOption
+                      .showSection!] = triggerableSectionActivationsCounts[
+                          currentOption.showSection!]! +
+                      1;
                 }
               });
             },
