@@ -14,7 +14,6 @@ import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class HomeController extends ControllerBase {
   final ShortSurveyService _homeService;
   final SurveyService _surveyService;
@@ -22,7 +21,7 @@ class HomeController extends ControllerBase {
   final RespondentGroupService _respondentGroupService;
   final GetStorage _storage;
   final SurveyParticipationService _participationService;
-  RxList<ShortSurveyDto> pendingSurveys = <ShortSurveyDto>[].obs;
+  RxList<SurveyWithTimeSlots> pendingSurveys = <SurveyWithTimeSlots>[].obs;
   final RxInt hours = 23.obs;
   final RxInt minutes = 60.obs;
   bool _isBusy = false;
@@ -43,7 +42,7 @@ class HomeController extends ControllerBase {
     try {
       _isBusy = true;
       pendingSurveys.clear();
-      APIResponse<List<ShortSurveyDto>> response =
+      APIResponse<List<SurveyWithTimeSlots>> response =
           await _homeService.getShortSurvey();
       if (response.error != null || response.statusCode != 200) {
         await handleSomethingWentWrong(null);
@@ -57,8 +56,7 @@ class HomeController extends ControllerBase {
       pendingSurveys.addAll(surveysToAdd);
     } catch (e) {
       //TODO: log the exception
-      await popup(
-          AppLocalizations.of(Get.context!)!.error,
+      await popup(AppLocalizations.of(Get.context!)!.error,
           AppLocalizations.of(Get.context!)!.loadingSurveyErrorTryAgainLater);
     } finally {
       _isBusy = false;
@@ -89,15 +87,13 @@ class HomeController extends ControllerBase {
     return timeLeft.inMinutes.remainder(60);
   }
 
-  bool hasTimeSlotForToday(ShortSurveyDto survey) {
+  bool hasTimeSlotForToday(SurveyWithTimeSlots survey) {
     final today = DateTime.now();
     return survey.dates.any((element) =>
         element.start.year == today.year &&
         element.start.month == today.month &&
         element.start.day == today.day);
   }
-
-
 
   void startCompletingSurvey(String surveyId) async {
     if (_isBusy) {
@@ -145,9 +141,10 @@ class HomeController extends ControllerBase {
 
   Future<List<String>?> _getGroupsIds() async {
     var respondentData = _storage.read("respondentData")!;
-    final String id = respondentData is RespondentDataDto ? respondentData.id : respondentData['id'];
-    var groupsResponse =
-        await _respondentGroupService.getAllForRespndent(id);
+    final String id = respondentData is RespondentDataDto
+        ? respondentData.id
+        : respondentData['id'];
+    var groupsResponse = await _respondentGroupService.getAllForRespndent(id);
 
     return groupsResponse.body?.map((e) => (e.id)).toList();
   }
