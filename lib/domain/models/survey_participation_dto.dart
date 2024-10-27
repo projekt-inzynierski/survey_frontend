@@ -7,7 +7,6 @@ class SurveyParticipationDto {
   String id;
   String respondentId;
   String surveyId;
-  //TODO: change this to date type
   String date;
   int rowVersion;
 

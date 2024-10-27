@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_frontend/domain/models/create_question_answer_dto.dart';
 
-part 'create_survey_resopnse_dto.g.dart';
+part 'create_survey_response_dto.g.dart';
 
 @JsonSerializable()
 class CreateSurveyResponseDto{

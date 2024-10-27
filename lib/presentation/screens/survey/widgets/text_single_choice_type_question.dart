@@ -15,58 +15,48 @@ class TextSingleChoiceTypeQuestion extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _TextSingleChoiceTypeQuestionState(
-        question: question,
-        selectedOption: selectedOption,
-        triggerableSectionActivationsCounts:
-            triggerableSectionActivationsCounts);
+    return _TextSingleChoiceTypeQuestionState();
   }
 }
 
 class _TextSingleChoiceTypeQuestionState
     extends State<TextSingleChoiceTypeQuestion> {
-  final Question question;
-  final CreateSelectedOptionDto selectedOption;
-  final Map<int, int> triggerableSectionActivationsCounts;
-
-  _TextSingleChoiceTypeQuestionState(
-      {required this.question,
-      required this.selectedOption,
-      required this.triggerableSectionActivationsCounts});
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: List<Widget>.from(
-        question.options!.map(
+        widget.question.options!.map(
           (option) => RadioListTile(
             title: Text(option.label),
             value: option.id,
-            groupValue: selectedOption.optionId,
+            groupValue: widget.selectedOption.optionId,
             onChanged: (value) {
               setState(() {
-                Option? currentOption = question.options!.firstWhereOrNull(
-                  (element) => element.id == selectedOption.optionId,
+                Option? currentOption =
+                    widget.question.options!.firstWhereOrNull(
+                  (element) => element.id == widget.selectedOption.optionId,
                 );
                 if (currentOption != null &&
                     currentOption.showSection != null) {
-                  triggerableSectionActivationsCounts[currentOption
-                      .showSection!] = triggerableSectionActivationsCounts[
-                          currentOption.showSection!]! -
-                      1;
+                  widget.triggerableSectionActivationsCounts[
+                          currentOption.showSection!] =
+                      widget.triggerableSectionActivationsCounts[
+                              currentOption.showSection!]! -
+                          1;
                 }
 
-                selectedOption.optionId = value;
+                widget.selectedOption.optionId = value;
 
-                currentOption = question.options!.firstWhereOrNull(
-                  (element) => element.id == selectedOption.optionId,
+                currentOption = widget.question.options!.firstWhereOrNull(
+                  (element) => element.id == widget.selectedOption.optionId,
                 );
                 if (currentOption != null &&
                     currentOption.showSection != null) {
-                  triggerableSectionActivationsCounts[currentOption
-                      .showSection!] = triggerableSectionActivationsCounts[
-                          currentOption.showSection!]! +
-                      1;
+                  widget.triggerableSectionActivationsCounts[
+                          currentOption.showSection!] =
+                      widget.triggerableSectionActivationsCounts[
+                              currentOption.showSection!]! +
+                          1;
                 }
               });
             },

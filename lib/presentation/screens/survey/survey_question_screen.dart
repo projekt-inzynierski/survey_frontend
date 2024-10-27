@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:survey_frontend/presentation/controllers/question_navigatable_controller.dart';
+import 'package:survey_frontend/presentation/controllers/question_navigable_controller.dart';
 import 'package:survey_frontend/presentation/controllers/survey_question_controller.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/next_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

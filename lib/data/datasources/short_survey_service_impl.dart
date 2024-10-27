@@ -1,12 +1,13 @@
-
+import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/data/datasources/api_service_base.dart';
 import 'package:survey_frontend/domain/external_services/api_response.dart';
 import 'package:survey_frontend/domain/external_services/short_survey_service.dart';
-import 'package:survey_frontend/domain/models/short_survey_dto.dart';
+import 'package:survey_frontend/domain/models/survey_with_time_slots.dart';
 
 class ShortSurveyServiceImpl extends APIServiceBase
     implements ShortSurveyService {
-  ShortSurveyServiceImpl(super.dio, {required super.tokenProvider});
+  final GetStorage _storage;
+  ShortSurveyServiceImpl(this._storage, super.dio, {required super.tokenProvider});
 
   // Mocked Data
   // @override
@@ -22,10 +23,12 @@ class ShortSurveyServiceImpl extends APIServiceBase
   // }
 
   @override
-  Future<APIResponse<List<ShortSurveyDto>>> getShortSurvey() =>
-      get<List<ShortSurveyDto>>(
-          '/api/surveys/shortsummaries',
+  Future<APIResponse<List<SurveyWithTimeSlots>>> getSurveysWithTimeSlots() =>
+      get<List<SurveyWithTimeSlots>>(
+          '/api/surveys/allwithtimeslots',
           (dynamic items) => items
-              .map<ShortSurveyDto>((e) => ShortSurveyDto.fromJson(e))
-              .toList());
+              .map<SurveyWithTimeSlots>((e) => SurveyWithTimeSlots.fromJson(e))
+              .toList(), headers: {
+                'Row-Version': _storage.read<int>('surveysRowVersion') ?? 0
+              });
 }

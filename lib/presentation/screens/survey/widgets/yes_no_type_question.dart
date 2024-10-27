@@ -8,42 +8,39 @@ class YesNoTypeQuestion extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _YesNoTypeQuestionState(createQuestionAnswerDto: createQuestionAnswerDto);
+    return _YesNoTypeQuestionState();
   }
 }
 
 class _YesNoTypeQuestionState extends State<YesNoTypeQuestion> {
-  CreateQuestionAnswerDto createQuestionAnswerDto;
-  _YesNoTypeQuestionState({required this.createQuestionAnswerDto});
-
   @override
   Widget build(BuildContext context) {
     return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Radio<bool>(
-            value: true,
-            groupValue: createQuestionAnswerDto.yesNoAnswer,
-            onChanged: (value) {
-              setState(() {
-                createQuestionAnswerDto.yesNoAnswer = value!;
-              });
-            },
-          ),
-          Text(AppLocalizations.of(context)!.yes),
-          const SizedBox(width: 40),
-          Radio<bool>(
-            value: false,
-            groupValue: createQuestionAnswerDto.yesNoAnswer,
-            onChanged: (bool? value) {
-              setState(() {
-                createQuestionAnswerDto.yesNoAnswer = value!;
-              });
-            },
-          ),
-          Text(AppLocalizations.of(context)!.no),
-        ],
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Radio<bool>(
+          value: true,
+          groupValue: widget.createQuestionAnswerDto.yesNoAnswer,
+          onChanged: (value) {
+            setState(() {
+              widget.createQuestionAnswerDto.yesNoAnswer = value!;
+            });
+          },
+        ),
+        Text(AppLocalizations.of(context)!.yes),
+        const SizedBox(width: 40),
+        Radio<bool>(
+          value: false,
+          groupValue: widget.createQuestionAnswerDto.yesNoAnswer,
+          onChanged: (bool? value) {
+            setState(() {
+              widget.createQuestionAnswerDto.yesNoAnswer = value!;
+            });
+          },
+        ),
+        Text(AppLocalizations.of(context)!.no),
+      ],
     );
   }
 }
