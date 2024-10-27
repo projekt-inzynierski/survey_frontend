@@ -5,7 +5,7 @@ import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:survey_frontend/presentation/controllers/home_controller.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_question_screen.dart';
 
-class QuestionNavigatableController extends ControllerBase{
+class QuestionNavigableController extends ControllerBase{
   bool isBusy = false;
   late SurveyDto survey;
   late List<QuestionWithSection> questions;

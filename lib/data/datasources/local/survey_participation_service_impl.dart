@@ -7,20 +7,18 @@ class SurveyParticipationServiceImpl implements SurveyParticipationService {
 
   SurveyParticipationServiceImpl(this._localStorage);
 
-  //TODO: this is not the best storage way imo, maybe we should use Sqlite db for this?
-  //or maybe this is good?
   @override
   Future<void> addParticipation(SurveyParticipationDto dto) async {
-    final participations = await getAllParticipates();
+    final participants = await getAllParticipates();
 
-    participations.add(dto);
-    await _localStorage.write('participations', participations);
+    participants.add(dto);
+    await _localStorage.write('participants', participants);
   }
 
   @override
   Future<List<SurveyParticipationDto>> getAllParticipates() {
     return Future.value(_localStorage
-            .read<List<dynamic>>('participations')
+            .read<List<dynamic>>('participants')
             ?.map((e) {
               if (e is SurveyParticipationDto) {
                 return e;

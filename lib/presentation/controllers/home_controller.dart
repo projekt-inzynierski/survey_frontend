@@ -12,6 +12,7 @@ import 'package:survey_frontend/domain/models/create_survey_response_dto.dart';
 import 'package:survey_frontend/domain/models/respondent_data_dto.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/domain/models/survey_with_time_slots.dart';
+import 'package:survey_frontend/domain/models/visibility_type.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -107,9 +108,10 @@ class HomeController extends ControllerBase {
 
     try {
       _isBusy = true;
-      //TODO: run those futures at once
-      SurveyDto? survey = await _loadSurvey(surveyId);
-      var respondentGroups = await _getGroupsIds();
+      final futures = [_loadSurvey(surveyId), _getGroupsIds()];
+      final results = await Future.wait(futures);
+      SurveyDto? survey = results[0] as SurveyDto?;
+      var respondentGroups = results[1];
 
       if (survey == null || respondentGroups == null) {
         await popup(AppLocalizations.of(Get.context!)!.error,
@@ -149,7 +151,7 @@ class HomeController extends ControllerBase {
     final String id = respondentData is RespondentDataDto
         ? respondentData.id
         : respondentData['id'];
-    var groupsResponse = await _respondentGroupService.getAllForRespndent(id);
+    var groupsResponse = await _respondentGroupService.getAllForRespondent(id);
 
     return groupsResponse.body?.map((e) => (e.id)).toList();
   }
@@ -196,11 +198,11 @@ class QuestionWithSection {
   bool canQuestionBeShown(List<String?> groupsIds,
       Map<int, int> triggerableSectionActivationsCounts) {
     //TODO: make a class with const strings here
-    if (section.visibility == "group_specific") {
+    if (section.visibility == VisibilityType.groupSpecific) {
       return groupsIds.contains(section.groupId);
     }
 
-    if (section.visibility == "answer_triggered") {
+    if (section.visibility == VisibilityType.answerTriggered) {
       return triggerableSectionActivationsCounts[section.order]! > 0;
     }
     return true;
