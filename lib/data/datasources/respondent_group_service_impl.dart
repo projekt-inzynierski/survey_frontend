@@ -8,7 +8,7 @@ class RespondentGroupServiceImpl extends APIServiceBase
   RespondentGroupServiceImpl(super.dio);
 
   @override
-  Future<APIResponse<List<RespondentGroupDto>>> getAllForRespndent(
+  Future<APIResponse<List<RespondentGroupDto>>> getAllForRespondent(
       String respondentId) {
     return get<List<RespondentGroupDto>>(
         '/api/respondentgroups?respondentId=$respondentId',

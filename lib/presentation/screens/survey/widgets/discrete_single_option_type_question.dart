@@ -17,26 +17,12 @@ class DiscreteSingleOptionTypeQuestion extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _DiscreteSingleOptionTypeQuestionState(
-        dto: dto, from: from, to: to, fromLabel: fromLabel, toLabel: toLabel);
+    return _DiscreteSingleOptionTypeQuestionState();
   }
 }
 
 class _DiscreteSingleOptionTypeQuestionState
     extends State<DiscreteSingleOptionTypeQuestion> {
-  final CreateQuestionAnswerDto dto;
-  final int from;
-  final int to;
-  final String? fromLabel;
-  final String? toLabel;
-
-  _DiscreteSingleOptionTypeQuestionState(
-      {required this.dto,
-      required this.from,
-      required this.to,
-      this.fromLabel,
-      this.toLabel});
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -44,23 +30,23 @@ class _DiscreteSingleOptionTypeQuestionState
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(fromLabel ?? ''),
-            Text(toLabel ?? ''),
+            Text(widget.fromLabel ?? ''),
+            Text(widget.toLabel ?? ''),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: List<Widget>.generate(to - from + 1, (index) {
-            final value = from + index;
+          children: List<Widget>.generate(widget.to - widget.from + 1, (index) {
+            final value = widget.from + index;
             return Column(
               children: [
                 Text(value.toString()),
                 Radio(
                   value: value,
-                  groupValue: dto.numericAnswer,
+                  groupValue: widget.dto.numericAnswer,
                   onChanged: (val) {
                     setState(() {
-                      dto.numericAnswer = val;
+                      widget.dto.numericAnswer = val;
                     });
                   },
                 ),

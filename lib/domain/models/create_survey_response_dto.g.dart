@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'create_survey_resopnse_dto.dart';
+part of 'create_survey_response_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
