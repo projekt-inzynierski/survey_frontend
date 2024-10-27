@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:survey_frontend/domain/models/create_survey_resopnse_dto.dart';
+import 'package:survey_frontend/domain/models/create_survey_response_dto.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:survey_frontend/presentation/controllers/home_controller.dart';

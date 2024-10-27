@@ -1,15 +1,18 @@
 import 'dart:io';
+import 'dart:math';
 
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:survey_frontend/data/models/short_survey.dart';
-import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/domain/models/survey_with_time_slots.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
   factory DatabaseHelper() => _instance;
+  final GetStorage _storage = Get.find();
 
   static Database? _database;
 
@@ -100,7 +103,7 @@ class DatabaseHelper {
   Future<void> upsertSurveys(
       List<SurveyWithTimeSlots> surveysWithTimeSlots) async {
     final db = await database;
-
+    int maxRowVersion = 0;
     await db.transaction((txn) async {
       for (var surveyWithTimeSlots in surveysWithTimeSlots) {
         await txn.insert(
@@ -112,6 +115,8 @@ class DatabaseHelper {
           },
           conflictAlgorithm: ConflictAlgorithm.replace,
         );
+        maxRowVersion =
+            max(maxRowVersion, surveyWithTimeSlots.survey.rowVersion);
 
         for (var timeSlot in surveyWithTimeSlots.surveySendingPolicyTimes) {
           await txn.insert(
@@ -124,6 +129,8 @@ class DatabaseHelper {
                 'rowVersion': timeSlot.rowVersion
               },
               conflictAlgorithm: ConflictAlgorithm.replace);
+
+          maxRowVersion = max(maxRowVersion, timeSlot.rowVersion ?? 0);
         }
 
         for (var section in surveyWithTimeSlots.survey.sections) {
@@ -140,6 +147,7 @@ class DatabaseHelper {
             },
             conflictAlgorithm: ConflictAlgorithm.replace,
           );
+          maxRowVersion = max(maxRowVersion, section.rowVersion);
 
           for (var question in section.questions) {
             await txn.insert(
@@ -155,6 +163,7 @@ class DatabaseHelper {
               },
               conflictAlgorithm: ConflictAlgorithm.replace,
             );
+            maxRowVersion = max(maxRowVersion, question.rowVersion);
 
             if (question.options != null) {
               for (var option in question.options!) {
@@ -170,6 +179,7 @@ class DatabaseHelper {
                   },
                   conflictAlgorithm: ConflictAlgorithm.replace,
                 );
+                maxRowVersion = max(maxRowVersion, option.rowVersion);
               }
             }
 
@@ -186,13 +196,23 @@ class DatabaseHelper {
                 },
                 conflictAlgorithm: ConflictAlgorithm.replace,
               );
+              maxRowVersion =
+                  max(maxRowVersion, question.numberRange!.rowVersion);
             }
           }
         }
       }
     });
+    updateMaxRowVersion(maxRowVersion);
   }
 
+  void updateMaxRowVersion(int newRawVersion) {
+    final currentMax = _storage.read<int>('surveysRowVersion');
+
+    if (currentMax == null || currentMax < newRawVersion) {
+      _storage.write('surveysRowVersion', newRawVersion);
+    }
+  }
 
   Future<List<SurveyShortInfo>> getSurveysCompletableNow() async {
     final db = await database;
@@ -209,7 +229,17 @@ class DatabaseHelper {
 
     return surveyMaps.map((e) {
       return SurveyShortInfo(
-          name: e['name'], id: e['id'], finishTime: DateTime.parse(e['finish']));
+          name: e['name'],
+          id: e['id'],
+          finishTime: DateTime.parse(e['finish']));
     }).toList();
+  }
+
+  Future removeSurveyTimeSlot(String id) async {
+    final db = await database;
+    final String currentDate = DateTime.now().toUtc().toIso8601String();
+    await db.delete('timeSlots',
+        where: 'surveyId = ? and start <= ? and finish >= ?',
+        whereArgs: [id, currentDate, currentDate]);
   }
 }
