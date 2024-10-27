@@ -1,7 +1,10 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:survey_frontend/core/usecases/create_question_answer_dto_factory.dart';
+import 'package:survey_frontend/data/datasources/local/database_service.dart';
+import 'package:survey_frontend/data/models/short_survey.dart';
 import 'package:survey_frontend/domain/external_services/api_response.dart';
 import 'package:survey_frontend/domain/external_services/respondent_group_service.dart';
 import 'package:survey_frontend/domain/external_services/short_survey_service.dart';
@@ -9,8 +12,8 @@ import 'package:survey_frontend/domain/external_services/survey_service.dart';
 import 'package:survey_frontend/domain/local_services/survey_participation_service.dart';
 import 'package:survey_frontend/domain/models/create_survey_resopnse_dto.dart';
 import 'package:survey_frontend/domain/models/respondent_data_dto.dart';
-import 'package:survey_frontend/domain/models/short_survey_dto.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
+import 'package:survey_frontend/domain/models/survey_with_time_slots.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -21,9 +24,10 @@ class HomeController extends ControllerBase {
   final RespondentGroupService _respondentGroupService;
   final GetStorage _storage;
   final SurveyParticipationService _participationService;
-  RxList<SurveyWithTimeSlots> pendingSurveys = <SurveyWithTimeSlots>[].obs;
+  RxList<SurveyShortInfo> pendingSurveys = <SurveyShortInfo>[].obs;
   final RxInt hours = 23.obs;
   final RxInt minutes = 60.obs;
+  final DatabaseHelper _databaseHelper;
   bool _isBusy = false;
 
   HomeController(
@@ -32,28 +36,19 @@ class HomeController extends ControllerBase {
       this._createQuestionAnswerDtoFactory,
       this._respondentGroupService,
       this._storage,
-      this._participationService);
+      this._participationService,
+      this._databaseHelper);
 
-  Future<void> loadShortSurveys() async {
+  Future<void> loadSurveys() async {
     if (_isBusy) {
       return;
     }
 
     try {
       _isBusy = true;
+      await _loadFromApi();
       pendingSurveys.clear();
-      APIResponse<List<SurveyWithTimeSlots>> response =
-          await _homeService.getShortSurvey();
-      if (response.error != null || response.statusCode != 200) {
-        await handleSomethingWentWrong(null);
-        return;
-      }
-      final participations = await _participationService.getAllParticipations();
-      final today = DateTime.now();
-      final DateFormat formatter = DateFormat('dd-MM-yyyy');
-      final String todayString = formatter.format(today);
-      final surveysToAdd = response.body!;
-      pendingSurveys.addAll(surveysToAdd);
+      await _loadFromDatabase();
     } catch (e) {
       //TODO: log the exception
       await popup(AppLocalizations.of(Get.context!)!.error,
@@ -61,6 +56,21 @@ class HomeController extends ControllerBase {
     } finally {
       _isBusy = false;
     }
+  }
+  
+
+  Future<void> _loadFromApi() async {
+    if (await connectivity.checkConnectivity() == ConnectivityResult.none) {
+      return;
+    }
+
+    APIResponse<List<SurveyWithTimeSlots>> response =
+        await _homeService.getSurveysWithTimeSlots();
+    if (response.error != null || response.statusCode != 200) {
+      return;
+    }
+
+    await _databaseHelper.upsertSurveys(response.body!);
   }
 
   int hoursLeft() {
@@ -89,7 +99,7 @@ class HomeController extends ControllerBase {
 
   bool hasTimeSlotForToday(SurveyWithTimeSlots survey) {
     final today = DateTime.now();
-    return survey.dates.any((element) =>
+    return survey.surveySendingPolicyTimes.any((element) =>
         element.start.year == today.year &&
         element.start.month == today.month &&
         element.start.day == today.day);
@@ -175,12 +185,11 @@ class HomeController extends ControllerBase {
     }
     return output;
   }
-}
 
-class SurveyShortInfo {
-  final String name;
-  final String id;
-  SurveyShortInfo({required this.name, required this.id});
+  
+  Future<void> _loadFromDatabase() async {
+    pendingSurveys.addAll(await _databaseHelper.getSurveysCompletableNow());
+  }
 }
 
 class QuestionWithSection {

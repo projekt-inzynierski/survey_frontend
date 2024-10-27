@@ -7,7 +7,7 @@ class TimeSlotDto {
   String id;
   DateTime start;
   DateTime finish;
-  int rowVersion;
+  int? rowVersion; //TODO make this not nullable
 
   TimeSlotDto(
       {required this.id,

@@ -11,14 +11,14 @@ class SurveyParticipationServiceImpl implements SurveyParticipationService {
   //or maybe this is good?
   @override
   Future<void> addParticipation(SurveyParticipationDto dto) async {
-    final participations = await getAllParticipations();
+    final participations = await getAllParticipates();
 
     participations.add(dto);
     await _localStorage.write('participations', participations);
   }
 
   @override
-  Future<List<SurveyParticipationDto>> getAllParticipations() {
+  Future<List<SurveyParticipationDto>> getAllParticipates() {
     return Future.value(_localStorage
             .read<List<dynamic>>('participations')
             ?.map((e) {
