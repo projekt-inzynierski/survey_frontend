@@ -7,7 +7,7 @@ import 'package:survey_frontend/domain/external_services/login_service.dart';
 import 'package:survey_frontend/domain/models/login_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:survey_frontend/presentation/functions/handle_need_insert_resondent_data.dart';
+import 'package:survey_frontend/presentation/functions/handle_need_insert_respondent_data.dart';
 
 
 class LoginController extends ControllerBase{
