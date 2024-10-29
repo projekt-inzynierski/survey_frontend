@@ -37,7 +37,7 @@ class WelcomeScreenController extends ControllerBase {
     };
 
     Get.offAllNamed(Routes.initialSurveyQuestions, arguments: {
-      "questions": questions,
+      "questions": questions.obs,
       "responsesIdMappings": responses,
       "questionIndexFrom": 0,
       "questionIndexTo": questions.length < 5 ? questions.length - 1 : 4

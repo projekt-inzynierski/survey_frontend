@@ -35,7 +35,7 @@ class InitialSurveyController extends ControllerBase{
 
   Future submit() async{
     try{
-      final result = await _service.submit(InitialSurveyResponse(questionResponses: responsesIdMappings.values.toList()));
+      final result = await _service.submit(responsesIdMappings.values.toList());
 
       if (result.error != null || result.statusCode == 201){
         await Get.offAllNamed('/home');

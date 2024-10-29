@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:survey_frontend/data/datasources/api_service_base.dart';
 import 'package:survey_frontend/domain/external_services/api_response.dart';
 import 'package:survey_frontend/domain/external_services/initial_survey_service.dart';
@@ -12,13 +13,14 @@ class InitialSurveyServiceImpl extends APIServiceBase implements InitialSurveySe
     => get<List<InitialSurveyQuestion>>('/api/initialsurvey',  (dynamic items) => items.map<InitialSurveyQuestion>((e) => InitialSurveyQuestion.fromJson(e)).toList());
   
   @override
-  Future<APIResponse> submit(InitialSurveyResponse response){
-    return post('/api/respondents',  response.toJson());
+  Future<APIResponse> submit(List<InitialSurveyQuestionResponse> response){
+    return postMany('/api/respondents',  response.map((e) => e.toJson()).toList());
   }
 
   @override
-  Future<APIResponse<InitialSurveyResponse>> getMyResponse() =>
-      get<InitialSurveyResponse>(
+
+  Future<APIResponse<Map<String, dynamic>>> getMyResponse() =>
+      get<Map<String, dynamic>>(
           '/api/respondents',
-          (dynamic json) => InitialSurveyResponse.fromJson(json));
+          (dynamic json) => json);
 }

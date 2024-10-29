@@ -4,6 +4,6 @@ import 'package:survey_frontend/domain/models/initial_survey_response.dart';
 
 abstract class InitialSurveyService{
   Future<APIResponse<List<InitialSurveyQuestion>>> getInitialSurvey();
-  Future<APIResponse> submit(InitialSurveyResponse response);
-  Future<APIResponse<InitialSurveyResponse>> getMyResponse();
+  Future<APIResponse> submit(List<InitialSurveyQuestionResponse> response);
+  Future<APIResponse<Map<String, dynamic>>> getMyResponse();
 }

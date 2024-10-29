@@ -66,6 +66,21 @@ abstract class APIServiceBase{
     }
   }
 
+  Future<APIResponse<T>> postMany<T>(String url, List<Map<String, dynamic>> body) async{
+    try{
+      Options? options = _getOptionsWithAuthorization();
+      Response<T> response = await _dio.post(url, 
+      options: options, 
+      data: body);
+      return APIResponse<T>(statusCode: response.statusCode!, body: response.data);
+    } catch (error){
+      if (error is DioException){
+        return _fromDioException(error);
+      }
+      return APIResponse<T>(error: error);
+    }
+  }
+
 
   
   Options? _getOptionsWithAuthorization() {
