@@ -1,61 +1,46 @@
 import 'package:get/get.dart';
-import 'package:survey_frontend/domain/external_services/age_category_service.dart';
-import 'package:survey_frontend/domain/external_services/api_response.dart';
-import 'package:survey_frontend/domain/external_services/education_category_service.dart';
-import 'package:survey_frontend/domain/external_services/greenery_area_category_service.dart';
-import 'package:survey_frontend/domain/external_services/occupation_category_service.dart';
-import 'package:survey_frontend/domain/models/age_category_dto.dart';
-import 'package:survey_frontend/domain/models/create_respondent_data_dto.dart';
-import 'package:survey_frontend/domain/models/education_category_dto.dart';
-import 'package:survey_frontend/domain/models/greenery_area_category_dto.dart';
-import 'package:survey_frontend/domain/models/occupation_category_dto.dart';
+import 'package:survey_frontend/domain/external_services/initial_survey_service.dart';
+import 'package:survey_frontend/domain/models/initial_survey_question.dart';
+import 'package:survey_frontend/domain/models/initial_survey_response.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
+import 'package:survey_frontend/presentation/screens/initial_survey/initial_survey_screen.dart';
+import 'package:survey_frontend/presentation/static/routes.dart';
 
 class WelcomeScreenController extends ControllerBase {
-  final AgeCategoryService _ageCategoryService;
-  final OccupationCategoryService _occupationCategoryService;
-  final EducationCategoryService _educationCategoryService;
-  final GreeneryAreaCategoryService _greeneryAreaCategoryService;
+  final InitialSurveyService _initialSurveyService;
 
-  final CreateRespondentDataDto _dto = CreateRespondentDataDto();
+  WelcomeScreenController(this._initialSurveyService);
 
-  WelcomeScreenController(
-      this._ageCategoryService, 
-      this._occupationCategoryService,
-      this._educationCategoryService,
-      this._greeneryAreaCategoryService);
 
   void letsGo() async{
-    Future<APIResponse<List<AgeCategoryDto>>> ageCategoriesFuture = _ageCategoryService.getAgeCategories();
-    Future<APIResponse<List<EducationCategoryDto>>> educationCategoriesFuture = _educationCategoryService.getEducationCategories();
-    Future<APIResponse<List<OccupationCategoryDto>>> occupationCategoriesFuture = _occupationCategoryService.getOccupationCategories();
-    Future<APIResponse<List<GreeneryAreaCategoryDto>>> greeneryAreaCategoriesFuture = _greeneryAreaCategoryService.getCategories();
+    final apiResult = await _initialSurveyService.getInitialSurvey();
 
-    await Future.wait([
-      ageCategoriesFuture,
-      educationCategoriesFuture, 
-      occupationCategoriesFuture,
-      greeneryAreaCategoriesFuture]);
-
-    APIResponse<List<AgeCategoryDto>> ageCategoriesResult = await ageCategoriesFuture;
-    APIResponse<List<EducationCategoryDto>> educationCategoriesResult = await educationCategoriesFuture;
-    APIResponse<List<OccupationCategoryDto>> occupationCategoriesResult = await occupationCategoriesFuture;
-    APIResponse<List<GreeneryAreaCategoryDto>> greeneryAreaCategoriesResult = await greeneryAreaCategoriesFuture;
-
-    if (ageCategoriesResult.error != null || ageCategoriesResult.statusCode != 200
-    || educationCategoriesResult.error != null || educationCategoriesResult.statusCode != 200
-    || occupationCategoriesResult.error != null || occupationCategoriesResult.statusCode != 200
-    || greeneryAreaCategoriesResult.error != null || greeneryAreaCategoriesResult.statusCode != 200) {
-      await handleSomethingWentWrong(null);
+    if (apiResult.statusCode == 404){
+      await Get.offAllNamed('/home');
       return;
     }
 
-    Get.toNamed('/insertdemograficinformation', arguments: {
-      'dto' : _dto,
-      'ageCategories': ageCategoriesResult.body!,
-      'educationCategories': educationCategoriesResult.body!,
-      'occupationCategories': occupationCategoriesResult.body!,
-      'greeneryAreaCategories': greeneryAreaCategoriesResult.body!
+    if (apiResult.error != null || apiResult.statusCode != 200){
+      handleSomethingWentWrong(apiResult.error);
+      return;
+    }
+
+    if (apiResult.body!.isEmpty){
+      await Get.offAllNamed('/home');
+      return;
+    }
+
+    final questions = apiResult.body!;
+    final responses = {
+      for (var question in questions)
+      question.id: InitialSurveyQuestionResponse(questionId: question.id, optionId: null),
+    };
+
+    Get.offAllNamed(Routes.initialSurveyQuestions, arguments: {
+      "questions": questions.obs,
+      "responsesIdMappings": responses,
+      "questionIndexFrom": 0,
+      "questionIndexTo": questions.length < 5 ? questions.length - 1 : 4
     });
   }
 }

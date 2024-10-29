@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/core/models/need_insert_respondent_data_result.dart';
 import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecase.dart';
+import 'package:survey_frontend/domain/external_services/initial_survey_service.dart';
 import 'package:survey_frontend/domain/usecases/token_validity_checker.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:survey_frontend/presentation/functions/handle_need_insert_respondent_data.dart';
@@ -11,11 +12,14 @@ class LoadingController extends ControllerBase {
   final GetStorage _storage;
   final TokenValidityChecker _tokenValidityChecker;
   final NeedInsertRespondentDataUseCase _needInsertRespondentDataUseCase;
+  final InitialSurveyService _initialSurveyService;
+
   Rx<bool> retryButtonVisible = false.obs;
 
   LoadingController(this._storage,
   this._tokenValidityChecker,
-  this._needInsertRespondentDataUseCase);
+  this._needInsertRespondentDataUseCase,
+  this._initialSurveyService);
 
 
   void goToNextPage() async {
@@ -26,7 +30,7 @@ class LoadingController extends ControllerBase {
       return;
     }
 
-    var respondentData = _storage.read<Map<String, dynamic>>("respondentData");
+    var respondentData = _storage.read<dynamic>("respondentData");
 
     if (respondentData != null){
       Get.offAllNamed('/home');
