@@ -6,15 +6,12 @@ import 'package:survey_frontend/presentation/screens/home/widgets/survey_tile.da
 import 'package:survey_frontend/presentation/screens/home/widgets/time_circle.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
-
-class HomeScreen extends GetView<HomeController>
-implements RouteAware {
+class HomeScreen extends GetView<HomeController> implements RouteAware {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    controller.loadShortSurveys();
+    controller.loadSurveys();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -79,41 +76,41 @@ implements RouteAware {
 
   Widget _buildSurveyList() {
     return Obx(() => RefreshIndicator(
-      onRefresh: controller.loadShortSurveys,
-      child: ListView.builder(
+          onRefresh: controller.loadSurveys,
+          child: ListView.builder(
             itemCount: controller.pendingSurveys.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 5.0),
+                padding: const EdgeInsets.symmetric(vertical: 5.0),
                 child: SurveyTile(
                     surveyTitle: controller.pendingSurveys[index].name,
                     onPressed: () {
-                      controller.startCompletingSurvey(controller.pendingSurveys[index].id);
+                      controller.startCompletingSurvey(
+                          controller.pendingSurveys[index].id);
                     }),
               );
             },
           ),
-    ));
+        ));
   }
-  
+
   @override
   void didPop() {
     return;
   }
-  
+
   @override
   void didPopNext() {
     return;
   }
-  
+
   @override
   void didPush() {
-    controller.loadShortSurveys();
+    controller.loadSurveys();
   }
-  
+
   @override
   void didPushNext() {
-    controller.loadShortSurveys();
+    controller.loadSurveys();
   }
 }

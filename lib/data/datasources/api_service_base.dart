@@ -9,9 +9,18 @@ abstract class APIServiceBase{
   
   APIServiceBase(this._dio, {this.tokenProvider});
 
-  Future<APIResponse<T>> get<T>(String url, T Function(dynamic json) deserialize) async {
+  Future<APIResponse<T>> get<T>(String url, T Function(dynamic json) deserialize,
+  {Map<String, dynamic>? headers}) async {
   try {
     Options? options = _getOptionsWithAuthorization();
+
+    if (headers != null){
+      options ??= Options(headers: {});
+      headers.forEach((key, value){
+        options!.headers![key] = value;
+      });
+    }
+
     Response response = await _dio.get(url, options: options);
     dynamic jsonData = response.data;
     T data = deserialize(jsonData);

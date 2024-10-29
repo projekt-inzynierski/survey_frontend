@@ -9,11 +9,14 @@ import 'package:survey_frontend/presentation/controllers/home_controller.dart';
 class HomeBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<ShortSurveyService>(
-        () => ShortSurveyServiceImpl(Get.find(), tokenProvider: Get.find()));
-    Get.lazyPut<CreateQuestionAnswerDtoFactory>(() => CreateQuestionAnswerDtoFactoryImpl());
-    Get.lazyPut<RespondentGroupService>(() => RespondentGroupServiceImpl(Get.find()));
-    Get.lazyPut<HomeController>(() => HomeController(Get.find(), Get.find(), Get.find(),
-    Get.find(), Get.find(), Get.find()));
+    Get.lazyPut<ShortSurveyService>(() => ShortSurveyServiceImpl(
+        Get.find(), Get.find(),
+        tokenProvider: Get.find()));
+    Get.lazyPut<CreateQuestionAnswerDtoFactory>(
+        () => CreateQuestionAnswerDtoFactoryImpl());
+    Get.lazyPut<RespondentGroupService>(
+        () => RespondentGroupServiceImpl(Get.find()));
+    Get.lazyPut<HomeController>(() => HomeController(Get.find(), Get.find(),
+        Get.find(), Get.find(), Get.find(), Get.find()));
   }
 }

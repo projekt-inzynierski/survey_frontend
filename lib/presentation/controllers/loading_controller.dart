@@ -6,7 +6,7 @@ import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecas
 import 'package:survey_frontend/domain/external_services/initial_survey_service.dart';
 import 'package:survey_frontend/domain/usecases/token_validity_checker.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
-import 'package:survey_frontend/presentation/functions/handle_need_insert_resondent_data.dart';
+import 'package:survey_frontend/presentation/functions/handle_need_insert_respondent_data.dart';
 
 class LoadingController extends ControllerBase {
   final GetStorage _storage;
