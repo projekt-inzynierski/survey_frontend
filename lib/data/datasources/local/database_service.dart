@@ -100,7 +100,7 @@ class DatabaseHelper {
     ''');
   }
 
-  Future<void> upsertSurveys(
+  Future<bool> upsertSurveys(
       List<SurveyWithTimeSlots> surveysWithTimeSlots) async {
     final db = await database;
     int maxRowVersion = 0;
@@ -203,15 +203,18 @@ class DatabaseHelper {
         }
       }
     });
-    updateMaxRowVersion(maxRowVersion);
+    return updateMaxRowVersion(maxRowVersion);
   }
 
-  void updateMaxRowVersion(int newRawVersion) {
+  bool updateMaxRowVersion(int newRawVersion) {
     final currentMax = _storage.read<int>('surveysRowVersion');
+    var changed = false;
 
     if (currentMax == null || currentMax < newRawVersion) {
+      changed = true;
       _storage.write('surveysRowVersion', newRawVersion);
     }
+    return changed;
   }
 
   Future<List<SurveyShortInfo>> getSurveysCompletableNow() async {
@@ -221,6 +224,7 @@ class DatabaseHelper {
         SELECT 
         surveys.id,
         surveys.name,
+        timeSlots.start
         timeSlots.finish
         FROM surveys
         JOIN timeSlots ON timeSlots.surveyId = surveys.id
@@ -231,7 +235,8 @@ class DatabaseHelper {
       return SurveyShortInfo(
           name: e['name'],
           id: e['id'],
-          finishTime: DateTime.parse(e['finish']));
+          finishTime: DateTime.parse(e['finish']),
+          startTime: DateTime.parse(e['start']));
     }).toList();
   }
 

@@ -2,7 +2,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/core/models/need_insert_respondent_data_result.dart';
 import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecase.dart';
 import 'package:survey_frontend/domain/external_services/initial_survey_service.dart';
-import 'package:survey_frontend/domain/external_services/respondent_date_service.dart';
 
 class NeedInsertRespondentDataUseCaseImpl implements NeedInsertRespondentDataUseCase{
   final InitialSurveyService _respondentDataService;

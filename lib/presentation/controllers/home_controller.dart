@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:connectivity/connectivity.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -8,6 +10,7 @@ import 'package:survey_frontend/domain/external_services/api_response.dart';
 import 'package:survey_frontend/domain/external_services/respondent_group_service.dart';
 import 'package:survey_frontend/domain/external_services/short_survey_service.dart';
 import 'package:survey_frontend/domain/external_services/survey_service.dart';
+import 'package:survey_frontend/domain/local_services/notification_service.dart';
 import 'package:survey_frontend/domain/models/create_survey_response_dto.dart';
 import 'package:survey_frontend/domain/models/respondent_data_dto.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
@@ -44,8 +47,6 @@ class HomeController extends ControllerBase {
     try {
       _isBusy = true;
       await _loadFromApi();
-      pendingSurveys.clear();
-      await _loadFromDatabase();
     } catch (e) {
       //TODO: log the exception
       await popup(AppLocalizations.of(Get.context!)!.error,
@@ -66,7 +67,11 @@ class HomeController extends ControllerBase {
       return;
     }
 
-    await _databaseHelper.upsertSurveys(response.body!);
+    if (await _databaseHelper.upsertSurveys(response.body!)) {
+      pendingSurveys.clear();
+      await _loadFromDatabase();
+    }
+    return;
   }
 
   int hoursLeft() {
@@ -185,6 +190,19 @@ class HomeController extends ControllerBase {
 
   Future<void> _loadFromDatabase() async {
     pendingSurveys.addAll(await _databaseHelper.getSurveysCompletableNow());
+    _setNotifications();
+  }
+
+  void _setNotifications() {
+    NotificationService.cancelAllNotifications();
+    List<SurveyShortInfo> pendingSurveysCopy =
+        List<SurveyShortInfo>.from(pendingSurveys);
+    pendingSurveysCopy.sort((a, b) => a.startTime.compareTo(b.startTime));
+    pendingSurveysCopy
+        .sublist(0, min(50, pendingSurveysCopy.length))
+        .forEach((e) {
+      e.setNotification();
+    });
   }
 }
 
