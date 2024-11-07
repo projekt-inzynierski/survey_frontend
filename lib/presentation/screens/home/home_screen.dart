@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:survey_frontend/domain/local_services/notification_service.dart';
 import 'package:survey_frontend/presentation/controllers/home_controller.dart';
 import 'package:survey_frontend/presentation/screens/home/widgets/survey_tile.dart';
 import 'package:survey_frontend/presentation/screens/home/widgets/time_circle.dart';
@@ -69,16 +68,6 @@ class HomeScreen extends GetView<HomeController> implements RouteAware {
             ),
             const SizedBox(height: 40),
             Expanded(child: _buildSurveyList()),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () => NotificationService.scheduleNotification(
-                    DateTime.now().add(const Duration(seconds: 5)),
-                    title: 'test',
-                    body: 'test'),
-                child: const Text('Schedule notification'),
-              ),
-            ),
           ],
         ),
       ),
