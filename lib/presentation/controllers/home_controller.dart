@@ -63,6 +63,7 @@ class HomeController extends ControllerBase {
 
     APIResponse<List<SurveyWithTimeSlots>> response =
         await _homeService.getSurveysWithTimeSlots();
+
     if (response.error != null || response.statusCode != 200) {
       return;
     }
@@ -191,17 +192,18 @@ class HomeController extends ControllerBase {
   Future<void> _loadFromDatabase() async {
     pendingSurveys.addAll(await _databaseHelper.getSurveysCompletableNow());
     _setNotifications();
+    // NotificationService.checkPendingNotificationRequests();
   }
 
-  void _setNotifications() {
+  void _setNotifications() async {
     NotificationService.cancelAllNotifications();
-    List<SurveyShortInfo> pendingSurveysCopy =
-        List<SurveyShortInfo>.from(pendingSurveys);
-    pendingSurveysCopy.sort((a, b) => a.startTime.compareTo(b.startTime));
-    pendingSurveysCopy
-        .sublist(0, min(50, pendingSurveysCopy.length))
+    List<SurveyShortInfo> futureAndOngoingSurveys =
+        await _databaseHelper.getFutureAndOngoingSurveys();
+    futureAndOngoingSurveys.sort((a, b) => a.startTime.compareTo(b.startTime));
+    futureAndOngoingSurveys
+        .sublist(0, min(50, futureAndOngoingSurveys.length))
         .forEach((e) {
-      e.setNotification();
+      e.setSurveyNotifications();
     });
   }
 }

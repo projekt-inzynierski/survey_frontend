@@ -203,7 +203,8 @@ class DatabaseHelper {
         }
       }
     });
-    return updateMaxRowVersion(maxRowVersion);
+    updateMaxRowVersion(maxRowVersion);
+    return true;
   }
 
   bool updateMaxRowVersion(int newRawVersion) {
@@ -224,12 +225,35 @@ class DatabaseHelper {
         SELECT 
         surveys.id,
         surveys.name,
-        timeSlots.start
+        timeSlots.start,
         timeSlots.finish
         FROM surveys
         JOIN timeSlots ON timeSlots.surveyId = surveys.id
         WHERE timeSlots.start < ? AND timeSlots.finish > ?
         ''', [currentDate, currentDate]);
+
+    return surveyMaps.map((e) {
+      return SurveyShortInfo(
+          name: e['name'],
+          id: e['id'],
+          finishTime: DateTime.parse(e['finish']),
+          startTime: DateTime.parse(e['start']));
+    }).toList();
+  }
+
+  Future<List<SurveyShortInfo>> getFutureAndOngoingSurveys() async {
+    final db = await database;
+    final String currentDate = DateTime.now().toUtc().toIso8601String();
+    final List<Map<String, dynamic>> surveyMaps = await db.rawQuery('''
+        SELECT 
+        surveys.id,
+        surveys.name,
+        timeSlots.start,
+        timeSlots.finish
+        FROM surveys
+        JOIN timeSlots ON timeSlots.surveyId = surveys.id
+        WHERE timeSlots.finish > ?
+        ''', [currentDate]);
 
     return surveyMaps.map((e) {
       return SurveyShortInfo(

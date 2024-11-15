@@ -13,12 +13,22 @@ class SurveyShortInfo {
       required this.finishTime,
       required this.startTime});
 
-  void setNotification() {
+  void setSurveyNotifications() {
     // TODO: nice if it will take a user to the survey immediately
-    NotificationService.scheduleNotification(startTime,
+    const timeBeforeFinish = 1;
+
+    var localStart = startTime.toLocal();
+    NotificationService.scheduleNotification(startTime.toLocal(),
         title: name, body: AppLocalizations.of(Get.context!)!.surveyStartBody);
+    if (finishTime
+        .subtract(const Duration(minutes: timeBeforeFinish))
+        .isBefore(startTime)) {
+      return;
+    }
     NotificationService.scheduleNotification(
-        finishTime.subtract(const Duration(minutes: 15)),
+        finishTime
+            .toLocal()
+            .subtract(const Duration(minutes: timeBeforeFinish)),
         title: name,
         body: AppLocalizations.of(Get.context!)!.surveyFinishBody);
   }
