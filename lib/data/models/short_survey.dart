@@ -15,7 +15,7 @@ class SurveyShortInfo {
 
   void setSurveyNotifications() {
     // TODO: nice if it will take a user to the survey immediately
-    const timeBeforeFinish = 1;
+    const timeBeforeFinish = 15;
 
     var localStart = startTime.toLocal();
     NotificationService.scheduleNotification(startTime.toLocal(),
