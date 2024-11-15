@@ -46,7 +46,7 @@ class NotificationService {
     body ??= 'Body';
 
     await _flutterLocalNotificationsPlugin.zonedSchedule(
-      DateTime.now().millisecondsSinceEpoch.remainder(100000),
+      DateTime.now().millisecondsSinceEpoch.remainder(10000),
       title,
       body,
       tz.TZDateTime.from(scheduledDate, tz.local),
