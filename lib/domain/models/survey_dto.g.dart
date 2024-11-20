@@ -29,6 +29,7 @@ Section _$SectionFromJson(Map<String, dynamic> json) => Section(
       visibility: json['visibility'] as String,
       groupId: json['groupId'] as String?,
       rowVersion: (json['rowVersion'] as num).toInt(),
+      displayOnOneScreen: json['displayOnOneScreen'] as bool,
       questions: (json['questions'] as List<dynamic>)
           .map((e) => Question.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -41,6 +42,7 @@ Map<String, dynamic> _$SectionToJson(Section instance) => <String, dynamic>{
       'visibility': instance.visibility,
       'groupId': instance.groupId,
       'rowVersion': instance.rowVersion,
+      'displayOnOneScreen': instance.displayOnOneScreen,
       'questions': instance.questions,
     };
 

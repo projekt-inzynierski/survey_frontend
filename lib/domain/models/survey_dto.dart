@@ -33,6 +33,7 @@ class Section {
   final String visibility;
   final String? groupId;
   final int rowVersion;
+  final bool displayOnOneScreen;
   final List<Question> questions;
 
   Section({
@@ -42,6 +43,7 @@ class Section {
     required this.visibility,
     this.groupId,
     required this.rowVersion,
+    required this.displayOnOneScreen,
     required this.questions,
   });
 
