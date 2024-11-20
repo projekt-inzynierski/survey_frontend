@@ -54,6 +54,10 @@ dependencies:
   sqflite: ^2.4.0
   path_provider: ^2.1.4
   path: ^1.9.0
+  flutter_local_notifications: ^17.2.4
+  timezone: ^0.9.4
+  permission_handler: ^11.3.1
+  flutter_timezone: ^3.0.1
 
 dev_dependencies:
   flutter_test:

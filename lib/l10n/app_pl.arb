@@ -41,6 +41,7 @@
     "valueNotEmpty": "Wartość nie może być pusta",
     "errorRetry": "Błąd, spróbuj ponownie",
     "yes": "Tak",
-    "no": "Nie"
-
+    "no": "Nie",
+    "surveyStartBody": "Mozesz już rozpoczęć ankiete. Jesteś gotów?",
+    "surveyFinishBody": "Ankieta zaraz się skończy. Do dzieła!"
 }

@@ -2,6 +2,7 @@ import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:survey_frontend/domain/local_services/notification_service.dart';
 import 'package:survey_frontend/presentation/app_styles.dart';
 import 'package:survey_frontend/presentation/bindings/home_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/initial_bindings.dart';
@@ -26,9 +27,10 @@ class StaticVariables {
 }
 
 void main() async {
-  
   await GetStorage.init();
   StaticVariables.lang = await _getCurrentLocale();
+  await NotificationService.initialize();
+
   runApp(GetMaterialApp(
     title: 'UrbEaT',
     localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -39,41 +41,34 @@ void main() async {
     initialRoute: '/loading',
     getPages: [
       GetPage(
-        name: '/login',
-        page: () => const LoginScreen(),
-        binding: LoginBindings()
-      ),
+          name: '/login',
+          page: () => const LoginScreen(),
+          binding: LoginBindings()),
       GetPage(
           name: '/home',
           page: () => const HomeScreen(),
-          binding: HomeBindings()
-      ),
+          binding: HomeBindings()),
       GetPage(
         name: '/surveystart',
         page: () => SurveyStartScreen(),
         binding: SurveyStartBindings(),
       ),
       GetPage(
-        name: Routes.welcome,
-        page: () => const WelcomeScreen(),
-        binding: WelcomeScreenBindings()
-        ),
+          name: Routes.welcome,
+          page: () => const WelcomeScreen(),
+          binding: WelcomeScreenBindings()),
       GetPage(
-        name: '/submitSurvey', 
-        page: () => const SurveyEndScreen(),
-        binding: SurveyEndBindings() 
-        )
-        ,
+          name: '/submitSurvey',
+          page: () => const SurveyEndScreen(),
+          binding: SurveyEndBindings()),
       GetPage(
-        name: '/loading', 
-        page: () => const LoadingScreen(),
-        binding: LoadingBindings() 
-        ),
+          name: '/loading',
+          page: () => const LoadingScreen(),
+          binding: LoadingBindings()),
       GetPage(
-        name: Routes.initialSurveyQuestions, 
-        page: () => InitialSurveyScreen(),
-        binding: InitialSurveyBindings()
-        ),
+          name: Routes.initialSurveyQuestions,
+          page: () => InitialSurveyScreen(),
+          binding: InitialSurveyBindings()),
     ],
   ));
 }

@@ -57,5 +57,7 @@
     "valueNotEmpty": "Value must not be empty",
     "errorRetry": "Error, retry",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "surveyStartBody": "You can start the survey now. Are you ready?",
+    "surveyFinishBody": "Survey is about to end. Let's do it!"
 }

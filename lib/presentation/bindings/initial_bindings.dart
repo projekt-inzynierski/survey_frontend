@@ -42,7 +42,8 @@ class InitialBindings extends Bindings {
         Get.find(),
         tokenProvider: Get.find<TokenProvider>()));
     Get.lazyPut(() => DatabaseHelper());
-    Get.put<InitialSurveyService>(InitialSurveyServiceImpl(Get.find(), tokenProvider: Get.find()));
+    Get.put<InitialSurveyService>(
+        InitialSurveyServiceImpl(Get.find(), tokenProvider: Get.find()));
   }
 
   Dio _getDio() {
