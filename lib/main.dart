@@ -8,6 +8,7 @@ import 'package:survey_frontend/presentation/bindings/initial_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/initial_survey_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/loading_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/login_bindings.dart';
+import 'package:survey_frontend/presentation/bindings/sensors_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/survey_end_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/survey_start_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/welcome_screen_bindings.dart';
@@ -15,6 +16,7 @@ import 'package:survey_frontend/presentation/screens/home/home_screen.dart';
 import 'package:survey_frontend/presentation/screens/initial_survey/initial_survey_screen.dart';
 import 'package:survey_frontend/presentation/screens/loading_screen.dart';
 import 'package:survey_frontend/presentation/screens/login_screen.dart';
+import 'package:survey_frontend/presentation/screens/sensors_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_end_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_start_screen.dart';
 import 'package:survey_frontend/presentation/screens/welcome_screen.dart';
@@ -36,7 +38,7 @@ void main() async {
     locale: Locale(StaticVariables.lang, ''),
     initialBinding: InitialBindings(),
     theme: AppStyles.lightTheme,
-    initialRoute: '/loading',
+    initialRoute: Routes.sensors,
     getPages: [
       GetPage(
         name: '/login',
@@ -74,6 +76,11 @@ void main() async {
         page: () => InitialSurveyScreen(),
         binding: InitialSurveyBindings()
         ),
+      GetPage(
+          name: Routes.sensors,
+          page: () => const SensorsScreen(),
+          binding: SensorsBindings()
+        )
     ],
   ));
 }

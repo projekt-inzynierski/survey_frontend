@@ -57,5 +57,10 @@
     "valueNotEmpty": "Value must not be empty",
     "errorRetry": "Error, retry",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "usedSensor": "Temperature sensor kind",
+    "save": "Save",
+    "chooseATemperatureSensorYouReceived": "Choose a temperature sensor you've received",
+    "noSensor": "No sensor",
+    "xiaomiSensor": "Xiaomi sensor"
 }

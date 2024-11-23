@@ -47,7 +47,7 @@ class InitialBindings extends Bindings {
 
   Dio _getDio() {
     var dio = Dio();
-    dio.options.baseUrl = "http://10.0.2.2:8080";
+    dio.options.baseUrl = "http://192.168.31.12:8080";
     dio.options.headers["Accept-Lang"] = StaticVariables.lang;
     return dio;
   }

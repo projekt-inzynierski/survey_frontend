@@ -41,6 +41,10 @@
     "valueNotEmpty": "Wartość nie może być pusta",
     "errorRetry": "Błąd, spróbuj ponownie",
     "yes": "Tak",
-    "no": "Nie"
-
+    "no": "Nie",
+    "usedSensor": "Rodzaj czujnika temperatury",
+    "save": "Zapisz",
+    "chooseATemperatureSensorYouReceived": "Wybierz otrzymany przez Ciebie czujnik temperatury",
+    "noSensor": "Brak czujnika",
+    "xiaomiSensor": "Czujnik Xiaomi"
 }
