@@ -11,6 +11,7 @@ class SensorsScreen extends GetView<SensorsController>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(10.0),

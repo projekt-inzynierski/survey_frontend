@@ -15,6 +15,7 @@ import 'package:survey_frontend/domain/models/survey_with_time_slots.dart';
 import 'package:survey_frontend/domain/models/visibility_type.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:survey_frontend/presentation/static/routes.dart';
 
 class HomeController extends ControllerBase {
   final ShortSurveyService _homeService;
@@ -101,6 +102,7 @@ class HomeController extends ControllerBase {
         element.start.day == today.day);
   }
 
+
   void startCompletingSurvey(String surveyId) async {
     if (_isBusy) {
       return;
@@ -185,6 +187,10 @@ class HomeController extends ControllerBase {
 
   Future<void> _loadFromDatabase() async {
     pendingSurveys.addAll(await _databaseHelper.getSurveysCompletableNow());
+  }
+
+    void openSettings(){
+    Get.toNamed(Routes.settings);
   }
 }
 

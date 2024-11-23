@@ -41,7 +41,7 @@ class InitialBindings extends Bindings {
     Get.lazyPut<RespondentDataService>(() => RespondentDataServiceImpl(
         Get.find(),
         tokenProvider: Get.find<TokenProvider>()));
-    Get.lazyPut(() => DatabaseHelper());
+    Get.put(DatabaseHelper());
     Get.put<InitialSurveyService>(InitialSurveyServiceImpl(Get.find(), tokenProvider: Get.find()));
   }
 

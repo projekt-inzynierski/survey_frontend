@@ -62,5 +62,8 @@
     "save": "Save",
     "chooseATemperatureSensorYouReceived": "Choose a temperature sensor you've received",
     "noSensor": "No sensor",
-    "xiaomiSensor": "Xiaomi sensor"
+    "xiaomiSensor": "Xiaomi sensor",
+    "settings": "Settings",
+    "editSensor": "Edit sensor",
+    "appSettings": "App settings"
 }
