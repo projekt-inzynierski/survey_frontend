@@ -38,7 +38,7 @@ class InitialSurveyController extends ControllerBase{
       final result = await _service.submit(responsesIdMappings.values.toList());
 
       if (result.error != null || result.statusCode == 201){
-        await Get.offAllNamed('/home');
+        await Get.offAllNamed(Routes.sensors);
       } else{
         handleSomethingWentWrong(result.error);
       }
