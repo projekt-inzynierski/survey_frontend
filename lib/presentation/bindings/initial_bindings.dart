@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:location/location.dart';
 import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecase.dart';
 import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecase_impl.dart';
 import 'package:survey_frontend/core/usecases/read_sensors_data_usecase.dart';
@@ -35,6 +36,9 @@ class InitialBindings extends Bindings {
       return;
     }
     _registered = true;
+    final location = Location();
+    location.enableBackgroundMode(enable: true);
+    Get.put(location);
     Get.lazyPut(() => RespondentDataController());
     Get.lazyPut(() => ArchivedSurveysController());
     Get.create<SurveyService>(() => SurveyServiceImpl(Get.find()));

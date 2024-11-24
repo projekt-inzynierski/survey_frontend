@@ -2,6 +2,8 @@ import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:survey_frontend/domain/local_services/notification_service.dart';
 import 'package:survey_frontend/presentation/backgroud.dart';
 import 'package:survey_frontend/presentation/app_styles.dart';
 import 'package:survey_frontend/presentation/bindings/home_bindings.dart';
@@ -32,8 +34,8 @@ class StaticVariables {
 }
 
 void main() async {
-  await NotificationService.initialize();
   WidgetsFlutterBinding.ensureInitialized();
+  await askForPermissions();
   await prepareWorkManager();
   await GetStorage.init();
   StaticVariables.lang = await _getCurrentLocale();
@@ -120,4 +122,14 @@ Future<void> prepareWorkManager() async{
     frequency: const Duration(minutes: 20),
     inputData: {}
   );
+}
+
+Future<void> askForPermissions() async {
+  await NotificationService.initialize();
+  await [
+    Permission.bluetooth,
+    Permission.bluetoothScan,
+    Permission.bluetoothConnect,
+    Permission.locationAlways,
+  ].request();
 }
