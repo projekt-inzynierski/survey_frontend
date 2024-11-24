@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:connectivity/connectivity.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -8,6 +10,7 @@ import 'package:survey_frontend/domain/external_services/api_response.dart';
 import 'package:survey_frontend/domain/external_services/respondent_group_service.dart';
 import 'package:survey_frontend/domain/external_services/short_survey_service.dart';
 import 'package:survey_frontend/domain/external_services/survey_service.dart';
+import 'package:survey_frontend/domain/local_services/notification_service.dart';
 import 'package:survey_frontend/domain/models/create_survey_response_dto.dart';
 import 'package:survey_frontend/domain/models/respondent_data_dto.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
@@ -15,7 +18,6 @@ import 'package:survey_frontend/domain/models/survey_with_time_slots.dart';
 import 'package:survey_frontend/domain/models/visibility_type.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:survey_frontend/presentation/static/routes.dart';
 
 class HomeController extends ControllerBase {
   final ShortSurveyService _homeService;
@@ -45,8 +47,6 @@ class HomeController extends ControllerBase {
     try {
       _isBusy = true;
       await _loadFromApi();
-      pendingSurveys.clear();
-      await _loadFromDatabase();
     } catch (e) {
       //TODO: log the exception
       await popup(AppLocalizations.of(Get.context!)!.error,
@@ -63,11 +63,16 @@ class HomeController extends ControllerBase {
 
     APIResponse<List<SurveyWithTimeSlots>> response =
         await _homeService.getSurveysWithTimeSlots();
+
     if (response.error != null || response.statusCode != 200) {
       return;
     }
 
-    await _databaseHelper.upsertSurveys(response.body!);
+    if (await _databaseHelper.upsertSurveys(response.body!)) {
+      pendingSurveys.clear();
+      await _loadFromDatabase();
+    }
+    return;
   }
 
   int hoursLeft() {
@@ -101,7 +106,6 @@ class HomeController extends ControllerBase {
         element.start.month == today.month &&
         element.start.day == today.day);
   }
-
 
   void startCompletingSurvey(String surveyId) async {
     if (_isBusy) {
@@ -187,9 +191,23 @@ class HomeController extends ControllerBase {
 
   Future<void> _loadFromDatabase() async {
     pendingSurveys.addAll(await _databaseHelper.getSurveysCompletableNow());
+    _setNotifications();
+    // NotificationService.checkPendingNotificationRequests();
   }
 
-    void openSettings(){
+  void _setNotifications() async {
+    NotificationService.cancelAllNotifications();
+    List<SurveyShortInfo> futureAndOngoingSurveys =
+        await _databaseHelper.getFutureAndOngoingSurveys();
+    futureAndOngoingSurveys.sort((a, b) => a.startTime.compareTo(b.startTime));
+    futureAndOngoingSurveys
+        .sublist(0, min(50, futureAndOngoingSurveys.length))
+        .forEach((e) {
+      e.setSurveyNotifications();
+    });
+  }
+
+  void openSettings(){
     Get.toNamed(Routes.settings);
   }
 }

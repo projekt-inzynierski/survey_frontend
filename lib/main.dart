@@ -32,6 +32,7 @@ class StaticVariables {
 }
 
 void main() async {
+  await NotificationService.initialize();
   WidgetsFlutterBinding.ensureInitialized();
   await prepareWorkManager();
   await GetStorage.init();

@@ -49,5 +49,7 @@
     "xiaomiSensor": "Czujnik Xiaomi",
     "settings": "Ustawienia",
     "editSensor": "Edytuj czujnik",
-    "appSettings": "Ustawienia aplikacji"
+    "appSettings": "Ustawienia aplikacji",
+    "surveyStartBody": "Mozesz już rozpoczęć ankiete. Jesteś gotów?",
+    "surveyFinishBody": "Ankieta zaraz się skończy. Do dzieła!"
 }

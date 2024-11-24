@@ -1,9 +1,7 @@
 import 'package:get/get.dart';
 import 'package:survey_frontend/domain/external_services/initial_survey_service.dart';
-import 'package:survey_frontend/domain/models/initial_survey_question.dart';
 import 'package:survey_frontend/domain/models/initial_survey_response.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
-import 'package:survey_frontend/presentation/screens/initial_survey/initial_survey_screen.dart';
 import 'package:survey_frontend/presentation/static/routes.dart';
 
 class WelcomeScreenController extends ControllerBase {

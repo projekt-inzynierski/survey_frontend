@@ -65,5 +65,7 @@
     "xiaomiSensor": "Xiaomi sensor",
     "settings": "Settings",
     "editSensor": "Edit sensor",
-    "appSettings": "App settings"
+    "appSettings": "App settings",
+    "surveyStartBody": "You can start the survey now. Are you ready?",
+    "surveyFinishBody": "Survey is about to end. Let's do it!"
 }
