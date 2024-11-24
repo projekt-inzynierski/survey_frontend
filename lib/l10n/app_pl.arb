@@ -43,5 +43,10 @@
     "yes": "Tak",
     "no": "Nie",
     "surveyStartBody": "Mozesz już rozpoczęć ankiete. Jesteś gotów?",
-    "surveyFinishBody": "Ankieta zaraz się skończy. Do dzieła!"
+    "surveyFinishBody": "Ankieta zaraz się skończy. Do dzieła!",
+    "pleaseEnterNumber": "Proszę wpisać liczbę",
+    "enterNumber": "Wpisz liczbę",
+    "pleaseEnterValidNumber": "Proszę wpisać poprawną liczbę",
+    "pleaseEnterLeastZeroNumber": "Proszę wpisać liczbę liczbę większą lub równą 0",
+    "pleaseEnterNumberLessThan1000": "Proszę wpisać liczbę mniejszą od 1000"
 }
