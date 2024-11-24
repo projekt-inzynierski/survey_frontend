@@ -17,7 +17,6 @@ class SurveyShortInfo {
     // TODO: nice if it will take a user to the survey immediately
     const timeBeforeFinish = 15;
 
-    var localStart = startTime.toLocal();
     NotificationService.scheduleNotification(startTime.toLocal(),
         title: name, body: AppLocalizations.of(Get.context!)!.surveyStartBody);
     if (finishTime
