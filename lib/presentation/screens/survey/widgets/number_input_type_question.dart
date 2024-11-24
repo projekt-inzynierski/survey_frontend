@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:survey_frontend/domain/models/create_question_answer_dto.dart';
+import 'package:survey_frontend/l10n/get_localizations.dart';
 
 class NumberInputTypeQuestion extends StatefulWidget {
   final CreateQuestionAnswerDto dto;
@@ -17,23 +18,21 @@ class _NumberInputTypeQuestion extends State<NumberInputTypeQuestion> {
   Widget build(BuildContext context) {
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      decoration: const InputDecoration(
-        labelText: 'Enter a number',
-      ),
+      decoration: InputDecoration(labelText: getAppLocalizations().enterNumber),
       keyboardType: TextInputType.number,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter a number';
+          return getAppLocalizations().pleaseEnterNumber;
         }
         final number = int.tryParse(value);
         if (number == null) {
-          return 'Please enter a valid number';
+          return getAppLocalizations().pleaseEnterValidNumber;
         }
         if (number < 0) {
-          return 'Please enter a positive number';
+          return getAppLocalizations().pleaseEnterLeastZeroNumber;
         }
         if (number > 1000) {
-          return 'Please enter a number less than 1000';
+          return getAppLocalizations().pleaseEnterNumberLessThan1000;
         }
         return null;
       },
