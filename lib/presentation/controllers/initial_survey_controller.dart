@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecase_impl.dart';
 import 'package:survey_frontend/domain/external_services/initial_survey_service.dart';
 import 'package:survey_frontend/domain/models/initial_survey_question.dart';
 import 'package:survey_frontend/domain/models/initial_survey_response.dart';
@@ -14,8 +15,9 @@ class InitialSurveyController extends ControllerBase{
   bool get isLastStartSurveyScreen => questionIndexTo == questions.length - 1;
   final formKey = GlobalKey<FormState>();
   final InitialSurveyService _service;
+  final NeedInsertRespondentDataUseCaseImpl _needInsertRespondentDataUseCase;
 
-  InitialSurveyController(this._service);
+  InitialSurveyController(this._service, this._needInsertRespondentDataUseCase);
 
   void next() async{
     final isValid = formKey.currentState!.validate();
@@ -37,7 +39,8 @@ class InitialSurveyController extends ControllerBase{
     try{
       final result = await _service.submit(responsesIdMappings.values.toList());
 
-      if (result.error != null || result.statusCode == 201){
+      if (result.error != null && result.statusCode == 201) {
+        _needInsertRespondentDataUseCase.needInsertRespondentData();
         await Get.offAllNamed('/home');
       } else{
         handleSomethingWentWrong(result.error);
