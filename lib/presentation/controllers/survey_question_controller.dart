@@ -4,6 +4,7 @@ import 'package:survey_frontend/domain/models/question_type.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/discrete_single_option_type_question.dart';
 import 'package:survey_frontend/presentation/controllers/question_navigable_controller.dart';
+import 'package:survey_frontend/presentation/screens/survey/widgets/number_input_type_question.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/text_multiple_choice_type_question.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/text_single_choice_type_question.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -43,6 +44,9 @@ class SurveyQuestionController extends QuestionNavigableController {
                 responseModel.answers[questionIndex].selectedOptions!,
             triggerableSectionActivationsCounts:
                 triggerableSectionActivationsCounts);
+      case QuestionType.numberInput:
+        return NumberInputTypeQuestion(
+            dto: responseModel.answers[questionIndex]);
       default:
         //TODO decide what to do in this case (most likely skip this question)
         throw Exception('Unsupported question type: ${question.questionType}');
@@ -82,6 +86,16 @@ class SurveyQuestionController extends QuestionNavigableController {
         return false;
       }
     }
+    if (question.questionType == QuestionType.numberInput) {
+      var number = responseModel.answers[questionIndex].numericAnswer;
+      if (number == null || number < 0 || number > 1000) {
+        return false;
+      }
+      return true;
+    }
+
     return true;
   }
 }
+
+class NumericInputTypeQuestion {}

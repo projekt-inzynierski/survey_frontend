@@ -67,5 +67,10 @@
     "editSensor": "Edit sensor",
     "appSettings": "App settings",
     "surveyStartBody": "You can start the survey now. Are you ready?",
-    "surveyFinishBody": "Survey is about to end. Let's do it!"
+    "surveyFinishBody": "Survey is about to end. Let's do it!",
+    "pleaseEnterNumber": "Please enter a number",
+    "enterNumber": "Enter a number",
+    "pleaseEnterValidNumber": "Please enter a valid number",
+    "pleaseEnterLeastZeroNumber": "Please enter a number that is at least 0",
+    "pleaseEnterNumberLessThan1000": "Please enter a number less than 1000"
 }
