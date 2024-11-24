@@ -7,7 +7,7 @@ import 'package:survey_frontend/domain/models/initial_survey_response.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:survey_frontend/presentation/static/routes.dart';
 
-class InitialSurveyController extends ControllerBase{
+class InitialSurveyController extends ControllerBase {
   late int questionIndexFrom;
   late int questionIndexTo;
   late RxList<InitialSurveyQuestion> questions;
@@ -19,49 +19,51 @@ class InitialSurveyController extends ControllerBase{
 
   InitialSurveyController(this._service, this._needInsertRespondentDataUseCase);
 
-  void next() async{
+  void next() async {
     final isValid = formKey.currentState!.validate();
     Get.focusScope!.unfocus();
 
-    if (!isValid){
+    if (!isValid) {
       return;
     }
 
-    if (isLastStartSurveyScreen){
+    if (isLastStartSurveyScreen) {
       await submit();
-    }
-    else{
+    } else {
       furtherQuestions();
     }
   }
 
-  Future submit() async{
-    try{
+  Future submit() async {
+    try {
       final result = await _service.submit(responsesIdMappings.values.toList());
 
       if (result.error != null && result.statusCode == 201) {
         _needInsertRespondentDataUseCase.needInsertRespondentData();
         await Get.offAllNamed('/home');
-      } else{
+      } else {
         handleSomethingWentWrong(result.error);
       }
-
-    } catch(e){
+    } catch (e) {
       //TODO: maybe more specyfic handler should be done here ???
       handleSomethingWentWrong(e);
     }
   }
 
-  void furtherQuestions(){
-    Get.toNamed(Routes.initialSurveyQuestions, arguments: {
-      "questions": questions,
-      "responsesIdMappings": responsesIdMappings,
-      "questionIndexFrom": questionIndexTo + 1,
-      "questionIndexTo": questions.length - questionIndexTo - 1 < 5 ? questions.length - 1 : questionIndexTo + 5
-    }, preventDuplicates: false);
+  void furtherQuestions() {
+    Get.toNamed(Routes.initialSurveyQuestions,
+        arguments: {
+          "questions": questions,
+          "responsesIdMappings": responsesIdMappings,
+          "questionIndexFrom": questionIndexTo + 1,
+          "questionIndexTo": questions.length - questionIndexTo - 1 < 5
+              ? questions.length - 1
+              : questionIndexTo + 5
+        },
+        preventDuplicates: false);
   }
 
-  void loadGetArguments(){
+  void loadGetArguments() {
     questionIndexFrom = Get.arguments['questionIndexFrom'];
     questionIndexTo = Get.arguments['questionIndexTo'];
     questions = Get.arguments['questions'];
