@@ -2,6 +2,7 @@ import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:survey_frontend/presentation/backgroud.dart';
 import 'package:survey_frontend/presentation/app_styles.dart';
 import 'package:survey_frontend/presentation/bindings/home_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/initial_bindings.dart';
@@ -24,13 +25,15 @@ import 'package:survey_frontend/presentation/screens/survey/survey_start_screen.
 import 'package:survey_frontend/presentation/screens/welcome_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey_frontend/presentation/static/routes.dart';
+import 'package:workmanager/workmanager.dart';
 
 class StaticVariables {
   static String lang = 'en';
 }
 
 void main() async {
-  
+  WidgetsFlutterBinding.ensureInitialized();
+  await prepareWorkManager();
   await GetStorage.init();
   StaticVariables.lang = await _getCurrentLocale();
   runApp(GetMaterialApp(
@@ -102,4 +105,18 @@ Future<String> _getCurrentLocale() async {
     locale = 'en';
   }
   return locale;
+}
+
+Future<void> prepareWorkManager() async{
+  await Workmanager().initialize(
+    callbackDispatcher,
+    isInDebugMode: false
+  );
+
+  await Workmanager().registerPeriodicTask(
+    BackgroundTasks.sensorsDataId,
+    BackgroundTasks.sensorsData,
+    frequency: const Duration(minutes: 20),
+    inputData: {}
+  );
 }
