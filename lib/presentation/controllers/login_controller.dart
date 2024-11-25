@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -16,13 +17,17 @@ class LoginController extends ControllerBase{
   final LoginService _loginService;
   final NeedInsertRespondentDataUseCase _needInsertRespondentDataUseCase;
   final GetStorage _storage;
+  String? apiUrl;
+  final RegExp apiUrlRegex = RegExp(r'https?:\/\/(www\\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)(:\d+)?');
   bool isBusy = false;
   bool _alwaysValidateInvalidCredentials = false;
+  final Dio _dio;
 
   LoginController(
       this._loginService, 
       this._storage, 
-      this._needInsertRespondentDataUseCase);
+      this._needInsertRespondentDataUseCase,
+      this._dio);
 
   void login() async{
     if (isBusy){
@@ -43,7 +48,7 @@ class LoginController extends ControllerBase{
       if (!await hasInternetConnection()) {
         return;
       }
-
+      _saveUrl();
       var apiResponse = await _loginService.login(model.value);
       await handleAPIResponse(apiResponse);
     } catch (e){
@@ -90,6 +95,18 @@ class LoginController extends ControllerBase{
 
     return null;
   }
+
+  String? apiUrlValidator(String? value) {
+    if (value == null || value == ''){
+      return AppLocalizations.of(Get.context!)!.apiUrlEmptyErrorMessage;
+    }
+
+    if (!apiUrlRegex.hasMatch(value)){
+      return AppLocalizations.of(Get.context!)!.apiUrlInvalidFormatErrorMessage;
+    }
+
+    return null;
+  }
   
   Future handleAPIResponse(APIResponse<String> apiResponse) async{
     if (apiResponse.error != null){
@@ -123,6 +140,11 @@ class LoginController extends ControllerBase{
   
   void saveToken(String token) {
     _storage.write('apiToken', token);
+  }
+  
+  void _saveUrl() {
+    _storage.write('apiUrl', apiUrl);
+    _dio.options.baseUrl = apiUrl!;
   }
 
 }
