@@ -40,7 +40,7 @@ class InitialSurveyController extends ControllerBase {
 
       if (result.error != null && result.statusCode == 201) {
         _needInsertRespondentDataUseCase.needInsertRespondentData();
-        await Get.offAllNamed('/home');
+        await Get.offAllNamed(Routes.sensors);
       } else {
         handleSomethingWentWrong(result.error);
       }
