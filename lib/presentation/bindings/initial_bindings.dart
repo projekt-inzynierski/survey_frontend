@@ -43,8 +43,9 @@ class InitialBindings extends Bindings {
     Get.lazyPut(() => ArchivedSurveysController());
     Get.create<SurveyService>(() => SurveyServiceImpl(Get.find()));
     Get.create<SurveyQuestionController>(() => SurveyQuestionController());
-    Get.put(_getDio());
-    Get.put(GetStorage());
+    final storage = GetStorage();
+    Get.put(storage);
+    Get.put(_getDio(storage));
     TokenProvider tp = TokenProviderImpl(Get.find());
     Get.put<TokenProvider>(tp);
     Get.put<TokenProvider?>(tp);
@@ -63,9 +64,12 @@ class InitialBindings extends Bindings {
     Get.put<ReadSensorsDataUsecase>(ReadXiaomiSensorsDataUsecase(), tag: SensorKind.xiaomi);
   }
 
-  Dio _getDio() {
+  Dio _getDio(GetStorage storage) {
     var dio = Dio();
-    dio.options.baseUrl = "http://192.168.31.12:8080";
+    final apiUrl = storage.read<String>('apiUrl');
+    if (apiUrl != null){
+      dio.options.baseUrl = apiUrl;
+    }
     dio.options.headers["Accept-Lang"] = StaticVariables.lang;
     return dio;
   }
