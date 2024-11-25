@@ -24,6 +24,18 @@ class LoginScreen extends GetView<LoginController> {
               ),
               TextFormField(
                 decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.apiUrl,
+                ),
+                validator: controller.apiUrlValidator,
+                onChanged: (value) {
+                  controller.apiUrl = value;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                decoration: InputDecoration(
                   labelText: AppLocalizations.of(context)!.username,
                 ),
                 validator: controller.usernameValidator,
