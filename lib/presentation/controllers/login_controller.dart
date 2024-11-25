@@ -18,7 +18,7 @@ class LoginController extends ControllerBase{
   final NeedInsertRespondentDataUseCase _needInsertRespondentDataUseCase;
   final GetStorage _storage;
   String? apiUrl;
-  final RegExp apiUrlRegex = RegExp(r'https?:\/\/(www\\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)');
+  final RegExp apiUrlRegex = RegExp(r'https?:\/\/(www\\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)(:\d+)?');
   bool isBusy = false;
   bool _alwaysValidateInvalidCredentials = false;
   final Dio _dio;
