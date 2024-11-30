@@ -23,12 +23,16 @@ import 'package:survey_frontend/domain/local_services/survey_participation_servi
 import 'package:survey_frontend/domain/usecases/token_provider.dart';
 import 'package:survey_frontend/domain/usecases/token_validity_checker.dart';
 import 'package:survey_frontend/main.dart';
+import 'package:survey_frontend/presentation/bindings/bindings_options.dart';
 import 'package:survey_frontend/presentation/controllers/archived_surveys_controller.dart';
 import 'package:survey_frontend/presentation/controllers/respondent_data_controller.dart';
 import 'package:survey_frontend/presentation/controllers/survey_question_controller.dart';
 
 class InitialBindings extends Bindings {
   static bool _registered = false;
+  final BindingOptions _bindingOptions;
+
+  InitialBindings(this._bindingOptions);
 
   @override
   void dependencies() {
@@ -37,7 +41,9 @@ class InitialBindings extends Bindings {
     }
     _registered = true;
     final location = Location();
-    location.enableBackgroundMode(enable: true);
+    if (_bindingOptions.locationAlwaysGranted){
+      location.enableBackgroundMode(enable: true);
+    }
     Get.put(location);
     Get.lazyPut(() => RespondentDataController());
     Get.lazyPut(() => ArchivedSurveysController());

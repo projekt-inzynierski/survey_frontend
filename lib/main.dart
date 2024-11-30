@@ -6,6 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:survey_frontend/domain/local_services/notification_service.dart';
 import 'package:survey_frontend/presentation/backgroud.dart';
 import 'package:survey_frontend/presentation/app_styles.dart';
+import 'package:survey_frontend/presentation/bindings/bindings_options.dart';
 import 'package:survey_frontend/presentation/bindings/home_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/initial_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/initial_survey_bindings.dart';
@@ -39,12 +40,13 @@ void main() async {
   await prepareWorkManager();
   await GetStorage.init();
   StaticVariables.lang = await _getCurrentLocale();
+  final bindingOptions = await _getBindingOptions();
   runApp(GetMaterialApp(
     title: 'UrbEaT',
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
     locale: Locale(StaticVariables.lang, ''),
-    initialBinding: InitialBindings(),
+    initialBinding: InitialBindings(bindingOptions),
     theme: AppStyles.lightTheme,
     initialRoute: '/loading',
     getPages: [
@@ -96,6 +98,12 @@ void main() async {
         )
     ],
   ));
+}
+
+Future<BindingOptions> _getBindingOptions() async{
+  return BindingOptions(
+    locationAlwaysGranted: await Permission.locationAlways.status.isGranted
+  );
 }
 
 Future<String> _getCurrentLocale() async {
