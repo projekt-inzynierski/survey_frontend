@@ -12,6 +12,7 @@ import 'package:survey_frontend/presentation/bindings/initial_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/initial_survey_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/loading_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/login_bindings.dart';
+import 'package:survey_frontend/presentation/bindings/logout_confirmation_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/sensors_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/settings_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/survey_end_bindings.dart';
@@ -21,6 +22,7 @@ import 'package:survey_frontend/presentation/screens/home/home_screen.dart';
 import 'package:survey_frontend/presentation/screens/initial_survey/initial_survey_screen.dart';
 import 'package:survey_frontend/presentation/screens/loading_screen.dart';
 import 'package:survey_frontend/presentation/screens/login_screen.dart';
+import 'package:survey_frontend/presentation/screens/logout_confirmation_screen.dart';
 import 'package:survey_frontend/presentation/screens/sensors_screen.dart';
 import 'package:survey_frontend/presentation/screens/settings/settings_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_end_screen.dart';
@@ -48,10 +50,10 @@ void main() async {
     locale: Locale(StaticVariables.lang, ''),
     initialBinding: InitialBindings(bindingOptions),
     theme: AppStyles.lightTheme,
-    initialRoute: '/loading',
+    initialRoute: Routes.loading,
     getPages: [
       GetPage(
-        name: '/login',
+        name: Routes.login,
         page: () => const LoginScreen(),
         binding: LoginBindings()
       ),
@@ -77,7 +79,7 @@ void main() async {
         )
         ,
       GetPage(
-        name: '/loading', 
+        name: Routes.loading, 
         page: () => const LoadingScreen(),
         binding: LoadingBindings() 
         ),
@@ -95,6 +97,11 @@ void main() async {
          name: Routes.settings,
          page: () => const SettingsScreen(),
          binding: SettingsBindings()
+        ),
+      GetPage(
+        name: Routes.logoutConfirmation,
+        page: () => LogoutConfirmationScreen(),
+        binding: LogoutConfirmationBindings(),
         )
     ],
   ));

@@ -271,4 +271,14 @@ class DatabaseHelper {
         where: 'surveyId = ? and start <= ? and finish >= ?',
         whereArgs: [id, currentDate, currentDate]);
   }
+
+  Future<void> clearAllTables() async {
+    final db = await database;
+    await db.delete('timeSlots');
+    await db.delete('surveys');
+    await db.delete('sections');
+    await db.delete('questions');
+    await db.delete('options');
+    await db.delete('number_ranges');
+  }
 }

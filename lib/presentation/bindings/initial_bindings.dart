@@ -55,17 +55,17 @@ class InitialBindings extends Bindings {
     TokenProvider tp = TokenProviderImpl(Get.find());
     Get.put<TokenProvider>(tp);
     Get.put<TokenProvider?>(tp);
+    Get.put<InitialSurveyService>(InitialSurveyServiceImpl(Get.find(), tokenProvider: Get.find()));
     Get.lazyPut<SurveyParticipationService>(
         () => SurveyParticipationServiceImpl(Get.find()));
-    Get.lazyPut<NeedInsertRespondentDataUseCase>(
-        () => NeedInsertRespondentDataUseCaseImpl(Get.find(), Get.find()));
-    Get.lazyPut<TokenValidityChecker>(() => TokenValidityCheckerImpl());
+    Get.put<NeedInsertRespondentDataUseCase>(
+        NeedInsertRespondentDataUseCaseImpl(Get.find(), Get.find()));
+    Get.put<TokenValidityChecker>(TokenValidityCheckerImpl());
     Get.lazyPut<RespondentDataService>(() => RespondentDataServiceImpl(
         Get.find(),
         tokenProvider: Get.find<TokenProvider>()));
     Get.put(DatabaseHelper());
     Get.put<SensorsDataService>(SensorsDataServiceImpl(Get.find(), tokenProvider: Get.find()));
-    Get.put<InitialSurveyService>(InitialSurveyServiceImpl(Get.find(), tokenProvider: Get.find()));
     Get.put<SendSensorsDataUsecase>(SendSensorsDataUsecaseImpl(Get.find(), Get.find()));
     Get.put<ReadSensorsDataUsecase>(ReadXiaomiSensorsDataUsecase(), tag: SensorKind.xiaomi);
   }
