@@ -13,6 +13,7 @@ import 'package:survey_frontend/presentation/bindings/initial_survey_bindings.da
 import 'package:survey_frontend/presentation/bindings/loading_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/login_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/logout_confirmation_bindings.dart';
+import 'package:survey_frontend/presentation/bindings/reinsert_credentials_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/sensors_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/settings_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/survey_end_bindings.dart';
@@ -23,6 +24,7 @@ import 'package:survey_frontend/presentation/screens/initial_survey/initial_surv
 import 'package:survey_frontend/presentation/screens/loading_screen.dart';
 import 'package:survey_frontend/presentation/screens/login_screen.dart';
 import 'package:survey_frontend/presentation/screens/logout_confirmation_screen.dart';
+import 'package:survey_frontend/presentation/screens/reinsert_credentials_screen.dart';
 import 'package:survey_frontend/presentation/screens/sensors_screen.dart';
 import 'package:survey_frontend/presentation/screens/settings/settings_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_end_screen.dart';
@@ -53,64 +55,59 @@ void main() async {
     initialRoute: Routes.loading,
     getPages: [
       GetPage(
-        name: Routes.login,
-        page: () => const LoginScreen(),
-        binding: LoginBindings()
-      ),
+          name: Routes.login,
+          page: () => const LoginScreen(),
+          binding: LoginBindings()),
       GetPage(
-          name: '/home',
+          name: Routes.home,
           page: () => const HomeScreen(),
-          binding: HomeBindings()
-      ),
+          binding: HomeBindings()),
       GetPage(
         name: '/surveystart',
         page: () => SurveyStartScreen(),
         binding: SurveyStartBindings(),
       ),
       GetPage(
-        name: Routes.welcome,
-        page: () => const WelcomeScreen(),
-        binding: WelcomeScreenBindings()
-        ),
+          name: Routes.welcome,
+          page: () => const WelcomeScreen(),
+          binding: WelcomeScreenBindings()),
       GetPage(
-        name: '/submitSurvey', 
-        page: () => const SurveyEndScreen(),
-        binding: SurveyEndBindings() 
-        )
-        ,
+          name: '/submitSurvey',
+          page: () => const SurveyEndScreen(),
+          binding: SurveyEndBindings()),
       GetPage(
-        name: Routes.loading, 
-        page: () => const LoadingScreen(),
-        binding: LoadingBindings() 
-        ),
+          name: Routes.loading,
+          page: () => const LoadingScreen(),
+          binding: LoadingBindings()),
       GetPage(
-        name: Routes.initialSurveyQuestions, 
-        page: () => InitialSurveyScreen(),
-        binding: InitialSurveyBindings()
-        ),
+          name: Routes.initialSurveyQuestions,
+          page: () => InitialSurveyScreen(),
+          binding: InitialSurveyBindings()),
       GetPage(
           name: Routes.sensors,
           page: () => const SensorsScreen(),
-          binding: SensorsBindings()
-        ),
+          binding: SensorsBindings()),
       GetPage(
-         name: Routes.settings,
-         page: () => const SettingsScreen(),
-         binding: SettingsBindings()
-        ),
+          name: Routes.settings,
+          page: () => const SettingsScreen(),
+          binding: SettingsBindings()),
       GetPage(
         name: Routes.logoutConfirmation,
         page: () => LogoutConfirmationScreen(),
         binding: LogoutConfirmationBindings(),
-        )
+      ),
+      GetPage(
+        name: Routes.reinsertCredentials,
+        page: () => const ReinsertCredentialsScreen(),
+        binding: ReinsertCredentialsBindings(),
+      )
     ],
   ));
 }
 
-Future<BindingOptions> _getBindingOptions() async{
+Future<BindingOptions> _getBindingOptions() async {
   return BindingOptions(
-    locationAlwaysGranted: await Permission.locationAlways.status.isGranted
-  );
+      locationAlwaysGranted: await Permission.locationAlways.status.isGranted);
 }
 
 Future<String> _getCurrentLocale() async {
@@ -125,18 +122,12 @@ Future<String> _getCurrentLocale() async {
   return locale;
 }
 
-Future<void> prepareWorkManager() async{
-  await Workmanager().initialize(
-    callbackDispatcher,
-    isInDebugMode: false
-  );
+Future<void> prepareWorkManager() async {
+  await Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
 
   await Workmanager().registerPeriodicTask(
-    BackgroundTasks.sensorsDataId,
-    BackgroundTasks.sensorsData,
-    frequency: const Duration(minutes: 20),
-    inputData: {}
-  );
+      BackgroundTasks.sensorsDataId, BackgroundTasks.sensorsData,
+      frequency: const Duration(minutes: 20), inputData: {});
 }
 
 Future<void> askForPermissions() async {

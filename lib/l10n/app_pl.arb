@@ -62,5 +62,6 @@
     "apiUrlInvalidFormatErrorMessage": "Niepoprawny format",
     "logout": "Wyloguj się",
     "logountConfirmationQuestion": "Czy na pewno chcesz się wylogować? Wszystkie dane, które nie zostały przesłane na serwer, zostaną utracone",
-    "couldNotLogout": "Nie udało się wylogować, spróbuj ponownie później."
+    "couldNotLogout": "Nie udało się wylogować, spróbuj ponownie później.",
+    "credentialsExpired": "Twój token wygasł, ponownie wprowadź hasło." 
 }

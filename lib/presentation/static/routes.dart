@@ -6,4 +6,6 @@ class Routes{
   static String get logoutConfirmation => '/logoutConfirmation';
   static String get loading => '/loading';
   static String get login => '/login';
+  static String get home => '/home';
+  static String get reinsertCredentials => '/reinsertCredentials';
 }

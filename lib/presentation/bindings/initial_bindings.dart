@@ -11,11 +11,13 @@ import 'package:survey_frontend/core/usecases/token_validity_checker_impl.dart';
 import 'package:survey_frontend/data/datasources/initial_survey_service_impl.dart';
 import 'package:survey_frontend/data/datasources/local/database_service.dart';
 import 'package:survey_frontend/data/datasources/local/survey_participation_service_impl.dart';
+import 'package:survey_frontend/data/datasources/login_service_impl.dart';
 import 'package:survey_frontend/data/datasources/respondent_data_service_impl.dart';
 import 'package:survey_frontend/data/datasources/sensors_data_service_impl.dart';
 import 'package:survey_frontend/data/datasources/survey_service_impl.dart';
 import 'package:survey_frontend/data/models/sensor_kind.dart';
 import 'package:survey_frontend/domain/external_services/initial_survey_service.dart';
+import 'package:survey_frontend/domain/external_services/login_service.dart';
 import 'package:survey_frontend/domain/external_services/respondent_date_service.dart';
 import 'package:survey_frontend/domain/external_services/sensors_data_service.dart';
 import 'package:survey_frontend/domain/external_services/survey_service.dart';
@@ -36,26 +38,29 @@ class InitialBindings extends Bindings {
 
   @override
   void dependencies() {
-    if (_registered){
+    if (_registered) {
       return;
     }
     _registered = true;
     final location = Location();
-    if (_bindingOptions.locationAlwaysGranted){
+    if (_bindingOptions.locationAlwaysGranted) {
       location.enableBackgroundMode(enable: true);
     }
     Get.put(location);
+    final storage = GetStorage();
+    Get.put(storage);
+    Get.put(_getDio(storage));
+    Get.put<LoginService>(LoginServiceImpl(Get.find()));
     Get.lazyPut(() => RespondentDataController());
     Get.lazyPut(() => ArchivedSurveysController());
     Get.create<SurveyService>(() => SurveyServiceImpl(Get.find()));
     Get.create<SurveyQuestionController>(() => SurveyQuestionController());
-    final storage = GetStorage();
-    Get.put(storage);
-    Get.put(_getDio(storage));
+
     TokenProvider tp = TokenProviderImpl(Get.find());
     Get.put<TokenProvider>(tp);
     Get.put<TokenProvider?>(tp);
-    Get.put<InitialSurveyService>(InitialSurveyServiceImpl(Get.find(), tokenProvider: Get.find()));
+    Get.put<InitialSurveyService>(
+        InitialSurveyServiceImpl(Get.find(), tokenProvider: Get.find()));
     Get.lazyPut<SurveyParticipationService>(
         () => SurveyParticipationServiceImpl(Get.find()));
     Get.put<NeedInsertRespondentDataUseCase>(
@@ -65,15 +70,18 @@ class InitialBindings extends Bindings {
         Get.find(),
         tokenProvider: Get.find<TokenProvider>()));
     Get.put(DatabaseHelper());
-    Get.put<SensorsDataService>(SensorsDataServiceImpl(Get.find(), tokenProvider: Get.find()));
-    Get.put<SendSensorsDataUsecase>(SendSensorsDataUsecaseImpl(Get.find(), Get.find()));
-    Get.put<ReadSensorsDataUsecase>(ReadXiaomiSensorsDataUsecase(), tag: SensorKind.xiaomi);
+    Get.put<SensorsDataService>(
+        SensorsDataServiceImpl(Get.find(), tokenProvider: Get.find()));
+    Get.put<SendSensorsDataUsecase>(
+        SendSensorsDataUsecaseImpl(Get.find(), Get.find()));
+    Get.put<ReadSensorsDataUsecase>(ReadXiaomiSensorsDataUsecase(),
+        tag: SensorKind.xiaomi);
   }
 
   Dio _getDio(GetStorage storage) {
     var dio = Dio();
     final apiUrl = storage.read<String>('apiUrl');
-    if (apiUrl != null){
+    if (apiUrl != null) {
       dio.options.baseUrl = apiUrl;
     }
     dio.options.headers["Accept-Lang"] = StaticVariables.lang;
