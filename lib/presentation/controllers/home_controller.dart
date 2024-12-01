@@ -177,7 +177,9 @@ class HomeController extends ControllerBase {
         .toList();
 
     return CreateSurveyResponseDto(
-        surveyId: surveyId, answers: questionAnswerDtos);
+        surveyId: surveyId,
+        startDate: DateTime.now().toUtc().toIso8601String(),
+        answers: questionAnswerDtos);
   }
 
   Map<int, int> _getTriggerableSectionActivationsCounts(SurveyDto survey) {

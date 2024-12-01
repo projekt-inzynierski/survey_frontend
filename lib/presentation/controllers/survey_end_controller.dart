@@ -46,9 +46,12 @@ class SurveyEndController extends ControllerBase {
 
   Future<SurveyParticipationDto?> _submitToServer() async {
     try {
+      dto.finishDate = DateTime.now().toUtc().toIso8601String();
       final apiResponse = await _service.submitResponse(dto);
       return apiResponse.body;
     } catch (e) {
+      popup(AppLocalizations.of(Get.context!)!.error,
+          AppLocalizations.of(Get.context!)!.mainPageTransitionError);
       //TODO: log the error
       return null;
     }
