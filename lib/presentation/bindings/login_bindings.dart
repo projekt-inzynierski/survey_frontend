@@ -12,9 +12,6 @@ class LoginBindings extends Bindings {
     Get.lazyPut<RespondentDataService>(() => RespondentDataServiceImpl(
         Get.find(),
         tokenProvider: Get.find<TokenProvider>()));
-    Get.lazyPut<LoginService>(() => LoginServiceImpl(
-      Get.find()
-    ));
     Get.lazyPut<LoginController>(() => LoginController(
       Get.find(),
       Get.find(),

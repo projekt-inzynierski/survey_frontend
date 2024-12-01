@@ -6,4 +6,8 @@ class SettingsController extends ControllerBase {
   void editSensor(){
     Get.toNamed(Routes.sensors);
   }
+
+  void logout(){
+    Get.toNamed(Routes.logoutConfirmation);
+  }
 }

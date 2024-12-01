@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:survey_frontend/presentation/controllers/login_controller.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:survey_frontend/presentation/controllers/reinsert_credentials_controller.dart';
 import 'package:survey_frontend/presentation/widgets/app_logo.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class LoginScreen extends GetView<LoginController> {
-  const LoginScreen({super.key});
+class ReinsertCredentialsScreen extends GetView<ReinsertCredentialsController> {
+  const ReinsertCredentialsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +20,13 @@ class LoginScreen extends GetView<LoginController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const AppLogo(),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.apiUrl,
-                ),
-                validator: controller.apiUrlValidator,
-                onChanged: (value) {
-                  controller.apiUrl = value;
-                },
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                AppLocalizations.of(context)!.credentialsExpired,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 20),
               ),
               const SizedBox(
                 height: 20,
@@ -35,10 +35,8 @@ class LoginScreen extends GetView<LoginController> {
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context)!.username,
                 ),
-                validator: controller.usernameValidator,
-                onChanged: (value) {
-                  controller.model.value.username = value;
-                },
+                initialValue: controller.model.value.username,
+                readOnly: true,
               ),
               const SizedBox(
                 height: 20,
@@ -56,9 +54,22 @@ class LoginScreen extends GetView<LoginController> {
               const SizedBox(
                 height: 20,
               ),
-              ElevatedButton(
-                onPressed: controller.login,
-                child: Text(AppLocalizations.of(context)!.login),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: controller.login,
+                  child: Text(AppLocalizations.of(context)!.login),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: controller.logout,
+                  child: Text(AppLocalizations.of(context)!.logout),
+                ),
               )
             ],
           ),

@@ -6,6 +6,7 @@ import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecas
 import 'package:survey_frontend/domain/usecases/token_validity_checker.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:survey_frontend/presentation/functions/handle_need_insert_respondent_data.dart';
+import 'package:survey_frontend/presentation/static/routes.dart';
 
 class LoadingController extends ControllerBase {
   final GetStorage _storage;
@@ -20,15 +21,20 @@ class LoadingController extends ControllerBase {
   void goToNextPage() async {
     retryButtonVisible.value = false;
     String? savedToken = _storage.read<String>("apiToken");
-    if (savedToken == null || !_tokenValidityChecker.isValid(savedToken)) {
-      Get.offAllNamed('login');
+    if (savedToken == null) {
+      Get.offAllNamed(Routes.login);
+      return;
+    }
+
+    if (!_tokenValidityChecker.isValid(savedToken)){
+      Get.offAllNamed(Routes.reinsertCredentials);
       return;
     }
 
     var respondentData = _storage.read<dynamic>("respondentData");    
 
     if (respondentData != null) {
-      Get.offAllNamed('/home');
+      Get.offAllNamed(Routes.home);
       return;
     }
 
