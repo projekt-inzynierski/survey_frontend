@@ -59,5 +59,9 @@
     "pleaseEnterNumberLessThan1000": "Proszę wpisać liczbę mniejszą od 1000",
     "apiUrl": "Adres API",
     "apiUrlEmptyErrorMessage": "Adres API nie może być pusty",
-    "apiUrlInvalidFormatErrorMessage": "Niepoprawny format"
+    "apiUrlInvalidFormatErrorMessage": "Niepoprawny format",
+    "logout": "Wyloguj się",
+    "logountConfirmationQuestion": "Czy na pewno chcesz się wylogować? Wszystkie dane, które nie zostały przesłane na serwer, zostaną utracone",
+    "couldNotLogout": "Nie udało się wylogować, spróbuj ponownie później.",
+    "credentialsExpired": "Twój token wygasł, ponownie wprowadź hasło." 
 }
