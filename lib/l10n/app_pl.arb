@@ -63,5 +63,8 @@
     "logout": "Wyloguj się",
     "logountConfirmationQuestion": "Czy na pewno chcesz się wylogować? Wszystkie dane, które nie zostały przesłane na serwer, zostaną utracone",
     "couldNotLogout": "Nie udało się wylogować, spróbuj ponownie później.",
-    "credentialsExpired": "Twój token wygasł, ponownie wprowadź hasło." 
+    "credentialsExpired": "Twój token wygasł, ponownie wprowadź hasło.",
+    "profile": "Profil",
+    "couldNotReachTheServer": "Nie udało się wysłać żądania, spróbuj ponownie później.",
+    "somethingWentWrong": "Coś poszło nie tak, spróbuj ponownie później."
 }

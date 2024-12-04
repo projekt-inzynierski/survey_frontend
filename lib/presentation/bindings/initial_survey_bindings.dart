@@ -5,6 +5,6 @@ class InitialSurveyBindings extends Bindings {
   @override
   void dependencies() {
     Get.create<InitialSurveyController>(
-        () => InitialSurveyController(Get.find(), Get.find()));
+        () => InitialSurveyController(Get.find(), Get.find(), Get.find()));
   }
 }

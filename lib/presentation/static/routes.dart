@@ -8,4 +8,5 @@ class Routes{
   static String get login => '/login';
   static String get home => '/home';
   static String get reinsertCredentials => '/reinsertCredentials';
+  static String get profile => '/profile';
 }
