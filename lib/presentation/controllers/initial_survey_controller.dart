@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecase.dart';
 import 'package:survey_frontend/domain/external_services/initial_survey_service.dart';
 import 'package:survey_frontend/domain/models/initial_survey_question.dart';
@@ -16,8 +17,9 @@ class InitialSurveyController extends ControllerBase {
   final formKey = GlobalKey<FormState>();
   final InitialSurveyService _service;
   final NeedInsertRespondentDataUseCase _needInsertRespondentDataUseCase;
+  final GetStorage _storage;
 
-  InitialSurveyController(this._service, this._needInsertRespondentDataUseCase);
+  InitialSurveyController(this._service, this._needInsertRespondentDataUseCase, this._storage);
 
   void next() async {
     final isValid = formKey.currentState!.validate();
@@ -38,8 +40,9 @@ class InitialSurveyController extends ControllerBase {
     try {
       final result = await _service.submit(responsesIdMappings.values.toList());
 
-      if (result.error != null && result.statusCode == 201) {
+      if (result.error == null && result.statusCode == 201) {
         _needInsertRespondentDataUseCase.needInsertRespondentData();
+        _storage.write('initialSurvey', questions.map((e) => e.toJson()).toList());
         await Get.offAllNamed(Routes.sensors);
       } else {
         handleSomethingWentWrong(result.error);

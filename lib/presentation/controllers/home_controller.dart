@@ -211,6 +211,10 @@ class HomeController extends ControllerBase {
   void openSettings(){
     Get.toNamed(Routes.settings);
   }
+
+  void openProfile(){
+    Get.toNamed(Routes.profile);
+  }
 }
 
 class QuestionWithSection {

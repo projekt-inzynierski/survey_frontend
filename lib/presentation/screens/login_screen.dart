@@ -56,9 +56,12 @@ class LoginScreen extends GetView<LoginController> {
               const SizedBox(
                 height: 20,
               ),
-              ElevatedButton(
-                onPressed: controller.login,
-                child: Text(AppLocalizations.of(context)!.login),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: controller.login,
+                  child: Text(AppLocalizations.of(context)!.login),
+                ),
               )
             ],
           ),
