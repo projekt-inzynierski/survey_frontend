@@ -1,14 +1,37 @@
+import 'dart:io';
+
 import 'package:connectivity/connectivity.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 
 class ControllerBase extends GetxController {
   final Connectivity connectivity = Connectivity();
 
   Future<void> handleSomethingWentWrong(Object? error) async {
-    await popup(AppLocalizations.of(Get.context!)!.error, error.toString());
+    String message;
+
+    if (error is DioException) {
+      if (error.type == DioExceptionType.connectionTimeout ||
+          error.type == DioExceptionType.sendTimeout ||
+          error.type == DioExceptionType.receiveTimeout) {
+        message = AppLocalizations.of(Get.context!)!
+            .couldNotReachTheServer;
+      } else if (error.type == DioExceptionType.unknown &&
+          error.error is SocketException) {
+        message = AppLocalizations.of(Get.context!)!
+            .couldNotReachTheServer;
+      } else {
+        message =
+            AppLocalizations.of(Get.context!)!.somethingWentWrong;
+      }
+    } else {
+      message =
+          AppLocalizations.of(Get.context!)!.somethingWentWrong; 
+    }
+
+    await popup(AppLocalizations.of(Get.context!)!.error, message);
   }
 
   Future<void> popup(String title, String message) async {

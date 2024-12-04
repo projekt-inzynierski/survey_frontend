@@ -20,7 +20,7 @@ class HomeScreen extends GetView<HomeController> implements RouteAware {
             height: 24,
           ),
           onPressed: () {
-            // Define the action when the user icon is pressed
+            controller.openProfile();
           },
         ),
         centerTitle: true,
