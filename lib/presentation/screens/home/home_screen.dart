@@ -74,12 +74,6 @@ class HomeScreen extends GetView<HomeController> implements RouteAware {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          controller.isLocationWorking();
-        },
-        child: const Icon(Icons.location_pin),
-      ),
     );
   }
 
