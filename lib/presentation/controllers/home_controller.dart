@@ -1,8 +1,10 @@
 import 'dart:math';
 
 import 'package:connectivity/connectivity.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:location/location.dart';
 import 'package:survey_frontend/core/usecases/create_question_answer_dto_factory.dart';
 import 'package:survey_frontend/data/datasources/local/database_service.dart';
 import 'package:survey_frontend/data/models/short_survey.dart';
@@ -18,6 +20,8 @@ import 'package:survey_frontend/domain/models/survey_with_time_slots.dart';
 import 'package:survey_frontend/domain/models/visibility_type.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:survey_frontend/presentation/screens/home/home_screen.dart';
+import 'package:survey_frontend/presentation/screens/home/widgets/location_request.dart';
 import 'package:survey_frontend/presentation/static/routes.dart';
 
 class HomeController extends ControllerBase {
@@ -115,6 +119,9 @@ class HomeController extends ControllerBase {
 
     try {
       _isBusy = true;
+      if (!await isLocationWorking()) {
+        return;
+      }
       final futures = [_loadSurvey(surveyId), _getGroupsIds()];
       final results = await Future.wait(futures);
       SurveyDto? survey = results[0] as SurveyDto?;
@@ -143,6 +150,30 @@ class HomeController extends ControllerBase {
     } finally {
       _isBusy = false;
     }
+  }
+
+  Future<bool> isLocationWorking() async {
+    Location location = Location();
+    LocationPermission locationPermission = await Geolocator.checkPermission();
+    if (locationPermission == LocationPermission.denied) {
+      locationPermission = await Geolocator.requestPermission();
+      if (locationPermission != LocationPermission.always &&
+          locationPermission != LocationPermission.whileInUse) {
+        await buildDenyDialog();
+        return false;
+      }
+    }
+
+    bool locationEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!locationEnabled) {
+      bool enabled = await location.requestService();
+      if (!enabled) {
+        return false;
+      }
+    }
+    return true;
+    Position position = await Geolocator.getCurrentPosition();
+    print(position);
   }
 
   Future<SurveyDto?> _loadSurvey(String surveyId) async {
@@ -210,11 +241,11 @@ class HomeController extends ControllerBase {
     });
   }
 
-  void openSettings(){
+  void openSettings() {
     Get.toNamed(Routes.settings);
   }
 
-  void openProfile(){
+  void openProfile() {
     Get.toNamed(Routes.profile);
   }
 }

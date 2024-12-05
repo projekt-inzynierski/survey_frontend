@@ -82,5 +82,9 @@
     "credentialsExpired": "Your token has expired, reeter passwor.",
     "profile": "Profile",
     "couldNotReachTheServer": "Failed to send the request, please try again later.",
-    "somethingWentWrong": "Something went wrong, please try again later."
+    "somethingWentWrong": "Something went wrong, please try again later.",
+    "locationPermissionDenied": "Location permission denied",
+    "locationPermissionDeniedMessage": "Location permission is required to fill the survey. Please enable it in your device settings.\nGo to Permissions -> Location \nSelect Allow",
+    "openSettings": "Open settings",
+    "close": "Close"
 }

@@ -1,5 +1,6 @@
 import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -144,5 +145,7 @@ Future<void> askForPermissions() async {
     Permission.bluetoothScan,
     Permission.bluetoothConnect,
     Permission.locationAlways,
+    Permission.locationWhenInUse
   ].request();
+  Geolocator.requestPermission();
 }
