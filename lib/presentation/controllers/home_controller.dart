@@ -21,7 +21,6 @@ import 'package:survey_frontend/domain/models/survey_with_time_slots.dart';
 import 'package:survey_frontend/domain/models/visibility_type.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:survey_frontend/presentation/screens/home/home_screen.dart';
 import 'package:survey_frontend/presentation/screens/home/widgets/location_request.dart';
 import 'package:survey_frontend/presentation/static/routes.dart';
 

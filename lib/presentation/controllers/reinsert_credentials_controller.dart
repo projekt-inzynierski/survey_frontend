@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecase.dart';
 import 'package:survey_frontend/domain/external_services/api_response.dart';

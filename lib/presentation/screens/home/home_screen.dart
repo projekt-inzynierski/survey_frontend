@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:location/location.dart';
-import 'package:survey_frontend/l10n/get_localizations.dart';
 import 'package:survey_frontend/presentation/controllers/home_controller.dart';
 import 'package:survey_frontend/presentation/screens/home/widgets/survey_tile.dart';
 import 'package:survey_frontend/presentation/screens/home/widgets/time_circle.dart';
