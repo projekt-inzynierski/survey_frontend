@@ -24,8 +24,9 @@ class ReinsertCredentialsController extends ControllerBase {
     model.value.username = _readUsername();
   }
 
-  String _readUsername(){
-    final respondentData = _storage.read<Map<String, dynamic>>('respondentData')!;
+  String _readUsername() {
+    final respondentData =
+        _storage.read<Map<String, dynamic>>("respondentData")!;
     return respondentData['username'];
   }
 
@@ -98,11 +99,11 @@ class ReinsertCredentialsController extends ControllerBase {
   }
 
   void showInvalidCredentialsError() {
-    try{
+    try {
       _alwaysValidateInvalidCredentials = true;
       formKey.currentState!.validate();
       Get.focusScope!.unfocus();
-    } finally{
+    } finally {
       _alwaysValidateInvalidCredentials = false;
     }
   }
@@ -111,7 +112,7 @@ class ReinsertCredentialsController extends ControllerBase {
     _storage.write('apiToken', token);
   }
 
-  void logout(){
+  void logout() {
     Get.toNamed(Routes.logoutConfirmation);
   }
 }
