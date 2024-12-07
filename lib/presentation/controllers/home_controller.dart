@@ -1,8 +1,10 @@
 import 'dart:math';
 
 import 'package:connectivity/connectivity.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:location/location.dart';
 import 'package:survey_frontend/core/usecases/create_question_answer_dto_factory.dart';
 import 'package:survey_frontend/core/usecases/survey_notification_usecase.dart';
 import 'package:survey_frontend/data/datasources/local/database_service.dart';
@@ -13,12 +15,14 @@ import 'package:survey_frontend/domain/external_services/short_survey_service.da
 import 'package:survey_frontend/domain/external_services/survey_service.dart';
 import 'package:survey_frontend/domain/local_services/notification_service.dart';
 import 'package:survey_frontend/domain/models/create_survey_response_dto.dart';
+import 'package:survey_frontend/domain/models/localization_data.dart';
 import 'package:survey_frontend/domain/models/respondent_data_dto.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/domain/models/survey_with_time_slots.dart';
 import 'package:survey_frontend/domain/models/visibility_type.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:survey_frontend/presentation/screens/home/widgets/location_request.dart';
 import 'package:survey_frontend/presentation/static/routes.dart';
 
 class HomeController extends ControllerBase {
@@ -118,6 +122,9 @@ class HomeController extends ControllerBase {
 
     try {
       _isBusy = true;
+      if (!await isLocationWorking()) {
+        return;
+      }
       final futures = [_loadSurvey(surveyId), _getGroupsIds()];
       final results = await Future.wait(futures);
       SurveyDto? survey = results[0] as SurveyDto?;
@@ -130,6 +137,7 @@ class HomeController extends ControllerBase {
       }
       final questions = _getQuestionsFromSurvey(survey);
       final responseModel = _prepareResponseModel(questions, survey.id);
+      final futureLocalizationData = _getCurrentLocation();
       final triggerableSectionActivationsCounts =
           _getTriggerableSectionActivationsCounts(survey);
       await Get.toNamed("/surveystart", arguments: {
@@ -138,7 +146,8 @@ class HomeController extends ControllerBase {
         "responseModel": responseModel,
         "groups": respondentGroups,
         "triggerableSectionActivationsCounts":
-            triggerableSectionActivationsCounts
+            triggerableSectionActivationsCounts,
+        "localizationData": futureLocalizationData
       });
     } catch (e) {
       await popup(AppLocalizations.of(Get.context!)!.error,
@@ -146,6 +155,28 @@ class HomeController extends ControllerBase {
     } finally {
       _isBusy = false;
     }
+  }
+
+  Future<bool> isLocationWorking() async {
+    Location location = Location();
+    LocationPermission locationPermission = await Geolocator.checkPermission();
+    if (locationPermission == LocationPermission.denied) {
+      locationPermission = await Geolocator.requestPermission();
+      if (locationPermission != LocationPermission.always &&
+          locationPermission != LocationPermission.whileInUse) {
+        await buildDenyDialog();
+        return false;
+      }
+    }
+
+    bool locationEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!locationEnabled) {
+      bool enabled = await location.requestService();
+      if (!enabled) {
+        return false;
+      }
+    }
+    return true;
   }
 
   Future<SurveyDto?> _loadSurvey(String surveyId) async {
@@ -157,7 +188,10 @@ class HomeController extends ControllerBase {
   }
 
   Future<List<String>?> _getGroupsIds() async {
-    var respondentData = _storage.read("respondentData")!;
+    var respondentData = _storage.read("respondentData");
+    if (respondentData == null) {
+      return [];
+    }
     final String id = respondentData is RespondentDataDto
         ? respondentData.id
         : respondentData['id'];
@@ -180,7 +214,9 @@ class HomeController extends ControllerBase {
         .toList();
 
     return CreateSurveyResponseDto(
-        surveyId: surveyId, answers: questionAnswerDtos);
+        surveyId: surveyId,
+        startDate: DateTime.now().toUtc().toIso8601String(),
+        answers: questionAnswerDtos);
   }
 
   Map<int, int> _getTriggerableSectionActivationsCounts(SurveyDto survey) {
@@ -198,12 +234,20 @@ class HomeController extends ControllerBase {
     await _surveyNotificationUseCase.scheduleSurveysNotifications();
   }
 
-  void openSettings(){
+  void openSettings() {
     Get.toNamed(Routes.settings);
   }
 
-  void openProfile(){
+  void openProfile() {
     Get.toNamed(Routes.profile);
+  }
+
+  Future<LocalizationData> _getCurrentLocation() async {
+    Position currentLocation = await Geolocator.getCurrentPosition();
+    return LocalizationData(
+        dateTime: DateTime.now().toUtc().toIso8601String(),
+        latitude: currentLocation.latitude,
+        longitude: currentLocation.longitude);
   }
 }
 

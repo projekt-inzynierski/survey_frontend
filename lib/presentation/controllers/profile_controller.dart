@@ -9,7 +9,7 @@ class ProfileController extends ControllerBase {
   late List<InitialSurveyQuestion> initialSurveyQuestions;
 
   ProfileController(GetStorage storage)
-      : respondentData = storage.read('respondentData')! {
+      : respondentData = storage.read("respondentData")! {
     initialSurveyQuestions = storage
         .read<List<dynamic>>('initialSurvey')!
         .map((e) => InitialSurveyQuestion.fromJson(e))
