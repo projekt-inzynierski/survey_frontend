@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:connectivity/connectivity.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';

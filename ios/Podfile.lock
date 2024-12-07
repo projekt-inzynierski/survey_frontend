@@ -11,6 +11,8 @@ PODS:
     - Flutter
   - flutter_timezone (0.0.1):
     - Flutter
+  - geolocator_apple (1.2.0):
+    - Flutter
   - location (0.0.1):
     - Flutter
   - path_provider_foundation (0.0.1):
@@ -32,6 +34,7 @@ DEPENDENCIES:
   - flutter_blue_plus (from `.symlinks/plugins/flutter_blue_plus/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_timezone (from `.symlinks/plugins/flutter_timezone/ios`)
+  - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - location (from `.symlinks/plugins/location/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
@@ -55,6 +58,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_timezone:
     :path: ".symlinks/plugins/flutter_timezone/ios"
+  geolocator_apple:
+    :path: ".symlinks/plugins/geolocator_apple/ios"
   location:
     :path: ".symlinks/plugins/location/ios"
   path_provider_foundation:
@@ -73,6 +78,7 @@ SPEC CHECKSUMS:
   flutter_blue_plus: 4837da7d00cf5d441fdd6635b3a57f936778ea96
   flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
   flutter_timezone: ffb07bdad3c6276af8dada0f11978d8a1f8a20bb
+  geolocator_apple: 9bcea1918ff7f0062d98345d238ae12718acfbc1
   location: d5cf8598915965547c3f36761ae9cc4f4e87d22e
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2

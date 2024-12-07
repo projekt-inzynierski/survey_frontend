@@ -150,9 +150,9 @@ Future<String> _getCurrentLocale() async {
 Future<void> prepareWorkManager() async {
   await Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
 
-  // await Workmanager().registerPeriodicTask(
-  //     BackgroundTasks.sensorsDataId, BackgroundTasks.sensorsData,
-  //     frequency: const Duration(minutes: 20), inputData: {});
+  await Workmanager().registerPeriodicTask(
+      BackgroundTasks.sensorsDataId, BackgroundTasks.sensorsData,
+      frequency: const Duration(minutes: 20), inputData: {});
 }
 
 Future<void> askForPermissions() async {
