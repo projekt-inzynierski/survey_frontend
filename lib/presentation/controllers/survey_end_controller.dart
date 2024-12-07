@@ -11,7 +11,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SurveyEndController extends ControllerBase {
   late CreateSurveyResponseDto dto;
-  late LocalizationData localizationData;
+  late Future<LocalizationData> localizationData;
   final SurveyResponseService _surveyService;
   final LocalizationService _locationService;
   final SurveyParticipationService _surveyParticipationService;
@@ -34,8 +34,9 @@ class SurveyEndController extends ControllerBase {
             AppLocalizations.of(Get.context!)!.answerSubmitError);
       } else {
         await _surveyParticipationService.addParticipation(participation);
-        await _locationService.submitLocation(
-            participation.id, localizationData);
+        final apiResponse = await _locationService.submitLocation(
+            participation.id, await localizationData);
+        print(apiResponse);
         await _databaseHelper.removeSurveyTimeSlot(participation.surveyId);
       }
 

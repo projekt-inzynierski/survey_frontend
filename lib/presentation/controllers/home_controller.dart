@@ -134,7 +134,7 @@ class HomeController extends ControllerBase {
       }
       final questions = _getQuestionsFromSurvey(survey);
       final responseModel = _prepareResponseModel(questions, survey.id);
-      final localizationData = _getCurrentLocation();
+      final futureLocalizationData = _getCurrentLocation();
       final triggerableSectionActivationsCounts =
           _getTriggerableSectionActivationsCounts(survey);
       await Get.toNamed("/surveystart", arguments: {
@@ -144,7 +144,7 @@ class HomeController extends ControllerBase {
         "groups": respondentGroups,
         "triggerableSectionActivationsCounts":
             triggerableSectionActivationsCounts,
-        "localizationData": localizationData
+        "localizationData": futureLocalizationData
       });
     } catch (e) {
       await popup(AppLocalizations.of(Get.context!)!.error,
@@ -185,7 +185,10 @@ class HomeController extends ControllerBase {
   }
 
   Future<List<String>?> _getGroupsIds() async {
-    var respondentData = _storage.read("respondentData")!;
+    var respondentData = _storage.read("respondentData");
+    if (respondentData == null) {
+      return [];
+    }
     final String id = respondentData is RespondentDataDto
         ? respondentData.id
         : respondentData['id'];

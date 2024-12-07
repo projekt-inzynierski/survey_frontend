@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:survey_frontend/data/datasources/local/survey_participation_service_impl.dart';
 import 'package:survey_frontend/data/datasources/location_service_impl.dart';
 import 'package:survey_frontend/data/datasources/survey_response_service_impl.dart';
+import 'package:survey_frontend/domain/external_services/location_service.dart';
 import 'package:survey_frontend/domain/external_services/survey_response_service.dart';
 import 'package:survey_frontend/domain/local_services/survey_participation_service.dart';
 import 'package:survey_frontend/domain/usecases/token_provider.dart';
@@ -13,7 +14,7 @@ class SurveyEndBindings extends Bindings {
     Get.lazyPut<SurveyResponseService>(() => SurveyResponseServiceImpl(
         Get.find(),
         tokenProvider: Get.find<TokenProvider>()));
-    Get.lazyPut(() => LocalizationServiceImpl(Get.find()));
+    Get.lazyPut<LocalizationService>(() => LocalizationServiceImpl(Get.find()));
     Get.lazyPut(() =>
         SurveyEndController(Get.find(), Get.find(), Get.find(), Get.find()));
     Get.lazyPut<SurveyParticipationService>(

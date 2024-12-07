@@ -1,6 +1,6 @@
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/domain/models/create_survey_response_dto.dart';
+import 'package:survey_frontend/domain/models/localization_data.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:survey_frontend/presentation/controllers/home_controller.dart';
@@ -14,7 +14,7 @@ class QuestionNavigableController extends ControllerBase {
   late CreateSurveyResponseDto responseModel;
   late List<String?> groupsIds;
   late Map<int, int> triggerableSectionActivationsCounts;
-  late Position localizationData;
+  late Future<LocalizationData> localizationData;
 
   void navigateToNextQuestion(QuestionNavigationMode mode) async {
     if (isBusy) {
@@ -31,8 +31,10 @@ class QuestionNavigableController extends ControllerBase {
       int nextQuestionIndex = _getNextValidQuestionIndex();
 
       if (nextQuestionIndex == -1) {
-        await Get.toNamed('/submitSurvey',
-            arguments: {'responseModel': responseModel});
+        await Get.toNamed('/submitSurvey', arguments: {
+          'responseModel': responseModel,
+          "localizationData": localizationData
+        });
         return;
       }
 
