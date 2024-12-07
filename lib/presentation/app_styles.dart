@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:survey_frontend/generated/l10n.dart';
 
 class AppStyles {
   static const Color backgroundSecondary = Color.fromARGB(255, 244, 244, 244);
@@ -22,6 +23,26 @@ class AppStyles {
       fontFamily: 'Roboto',
       shadowColor: Colors.black,
       textTheme: const TextTheme(bodyLarge: TextStyle(fontSize: 20)),
+      timePickerTheme: TimePickerThemeData(
+        backgroundColor: onBackgroundSecondary,
+        hourMinuteTextColor: _appNameColor,
+        dialHandColor: _primaryColor,
+        dialBackgroundColor: backgroundSecondary,
+        entryModeIconColor: primaryDark,
+        hourMinuteColor: _primaryColor,
+        cancelButtonStyle: ButtonStyle(
+          foregroundColor: WidgetStateProperty.resolveWith((states){
+            return primaryDark;
+          }),
+          overlayColor: WidgetStatePropertyAll(_primaryColor)
+        ),
+        confirmButtonStyle:  ButtonStyle(
+          foregroundColor: WidgetStateProperty.resolveWith((states){
+            return primaryDark;
+          }),
+          overlayColor: WidgetStatePropertyAll(_primaryColor)
+        ),
+      ),
       switchTheme: SwitchThemeData(
       thumbColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {

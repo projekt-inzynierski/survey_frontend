@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/app_styles.dart';
 import 'package:survey_frontend/presentation/controllers/privacy_settings_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:survey_frontend/presentation/widgets/time_picker.dart';
 
 class PrivacySettingsScreen extends GetView<PrivacySettingsController> {
   const PrivacySettingsScreen({super.key});
@@ -74,9 +75,7 @@ class PrivacySettingsScreen extends GetView<PrivacySettingsController> {
                   endIndent: 20,
                 ),
                 const SizedBox(height: 10),
-                GFTimePicker(
-                  
-                )
+                TimePicker(onChange: (v){})
               ]),
             ),
           ),
