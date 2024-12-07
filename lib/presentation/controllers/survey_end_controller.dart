@@ -1,21 +1,25 @@
 import 'package:get/get.dart';
 import 'package:survey_frontend/data/datasources/local/database_service.dart';
+import 'package:survey_frontend/domain/external_services/location_service.dart';
 import 'package:survey_frontend/domain/external_services/survey_response_service.dart';
 import 'package:survey_frontend/domain/local_services/survey_participation_service.dart';
 import 'package:survey_frontend/domain/models/create_survey_response_dto.dart';
+import 'package:survey_frontend/domain/models/localization_data.dart';
 import 'package:survey_frontend/domain/models/survey_participation_dto.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SurveyEndController extends ControllerBase {
   late CreateSurveyResponseDto dto;
-  final SurveyResponseService _service;
+  late Future<LocalizationData> localizationData;
+  final SurveyResponseService _surveyService;
+  final LocalizationService _locationService;
   final SurveyParticipationService _surveyParticipationService;
   final DatabaseHelper _databaseHelper;
   bool _isBusy = false;
 
-  SurveyEndController(
-      this._service, this._surveyParticipationService, this._databaseHelper);
+  SurveyEndController(this._surveyService, this._locationService,
+      this._surveyParticipationService, this._databaseHelper);
 
   void endSurvey() async {
     if (_isBusy) {
@@ -30,6 +34,9 @@ class SurveyEndController extends ControllerBase {
             AppLocalizations.of(Get.context!)!.answerSubmitError);
       } else {
         await _surveyParticipationService.addParticipation(participation);
+        final apiResponse = await _locationService.submitLocation(
+            participation.id, await localizationData);
+        print(apiResponse);
         await _databaseHelper.removeSurveyTimeSlot(participation.surveyId);
       }
 
@@ -46,9 +53,12 @@ class SurveyEndController extends ControllerBase {
 
   Future<SurveyParticipationDto?> _submitToServer() async {
     try {
-      final apiResponse = await _service.submitResponse(dto);
+      dto.finishDate = DateTime.now().toUtc().toIso8601String();
+      final apiResponse = await _surveyService.submitResponse(dto);
       return apiResponse.body;
     } catch (e) {
+      popup(AppLocalizations.of(Get.context!)!.error,
+          AppLocalizations.of(Get.context!)!.mainPageTransitionError);
       //TODO: log the error
       return null;
     }
@@ -56,5 +66,8 @@ class SurveyEndController extends ControllerBase {
 
   void readGetArgs() {
     dto = Get.arguments['responseModel'];
+    localizationData = Get.arguments['localizationData'];
   }
+
+  void _sendLocalizationData(String id, LocalizationData localizationData) {}
 }

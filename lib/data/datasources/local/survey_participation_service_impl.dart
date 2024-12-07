@@ -9,23 +9,21 @@ class SurveyParticipationServiceImpl implements SurveyParticipationService {
 
   @override
   Future<void> addParticipation(SurveyParticipationDto dto) async {
-    final participants = await getAllParticipates();
+    final participations = await getAllParticipates();
 
-    participants.add(dto);
-    await _localStorage.write('participants', participants);
+    participations.add(dto);
+    await _localStorage.write('participations', participations);
   }
 
   @override
   Future<List<SurveyParticipationDto>> getAllParticipates() {
-    return Future.value(_localStorage
-            .read<List<dynamic>>('participants')
-            ?.map((e) {
+    return Future.value(
+        _localStorage.read<List<dynamic>>('participations')?.map((e) {
               if (e is SurveyParticipationDto) {
                 return e;
               }
               return SurveyParticipationDto.fromJson(e);
-            })
-            .toList() ??
-        <SurveyParticipationDto>[]);
+            }).toList() ??
+            <SurveyParticipationDto>[]);
   }
 }
