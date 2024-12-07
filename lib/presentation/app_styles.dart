@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:survey_frontend/generated/l10n.dart';
 
 class AppStyles {
   static const Color backgroundSecondary = Color.fromARGB(255, 244, 244, 244);
@@ -6,11 +7,14 @@ class AppStyles {
   static final MaterialColor _primaryColor =
       MaterialColor(const Color.fromRGBO(165, 214, 35, 0.46).value, const {});
   static const Color _appNameColor = Color.fromARGB(255, 61, 68, 79);
+  static const Color primaryDark = Color.fromARGB(255, 117, 161, 0);
+  static const Color primary = Color.fromARGB(255, 165, 214, 35);
+
   static ThemeData lightTheme = ThemeData(
       scaffoldBackgroundColor: Colors.white,
-      primaryColor: const Color.fromARGB(255, 165, 214, 35),
+      primaryColor: primary,
       primaryColorLight: const Color.fromARGB(117, 166, 214, 35),
-      primaryColorDark: const Color.fromARGB(255, 117, 161, 0),
+      primaryColorDark: primaryDark,
       cardColor: const Color.fromARGB(255, 252, 176, 64),
       indicatorColor: const Color.fromARGB(255, 4, 90, 161),
       hintColor: const Color.fromARGB(255, 230, 166, 72),
@@ -19,6 +23,40 @@ class AppStyles {
       fontFamily: 'Roboto',
       shadowColor: Colors.black,
       textTheme: const TextTheme(bodyLarge: TextStyle(fontSize: 20)),
+      timePickerTheme: TimePickerThemeData(
+        backgroundColor: onBackgroundSecondary,
+        hourMinuteTextColor: _appNameColor,
+        dialHandColor: _primaryColor,
+        dialBackgroundColor: backgroundSecondary,
+        entryModeIconColor: primaryDark,
+        hourMinuteColor: _primaryColor,
+        cancelButtonStyle: ButtonStyle(
+          foregroundColor: WidgetStateProperty.resolveWith((states){
+            return primaryDark;
+          }),
+          overlayColor: WidgetStatePropertyAll(_primaryColor)
+        ),
+        confirmButtonStyle:  ButtonStyle(
+          foregroundColor: WidgetStateProperty.resolveWith((states){
+            return primaryDark;
+          }),
+          overlayColor: WidgetStatePropertyAll(_primaryColor)
+        ),
+      ),
+      switchTheme: SwitchThemeData(
+      thumbColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return primaryDark;
+        }
+        return Colors.grey;
+      }),
+      trackColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return primary;
+        }
+        return Colors.grey.shade400;
+      }),
+      ),
       appBarTheme: const AppBarTheme(
           color: Colors.white,
           titleTextStyle: TextStyle(

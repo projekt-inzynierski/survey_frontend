@@ -70,5 +70,12 @@
     "locationPermissionDenied": "Odmowa dostępu do lokalizacji",
     "locationPermissionDeniedMessage": "Dostęp do lokalizacji jest wymagany do wypełnienia ankiet. Włacz go w ustawieniach urządzenia. \nIdz do Uprawnienia -> Lokalizacja \nWybierz Zezwól",
     "openSettings": "Otwórz ustawienia",
-    "close": "Zamknij"
+    "close": "Zamknij",
+    "notifications": "Powiadomienia",
+    "privacy": "Privacy",
+    "privacySettings": "Ustawienia prywatności",
+    "allowTrackLocation": "Zezwalaj na śledzenie lokalizacji",
+    "timeFrom": "Godzina od",
+    "timeTo": "Godzina do",
+    "notifyMeAboutSurveys": "Powiadamiaj mnie o ankietach"
 }

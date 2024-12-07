@@ -1,11 +1,11 @@
 import 'dart:math';
-
 import 'package:connectivity/connectivity.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:location/location.dart';
 import 'package:survey_frontend/core/usecases/create_question_answer_dto_factory.dart';
+import 'package:survey_frontend/core/usecases/survey_notification_usecase.dart';
 import 'package:survey_frontend/data/datasources/local/database_service.dart';
 import 'package:survey_frontend/data/models/short_survey.dart';
 import 'package:survey_frontend/domain/external_services/api_response.dart';
@@ -34,6 +34,7 @@ class HomeController extends ControllerBase {
   final RxInt hours = 23.obs;
   final RxInt minutes = 60.obs;
   final DatabaseHelper _databaseHelper;
+  final SurveyNotificationUseCase _surveyNotificationUseCase;
   bool _isBusy = false;
 
   HomeController(
@@ -42,7 +43,8 @@ class HomeController extends ControllerBase {
       this._createQuestionAnswerDtoFactory,
       this._respondentGroupService,
       this._storage,
-      this._databaseHelper);
+      this._databaseHelper,
+      this._surveyNotificationUseCase);
 
   Future<void> loadSurveys() async {
     if (_isBusy) {
@@ -228,20 +230,7 @@ class HomeController extends ControllerBase {
 
   Future<void> _loadFromDatabase() async {
     pendingSurveys.addAll(await _databaseHelper.getSurveysCompletableNow());
-    _setNotifications();
-    // NotificationService.checkPendingNotificationRequests();
-  }
-
-  void _setNotifications() async {
-    NotificationService.cancelAllNotifications();
-    List<SurveyShortInfo> futureAndOngoingSurveys =
-        await _databaseHelper.getFutureAndOngoingSurveys();
-    futureAndOngoingSurveys.sort((a, b) => a.startTime.compareTo(b.startTime));
-    futureAndOngoingSurveys
-        .sublist(0, min(50, futureAndOngoingSurveys.length))
-        .forEach((e) {
-      e.setSurveyNotifications();
-    });
+    await _surveyNotificationUseCase.scheduleSurveysNotifications();
   }
 
   void openSettings() {

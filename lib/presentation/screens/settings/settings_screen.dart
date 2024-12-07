@@ -48,36 +48,50 @@ class SettingsScreen extends GetView<SettingsController> {
           Expanded(
             child: Container(
               color: settingsBackgroundColor,
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.appSettings,
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                      ],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 30,
                     ),
-                  ),
-                  NavItem(
-                    icon: Icons.thermostat,
-                    label: AppLocalizations.of(context)!.editSensor,
-                    onTap: controller.editSensor,
-                    iconColor: Colors.black,
-                  ),
-                   NavItem(
-                    icon: Icons.lock_open,
-                    label: AppLocalizations.of(context)!.logout,
-                    onTap: controller.logout,
-                    iconColor: Colors.black,
-                  ),
-                ],
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.appSettings,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    ),
+                    NavItem(
+                      icon: Icons.shield_outlined,
+                      label: AppLocalizations.of(context)!.privacySettings,
+                      onTap: controller.privacySettings,
+                      iconColor: Colors.black,
+                    ),
+                    NavItem(
+                      icon: Icons.notifications_outlined,
+                      label: AppLocalizations.of(context)!.notifications,
+                      onTap: controller.notifications,
+                      iconColor: Colors.black,
+                    ),
+                    NavItem(
+                      icon: Icons.thermostat,
+                      label: AppLocalizations.of(context)!.editSensor,
+                      onTap: controller.editSensor,
+                      iconColor: Colors.black,
+                    ),
+                     NavItem(
+                      icon: Icons.lock_open,
+                      label: AppLocalizations.of(context)!.logout,
+                      onTap: controller.logout,
+                      iconColor: Colors.black,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

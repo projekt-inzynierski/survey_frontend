@@ -6,6 +6,7 @@ import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecas
 import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecase_impl.dart';
 import 'package:survey_frontend/core/usecases/read_sensors_data_usecase.dart';
 import 'package:survey_frontend/core/usecases/send_sensors_data_usecase.dart';
+import 'package:survey_frontend/core/usecases/survey_notification_usecase.dart';
 import 'package:survey_frontend/core/usecases/token_provider_impl.dart';
 import 'package:survey_frontend/core/usecases/token_validity_checker_impl.dart';
 import 'package:survey_frontend/data/datasources/initial_survey_service_impl.dart';
@@ -70,6 +71,7 @@ class InitialBindings extends Bindings {
         Get.find(),
         tokenProvider: Get.find<TokenProvider>()));
     Get.put(DatabaseHelper());
+    Get.put<SurveyNotificationUseCase>(SurveyNotificationUseCaseImpl(Get.find()));
     Get.put<SensorsDataService>(
         SensorsDataServiceImpl(Get.find(), tokenProvider: Get.find()));
     Get.put<SendSensorsDataUsecase>(
