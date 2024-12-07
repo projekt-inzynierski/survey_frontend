@@ -5,6 +5,6 @@ class PrivacySettingsBindings extends Bindings
 {
   @override
   void dependencies() {
-    Get.lazyPut(() => PrivacySettingsController());
+    Get.lazyPut(() => PrivacySettingsController(Get.find()));
   }
 }

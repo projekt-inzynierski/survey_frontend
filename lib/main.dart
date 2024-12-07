@@ -43,6 +43,8 @@ class StaticVariables {
 }
 
 void main() async {
+
+  final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
   WidgetsFlutterBinding.ensureInitialized();
   await askForPermissions();
   await prepareWorkManager();
@@ -51,6 +53,7 @@ void main() async {
   final bindingOptions = await _getBindingOptions();
   runApp(GetMaterialApp(
     title: 'UrbEaT',
+    navigatorObservers: [routeObserver],
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
     locale: Locale(StaticVariables.lang, ''),

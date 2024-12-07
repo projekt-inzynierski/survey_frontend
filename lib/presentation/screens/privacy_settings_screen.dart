@@ -5,11 +5,12 @@ import 'package:survey_frontend/presentation/controllers/privacy_settings_contro
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey_frontend/presentation/widgets/time_picker.dart';
 
-class PrivacySettingsScreen extends GetView<PrivacySettingsController> {
+class PrivacySettingsScreen extends GetView<PrivacySettingsController>{
   const PrivacySettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    controller.loadPrivacySettings();
     return Scaffold(
       body: Column(
         children: [
@@ -67,7 +68,7 @@ class PrivacySettingsScreen extends GetView<PrivacySettingsController> {
                         ],
                       ),
                     )),
-                    const SizedBox(height: 10), 
+                const SizedBox(height: 10),
                 const Divider(
                   color: Colors.black,
                   thickness: 1,
@@ -75,11 +76,52 @@ class PrivacySettingsScreen extends GetView<PrivacySettingsController> {
                   endIndent: 20,
                 ),
                 const SizedBox(height: 10),
-                TimePicker(onChange: (v){})
+                Obx(() => Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      child: TimePicker(
+                        onChange: (v) {
+                          controller.setTimeFrom(v);
+                        },
+                        value: controller.timeFrom.value,
+                        label: AppLocalizations.of(context)!.timeFrom,
+                      ),
+                    )),
+                const SizedBox(
+                  height: 30,
+                ),
+                Obx(() => Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      child: TimePicker(
+                        onChange: (v) {
+                          controller.setTimeTo(v);
+                        },
+                        value: controller.timeTo.value,
+                        label: AppLocalizations.of(context)!.timeTo,
+                      ),
+                    ))
               ]),
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: AppStyles.backgroundSecondary,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 10,
+              offset: const Offset(0, -5)
+            )
+          ]
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(25),
+          child: ElevatedButton(
+            onPressed: controller.save,
+            child: Text(AppLocalizations.of(context)!.save),
+          ),
+        ),
       ),
     );
   }
