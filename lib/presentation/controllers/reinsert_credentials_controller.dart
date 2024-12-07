@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecase.dart';
 import 'package:survey_frontend/domain/external_services/api_response.dart';
@@ -25,8 +24,9 @@ class ReinsertCredentialsController extends ControllerBase {
     model.value.username = _readUsername();
   }
 
-  String _readUsername(){
-    final respondentData = _storage.read<Map<String, dynamic>>('respondentData')!;
+  String _readUsername() {
+    final respondentData =
+        _storage.read<Map<String, dynamic>>("respondentData")!;
     return respondentData['username'];
   }
 
@@ -99,11 +99,11 @@ class ReinsertCredentialsController extends ControllerBase {
   }
 
   void showInvalidCredentialsError() {
-    try{
+    try {
       _alwaysValidateInvalidCredentials = true;
       formKey.currentState!.validate();
       Get.focusScope!.unfocus();
-    } finally{
+    } finally {
       _alwaysValidateInvalidCredentials = false;
     }
   }
@@ -112,7 +112,7 @@ class ReinsertCredentialsController extends ControllerBase {
     _storage.write('apiToken', token);
   }
 
-  void logout(){
+  void logout() {
     Get.toNamed(Routes.logoutConfirmation);
   }
 }
