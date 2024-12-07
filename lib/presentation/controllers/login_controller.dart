@@ -95,10 +95,6 @@ class LoginController extends ControllerBase {
   }
 
   String? apiUrlValidator(String? value) {
-    if (kDebugMode) {
-      return null;
-    }
-
     if (value == null || value == '') {
       return AppLocalizations.of(Get.context!)!.apiUrlEmptyErrorMessage;
     }
@@ -146,9 +142,6 @@ class LoginController extends ControllerBase {
   }
 
   void _saveUrl() {
-    if (kDebugMode) {
-      apiUrl = 'http://10.0.2.2:8080';
-    }
     _storage.write('apiUrl', apiUrl);
     _dio.options.baseUrl = apiUrl!;
   }
