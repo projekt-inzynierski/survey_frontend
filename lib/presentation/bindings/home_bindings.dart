@@ -17,6 +17,6 @@ class HomeBindings extends Bindings {
     Get.lazyPut<RespondentGroupService>(
         () => RespondentGroupServiceImpl(Get.find()));
     Get.lazyPut<HomeController>(() => HomeController(Get.find(), Get.find(),
-        Get.find(), Get.find(), Get.find(), Get.find()));
+        Get.find(), Get.find(), Get.find(), Get.find(), Get.find()));
   }
 }

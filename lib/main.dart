@@ -13,6 +13,7 @@ import 'package:survey_frontend/presentation/bindings/initial_survey_bindings.da
 import 'package:survey_frontend/presentation/bindings/loading_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/login_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/logout_confirmation_bindings.dart';
+import 'package:survey_frontend/presentation/bindings/notifications_settings_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/privacy_settings_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/profile_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/reinsert_credentials_bindings.dart';
@@ -26,6 +27,7 @@ import 'package:survey_frontend/presentation/screens/initial_survey/initial_surv
 import 'package:survey_frontend/presentation/screens/loading_screen.dart';
 import 'package:survey_frontend/presentation/screens/login_screen.dart';
 import 'package:survey_frontend/presentation/screens/logout_confirmation_screen.dart';
+import 'package:survey_frontend/presentation/screens/notifications_settings_screen.dart';
 import 'package:survey_frontend/presentation/screens/privacy_settings_screen.dart';
 import 'package:survey_frontend/presentation/screens/profile_screen.dart';
 import 'package:survey_frontend/presentation/screens/reinsert_credentials_screen.dart';
@@ -117,6 +119,11 @@ void main() async {
         name: Routes.privacySettings, 
         page: () => const PrivacySettingsScreen(),
         binding: PrivacySettingsBindings()
+      ),
+      GetPage(
+        name: Routes.notifications, 
+        page: () => const NotificationsSettingsScreen(),
+        binding: NotificationsSettingsBindings()
       )
     ],
   ));
