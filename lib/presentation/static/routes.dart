@@ -9,4 +9,6 @@ class Routes{
   static String get home => '/home';
   static String get reinsertCredentials => '/reinsertCredentials';
   static String get profile => '/profile';
+  static String get privacySettings => '/privacySettings';
+  static String get notifications => '/notifications';
 }

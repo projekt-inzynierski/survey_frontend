@@ -66,5 +66,12 @@
     "credentialsExpired": "Twój token wygasł, ponownie wprowadź hasło.",
     "profile": "Profil",
     "couldNotReachTheServer": "Nie udało się wysłać żądania, spróbuj ponownie później.",
-    "somethingWentWrong": "Coś poszło nie tak, spróbuj ponownie później."
+    "somethingWentWrong": "Coś poszło nie tak, spróbuj ponownie później.",
+    "notifications": "Powiadomienia",
+    "privacy": "Privacy",
+    "privacySettings": "Ustawienia prywatności",
+    "allowTrackLocation": "Zezwalaj na śledzenie lokalizacji",
+    "timeFrom": "Godzina od",
+    "timeTo": "Godzina do",
+    "notifyMeAboutSurveys": "Powiadamiaj mnie o ankietach"
 }

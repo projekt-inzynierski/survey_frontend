@@ -82,5 +82,12 @@
     "credentialsExpired": "Your token has expired, reeter passwor.",
     "profile": "Profile",
     "couldNotReachTheServer": "Failed to send the request, please try again later.",
-    "somethingWentWrong": "Something went wrong, please try again later."
+    "somethingWentWrong": "Something went wrong, please try again later.",
+    "notifications": "Notifications",
+    "privacy": "Privacy",
+    "privacySettings": "Privacy settings",
+    "allowTrackLocation": "Allow location tracking",
+    "timeFrom": "Time from",
+    "timeTo": "Time to",
+    "notifyMeAboutSurveys": "Notify me about surveys"
 }

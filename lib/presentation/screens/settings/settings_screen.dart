@@ -66,6 +66,18 @@ class SettingsScreen extends GetView<SettingsController> {
                     ),
                   ),
                   NavItem(
+                    icon: Icons.shield_outlined,
+                    label: AppLocalizations.of(context)!.privacySettings,
+                    onTap: controller.privacySettings,
+                    iconColor: Colors.black,
+                  ),
+                  NavItem(
+                    icon: Icons.notifications_outlined,
+                    label: AppLocalizations.of(context)!.notifications,
+                    onTap: controller.notifications,
+                    iconColor: Colors.black,
+                  ),
+                  NavItem(
                     icon: Icons.thermostat,
                     label: AppLocalizations.of(context)!.editSensor,
                     onTap: controller.editSensor,
