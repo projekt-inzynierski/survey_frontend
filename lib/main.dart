@@ -1,3 +1,4 @@
+import 'package:background_fetch/background_fetch.dart';
 import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -39,28 +40,27 @@ import 'package:survey_frontend/presentation/screens/survey/survey_start_screen.
 import 'package:survey_frontend/presentation/screens/welcome_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey_frontend/presentation/static/routes.dart';
-import 'package:workmanager/workmanager.dart';
 
 class StaticVariables {
   static String lang = 'en';
 }
 
 void main() async {
-
-  final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
   WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
+  final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
+  InitialBindings().dependencies();
   await askForPermissions();
   await prepareWorkManager();
-  await GetStorage.init();
   StaticVariables.lang = await _getCurrentLocale();
-  final bindingOptions = await _getBindingOptions();
   runApp(GetMaterialApp(
     title: 'UrbEaT',
     navigatorObservers: [routeObserver],
+    debugShowCheckedModeBanner: false,
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
     locale: Locale(StaticVariables.lang, ''),
-    initialBinding: InitialBindings(bindingOptions),
+    initialBinding: InitialBindings(),
     theme: AppStyles.lightTheme,
     initialRoute: Routes.loading,
     getPages: [
@@ -148,11 +148,15 @@ Future<String> _getCurrentLocale() async {
 }
 
 Future<void> prepareWorkManager() async {
-  await Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
-
-  await Workmanager().registerPeriodicTask(
-      BackgroundTasks.sensorsDataId, BackgroundTasks.sensorsData,
-      frequency: const Duration(minutes: 20), inputData: {});
+  await BackgroundFetch.configure(
+    BackgroundFetchConfig(
+      minimumFetchInterval: 20,
+      stopOnTerminate: false,
+      startOnBoot: true,
+      enableHeadless: true
+      ), 
+      backgroundTask
+    );
 }
 
 Future<void> askForPermissions() async {
