@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:survey_frontend/l10n/get_localizations.dart';
 import 'package:survey_frontend/presentation/app_styles.dart';
 import 'package:survey_frontend/presentation/controllers/privacy_settings_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:survey_frontend/presentation/screens/privacy_policy_screen.dart';
 import 'package:survey_frontend/presentation/widgets/time_picker.dart';
 
-class PrivacySettingsScreen extends GetView<PrivacySettingsController>{
+class PrivacySettingsScreen extends GetView<PrivacySettingsController> {
   const PrivacySettingsScreen({super.key});
 
   @override
@@ -99,23 +101,37 @@ class PrivacySettingsScreen extends GetView<PrivacySettingsController>{
                         label: AppLocalizations.of(context)!.timeTo,
                       ),
                     )),
-                    const SizedBox(height: 10,)
+                const SizedBox(
+                  height: 30,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (ctx) => PrivacyPolicyScreen()));
+                  },
+                  child: RichText(
+                      text: TextSpan(
+                    text: getAppLocalizations().openPrivacyPolicy,
+                    style: const TextStyle(
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline),
+                  )),
+                )
               ]),
             ),
           ),
         ],
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: AppStyles.backgroundSecondary,
-          boxShadow: [
-            BoxShadow(
+        decoration:
+            BoxDecoration(color: AppStyles.backgroundSecondary, boxShadow: [
+          BoxShadow(
               color: Colors.black.withOpacity(0.2),
               blurRadius: 10,
-              offset: const Offset(0, -5)
-            )
-          ]
-        ),
+              offset: const Offset(0, -5))
+        ]),
         child: Padding(
           padding: const EdgeInsets.all(25),
           child: ElevatedButton(
