@@ -27,7 +27,7 @@ class SendSensorsDataUsecaseImpl extends SendSensorsDataUsecase {
       var readSensorDataService =
           Get.find<ReadSensorsDataUsecase>(tag: selectedSonsor);
       var allSensorsData =
-          _storage.read<List<Map<String, dynamic>>>('rememberedSensorsData');
+          _storage.read <List<dynamic>>('rememberedSensorsData');
       allSensorsData ??= [];
       var sensorsData = await readSensorDataService.getSensorsData();
 
@@ -42,7 +42,7 @@ class SendSensorsDataUsecaseImpl extends SendSensorsDataUsecase {
           .create(allSensorsData.map((e) => SensorData.fromJson(e)).toList());
 
       if (submitResult.statusCode == 201) {
-        _storage.remove('rememberedSensorsData');
+        await _storage.remove('rememberedSensorsData');
       }
 
       return true;

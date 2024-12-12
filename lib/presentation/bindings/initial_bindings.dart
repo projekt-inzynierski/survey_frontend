@@ -12,12 +12,14 @@ import 'package:survey_frontend/core/usecases/token_validity_checker_impl.dart';
 import 'package:survey_frontend/data/datasources/initial_survey_service_impl.dart';
 import 'package:survey_frontend/data/datasources/local/database_service.dart';
 import 'package:survey_frontend/data/datasources/local/survey_participation_service_impl.dart';
+import 'package:survey_frontend/data/datasources/location_service_impl.dart';
 import 'package:survey_frontend/data/datasources/login_service_impl.dart';
 import 'package:survey_frontend/data/datasources/respondent_data_service_impl.dart';
 import 'package:survey_frontend/data/datasources/sensors_data_service_impl.dart';
 import 'package:survey_frontend/data/datasources/survey_service_impl.dart';
 import 'package:survey_frontend/data/models/sensor_kind.dart';
 import 'package:survey_frontend/domain/external_services/initial_survey_service.dart';
+import 'package:survey_frontend/domain/external_services/location_service.dart';
 import 'package:survey_frontend/domain/external_services/login_service.dart';
 import 'package:survey_frontend/domain/external_services/respondent_date_service.dart';
 import 'package:survey_frontend/domain/external_services/sensors_data_service.dart';
@@ -33,9 +35,8 @@ import 'package:survey_frontend/presentation/controllers/survey_question_control
 
 class InitialBindings extends Bindings {
   static bool _registered = false;
-  final BindingOptions _bindingOptions;
 
-  InitialBindings(this._bindingOptions);
+  InitialBindings();
 
   @override
   void dependencies() {
@@ -44,8 +45,10 @@ class InitialBindings extends Bindings {
     }
     _registered = true;
     final location = Location();
-    if (_bindingOptions.locationAlwaysGranted) {
+    try{
       location.enableBackgroundMode(enable: true);
+    } catch (e){
+      //ignore for now
     }
     Get.put(location);
     final storage = GetStorage();
@@ -78,6 +81,8 @@ class InitialBindings extends Bindings {
         SendSensorsDataUsecaseImpl(Get.find(), Get.find()));
     Get.put<ReadSensorsDataUsecase>(ReadXiaomiSensorsDataUsecase(),
         tag: SensorKind.xiaomi);
+    Get.put<LocalizationService>(LocalizationServiceImpl(Get.find(), tokenProvider: Get.find<TokenProvider>()));
+
   }
 
   Dio _getDio(GetStorage storage) {
