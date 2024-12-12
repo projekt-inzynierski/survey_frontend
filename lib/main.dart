@@ -10,6 +10,7 @@ import 'package:survey_frontend/domain/local_services/notification_service.dart'
 import 'package:survey_frontend/presentation/backgroud.dart';
 import 'package:survey_frontend/presentation/app_styles.dart';
 import 'package:survey_frontend/presentation/bindings/bindings_options.dart';
+import 'package:survey_frontend/presentation/bindings/change_password_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/home_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/initial_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/initial_survey_bindings.dart';
@@ -25,6 +26,7 @@ import 'package:survey_frontend/presentation/bindings/settings_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/survey_end_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/survey_start_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/welcome_screen_bindings.dart';
+import 'package:survey_frontend/presentation/screens/change_password_screen.dart';
 import 'package:survey_frontend/presentation/screens/home/home_screen.dart';
 import 'package:survey_frontend/presentation/screens/initial_survey/initial_survey_screen.dart';
 import 'package:survey_frontend/presentation/screens/loading_screen.dart';
@@ -54,10 +56,8 @@ void main() async {
   await askForPermissions();
   await prepareWorkManager();
   StaticVariables.lang = await _getCurrentLocale();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown
-  ]);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(GetMaterialApp(
     title: 'UrbEaT',
     navigatorObservers: [routeObserver],
@@ -122,15 +122,16 @@ void main() async {
         binding: ProfileBindings(),
       ),
       GetPage(
-        name: Routes.privacySettings, 
-        page: () => const PrivacySettingsScreen(),
-        binding: PrivacySettingsBindings()
-      ),
+          name: Routes.privacySettings,
+          page: () => const PrivacySettingsScreen(),
+          binding: PrivacySettingsBindings()),
       GetPage(
-        name: Routes.notifications, 
-        page: () => const NotificationsSettingsScreen(),
-        binding: NotificationsSettingsBindings()
-      )
+          name: Routes.notifications,
+          page: () => const NotificationsSettingsScreen(),
+          binding: NotificationsSettingsBindings()),
+      GetPage(name: Routes.changePassword,
+       page: () => const ChangePasswordScreen(),
+       binding: ChangePasswordBindings())
     ],
   ));
 }
@@ -154,14 +155,12 @@ Future<String> _getCurrentLocale() async {
 
 Future<void> prepareWorkManager() async {
   await BackgroundFetch.configure(
-    BackgroundFetchConfig(
-      minimumFetchInterval: 20,
-      stopOnTerminate: false,
-      startOnBoot: true,
-      enableHeadless: true
-      ), 
-      backgroundTask
-    );
+      BackgroundFetchConfig(
+          minimumFetchInterval: 20,
+          stopOnTerminate: false,
+          startOnBoot: true,
+          enableHeadless: true),
+      backgroundTask);
 }
 
 Future<void> askForPermissions() async {

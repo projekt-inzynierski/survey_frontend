@@ -84,6 +84,12 @@ class SettingsScreen extends GetView<SettingsController> {
                       onTap: controller.editSensor,
                       iconColor: Colors.black,
                     ),
+                    NavItem(
+                      icon: Icons.key,
+                      label: AppLocalizations.of(context)!.changePassword,
+                      onTap: controller.changePassword,
+                      iconColor: Colors.black,
+                    ),
                      NavItem(
                       icon: Icons.lock_open,
                       label: AppLocalizations.of(context)!.logout,

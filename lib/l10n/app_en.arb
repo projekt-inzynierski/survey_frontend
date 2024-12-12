@@ -94,5 +94,9 @@
     "timeFrom": "Time from",
     "timeTo": "Time to",
     "notifyMeAboutSurveys": "Notify me about surveys",
-    "openPrivacyPolicy": "Open privacy policy"
+    "openPrivacyPolicy": "Open privacy policy",
+    "changePassword": "Change password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "retypePassword": "Retype password"
 }

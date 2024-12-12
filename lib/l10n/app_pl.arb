@@ -78,5 +78,9 @@
     "timeFrom": "Godzina od",
     "timeTo": "Godzina do",
     "notifyMeAboutSurveys": "Powiadamiaj mnie o ankietach",
-    "openPrivacyPolicy": "Otwórz politykę prywatności"
+    "openPrivacyPolicy": "Otwórz politykę prywatności",
+    "changePassword": "Zmiana hasła",
+    "currentPassword": "Aktualne hasło",
+    "newPassword": "Nowe hasło",
+    "retypePassword": "Powtórz hasło"
 }
