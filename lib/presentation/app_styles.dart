@@ -16,7 +16,7 @@ class AppStyles {
       primaryColorLight: const Color.fromARGB(117, 166, 214, 35),
       primaryColorDark: primaryDark,
       cardColor: const Color.fromARGB(255, 252, 176, 64),
-      indicatorColor: const Color.fromARGB(255, 4, 90, 161),
+      indicatorColor: const Color(0xFFCE7B00),
       hintColor: const Color.fromARGB(255, 230, 166, 72),
       highlightColor: const Color(0xFFCE7B00),
       unselectedWidgetColor: Colors.white,

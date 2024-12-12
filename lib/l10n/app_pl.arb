@@ -77,5 +77,6 @@
     "allowTrackLocation": "Zezwalaj na śledzenie lokalizacji",
     "timeFrom": "Godzina od",
     "timeTo": "Godzina do",
-    "notifyMeAboutSurveys": "Powiadamiaj mnie o ankietach"
+    "notifyMeAboutSurveys": "Powiadamiaj mnie o ankietach",
+    "openPrivacyPolicy": "Otwórz politykę prywatności"
 }

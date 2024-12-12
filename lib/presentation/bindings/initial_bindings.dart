@@ -89,7 +89,7 @@ class InitialBindings extends Bindings {
     var dio = Dio();
     final apiUrl = storage.read<String>('apiUrl');
     if (apiUrl != null) {
-      dio.options.baseUrl = apiUrl;
+      dio.options.baseUrl = apiUrl; 
     }
     dio.options.headers["Accept-Lang"] = StaticVariables.lang;
     return dio;

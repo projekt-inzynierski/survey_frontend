@@ -93,5 +93,6 @@
     "allowTrackLocation": "Allow location tracking",
     "timeFrom": "Time from",
     "timeTo": "Time to",
-    "notifyMeAboutSurveys": "Notify me about surveys"
+    "notifyMeAboutSurveys": "Notify me about surveys",
+    "openPrivacyPolicy": "Open privacy policy"
 }

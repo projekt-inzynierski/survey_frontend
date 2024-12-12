@@ -98,7 +98,8 @@ class PrivacySettingsScreen extends GetView<PrivacySettingsController>{
                         value: controller.timeTo.value,
                         label: AppLocalizations.of(context)!.timeTo,
                       ),
-                    ))
+                    )),
+                    const SizedBox(height: 10,)
               ]),
             ),
           ),
