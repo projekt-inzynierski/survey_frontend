@@ -16,13 +16,27 @@ class AppStyles {
       primaryColorLight: const Color.fromARGB(117, 166, 214, 35),
       primaryColorDark: primaryDark,
       cardColor: const Color.fromARGB(255, 252, 176, 64),
-      indicatorColor: const Color.fromARGB(255, 4, 90, 161),
+      indicatorColor: const Color(0xFFCE7B00),
       hintColor: const Color.fromARGB(255, 230, 166, 72),
       highlightColor: const Color(0xFFCE7B00),
       unselectedWidgetColor: Colors.white,
       fontFamily: 'Roboto',
       shadowColor: Colors.black,
       textTheme: const TextTheme(bodyLarge: TextStyle(fontSize: 20)),
+      dialogTheme: DialogTheme(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        )
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor: WidgetStateProperty.resolveWith((states){
+            return primaryDark;
+          }),
+          overlayColor: WidgetStatePropertyAll(_primaryColor)
+        )
+      ),
       timePickerTheme: TimePickerThemeData(
         backgroundColor: onBackgroundSecondary,
         hourMinuteTextColor: _appNameColor,

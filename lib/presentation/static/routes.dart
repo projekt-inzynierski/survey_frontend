@@ -11,4 +11,6 @@ class Routes{
   static String get profile => '/profile';
   static String get privacySettings => '/privacySettings';
   static String get notifications => '/notifications';
+  static String get changePassword => '/changePassword';
+  static String get changePasswordConfirmation => '/changePasswordConfirmation';
 }

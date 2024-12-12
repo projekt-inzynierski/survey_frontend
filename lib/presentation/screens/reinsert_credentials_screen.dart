@@ -19,55 +19,63 @@ class ReinsertCredentialsScreen extends GetView<ReinsertCredentialsController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const AppLogo(),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                AppLocalizations.of(context)!.credentialsExpired,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 20),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.username,
-                ),
-                initialValue: controller.model.value.username,
-                readOnly: true,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.password,
-                ),
-                validator: controller.passwordValidator,
-                obscureText: true,
-                onChanged: (value) {
-                  controller.model.value.password = value;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: controller.login,
-                  child: Text(AppLocalizations.of(context)!.login),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: controller.logout,
-                  child: Text(AppLocalizations.of(context)!.logout),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        AppLocalizations.of(context)!.credentialsExpired,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.username,
+                        ),
+                        initialValue: controller.model.value.username,
+                        readOnly: true,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.password,
+                        ),
+                        validator: controller.passwordValidator,
+                        obscureText: true,
+                        onChanged: (value) {
+                          controller.model.value.password = value;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: controller.login,
+                          child: Text(AppLocalizations.of(context)!.login),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: controller.logout,
+                          child: Text(AppLocalizations.of(context)!.logout),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               )
             ],

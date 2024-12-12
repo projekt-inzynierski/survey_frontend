@@ -93,5 +93,15 @@
     "allowTrackLocation": "Allow location tracking",
     "timeFrom": "Time from",
     "timeTo": "Time to",
-    "notifyMeAboutSurveys": "Notify me about surveys"
+    "notifyMeAboutSurveys": "Notify me about surveys",
+    "openPrivacyPolicy": "Open privacy policy",
+    "changePassword": "Change password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "retypePassword": "Retype password",
+    "passwordChangedSuccessfully": "Your password has been successfully changed!",
+    "ok": "Ok",
+    "currentPasswordMustNotBeEmpty": "Current password must not be empty",
+    "minNewPasswordLenError": "The minimum length is 8 characters",
+    "retypePasswordMustBeEqualToNewPassword": "The value must be equal to new password"
 }

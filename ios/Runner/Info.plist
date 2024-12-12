@@ -26,8 +26,23 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>We need to connect  to a temperature sensors</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>We need to connect  to a temperature sensors</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need to track you location for the scientific research</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need to track you location for the scientific research</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need to track you location for the scientific research</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

@@ -36,7 +36,6 @@ class SurveyEndController extends ControllerBase {
         await _surveyParticipationService.addParticipation(participation);
         final apiResponse = await _locationService.submitLocation(
             participation.id, await localizationData);
-        print(apiResponse);
         await _databaseHelper.removeSurveyTimeSlot(participation.surveyId);
       }
 

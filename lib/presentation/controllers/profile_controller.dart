@@ -10,9 +10,14 @@ class ProfileController extends ControllerBase {
 
   ProfileController(GetStorage storage)
       : respondentData = storage.read("respondentData")! {
-    initialSurveyQuestions = storage
-        .read<List<dynamic>>('initialSurvey')!
-        .map((e) => InitialSurveyQuestion.fromJson(e))
+    initialSurveyQuestions = (storage
+        .read<List<dynamic>>('initialSurvey') ?? [])
+        .map((e){
+          if (e.runtimeType != InitialSurveyQuestion){
+            return InitialSurveyQuestion.fromJson(e);
+          }
+          return e as InitialSurveyQuestion;
+        })
         .toList();
   }
 
