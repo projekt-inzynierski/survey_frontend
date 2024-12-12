@@ -33,6 +33,7 @@ import 'package:survey_frontend/presentation/screens/loading_screen.dart';
 import 'package:survey_frontend/presentation/screens/login_screen.dart';
 import 'package:survey_frontend/presentation/screens/logout_confirmation_screen.dart';
 import 'package:survey_frontend/presentation/screens/notifications_settings_screen.dart';
+import 'package:survey_frontend/presentation/screens/password_change_confirmation_screen.dart';
 import 'package:survey_frontend/presentation/screens/privacy_settings_screen.dart';
 import 'package:survey_frontend/presentation/screens/profile_screen.dart';
 import 'package:survey_frontend/presentation/screens/reinsert_credentials_screen.dart';
@@ -129,9 +130,13 @@ void main() async {
           name: Routes.notifications,
           page: () => const NotificationsSettingsScreen(),
           binding: NotificationsSettingsBindings()),
-      GetPage(name: Routes.changePassword,
-       page: () => const ChangePasswordScreen(),
-       binding: ChangePasswordBindings())
+      GetPage(
+          name: Routes.changePassword,
+          page: () => const ChangePasswordScreen(),
+          binding: ChangePasswordBindings()),
+      GetPage(
+          name: Routes.changePasswordConfirmation,
+          page: () => const PasswordChangeConfirmationScreen())
     ],
   ));
 }

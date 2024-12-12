@@ -82,5 +82,7 @@
     "changePassword": "Zmiana hasła",
     "currentPassword": "Aktualne hasło",
     "newPassword": "Nowe hasło",
-    "retypePassword": "Powtórz hasło"
+    "retypePassword": "Powtórz hasło",
+    "passwordChangedSuccessfully": "Twoje hasło zostało pomyślnie zmienione!",
+    "ok": "Ok"
 }

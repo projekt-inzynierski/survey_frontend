@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
+import 'package:survey_frontend/presentation/static/routes.dart';
 
 class ChangePasswordController extends ControllerBase{
   final RxString currentPassword = ''.obs;
@@ -8,7 +9,9 @@ class ChangePasswordController extends ControllerBase{
   final RxString retypePassword = ''.obs;
   final formKey = GlobalKey<FormState>();
 
-  void save(){}
+  void save(){
+    Get.toNamed(Routes.changePasswordConfirmation);
+  }
 
   void clearData(){
     currentPassword.value = '';

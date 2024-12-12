@@ -98,5 +98,7 @@
     "changePassword": "Change password",
     "currentPassword": "Current password",
     "newPassword": "New password",
-    "retypePassword": "Retype password"
+    "retypePassword": "Retype password",
+    "passwordChangedSuccessfully": "Your password has been successfully changed!",
+    "ok": "Ok"
 }
