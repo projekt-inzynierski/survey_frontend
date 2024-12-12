@@ -19,48 +19,57 @@ class LoginScreen extends GetView<LoginController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const AppLogo(),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.apiUrl,
-                ),
-                validator: controller.apiUrlValidator,
-                onChanged: (value) {
-                  controller.apiUrl = value;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.username,
-                ),
-                validator: controller.usernameValidator,
-                onChanged: (value) {
-                  controller.model.value.username = value;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.password,
-                ),
-                validator: controller.passwordValidator,
-                obscureText: true,
-                onChanged: (value) {
-                  controller.model.value.password = value;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: controller.login,
-                  child: Text(AppLocalizations.of(context)!.login),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 10,),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.apiUrl,
+                        ),
+                        validator: controller.apiUrlValidator,
+                        onChanged: (value) {
+                          controller.apiUrl = value;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.username,
+                        ),
+                        validator: controller.usernameValidator,
+                        onChanged: (value) {
+                          controller.model.value.username = value;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.password,
+                        ),
+                        validator: controller.passwordValidator,
+                        obscureText: true,
+                        onChanged: (value) {
+                          controller.model.value.password = value;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: controller.login,
+                          child: Text(AppLocalizations.of(context)!.login),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               )
             ],

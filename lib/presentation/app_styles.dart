@@ -23,6 +23,20 @@ class AppStyles {
       fontFamily: 'Roboto',
       shadowColor: Colors.black,
       textTheme: const TextTheme(bodyLarge: TextStyle(fontSize: 20)),
+      dialogTheme: DialogTheme(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        )
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor: WidgetStateProperty.resolveWith((states){
+            return primaryDark;
+          }),
+          overlayColor: WidgetStatePropertyAll(_primaryColor)
+        )
+      ),
       timePickerTheme: TimePickerThemeData(
         backgroundColor: onBackgroundSecondary,
         hourMinuteTextColor: _appNameColor,
