@@ -1,6 +1,7 @@
 import 'package:background_fetch/background_fetch.dart';
 import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -53,6 +54,10 @@ void main() async {
   await askForPermissions();
   await prepareWorkManager();
   StaticVariables.lang = await _getCurrentLocale();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
   runApp(GetMaterialApp(
     title: 'UrbEaT',
     navigatorObservers: [routeObserver],
