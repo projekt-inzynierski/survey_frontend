@@ -100,5 +100,8 @@
     "newPassword": "New password",
     "retypePassword": "Retype password",
     "passwordChangedSuccessfully": "Your password has been successfully changed!",
-    "ok": "Ok"
+    "ok": "Ok",
+    "currentPasswordMustNotBeEmpty": "Current password must not be empty",
+    "minNewPasswordLenError": "The minimum length is 8 characters",
+    "retypePasswordMustBeEqualToNewPassword": "The value must be equal to new password"
 }

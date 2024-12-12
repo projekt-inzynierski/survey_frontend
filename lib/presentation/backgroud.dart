@@ -85,7 +85,6 @@ void backgroundTask(String taskId) async{
     await sendSensorsData();
     await readLocation();
   } catch(e){ 
-    final chuj = e;
     //TODO: log the error
   } finally {
     BackgroundFetch.finish(taskId);

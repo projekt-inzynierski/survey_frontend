@@ -84,5 +84,8 @@
     "newPassword": "Nowe hasło",
     "retypePassword": "Powtórz hasło",
     "passwordChangedSuccessfully": "Twoje hasło zostało pomyślnie zmienione!",
-    "ok": "Ok"
+    "ok": "Ok",
+    "currentPasswordMustNotBeEmpty": "Aktualne hasło nie może być puste",
+    "minNewPasswordLenError": "Minimalna długość wynosi 8 znaków",
+    "retypePasswordMustBeEqualToNewPassword": "Wartość nie jest równa polu nowe hasło"
 }

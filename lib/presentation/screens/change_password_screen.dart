@@ -10,6 +10,7 @@ class ChangePasswordScreen extends GetView<ChangePasswordController>{
 
   @override
   Widget build(BuildContext context) {
+    controller.clearData();
     return Scaffold(
       body: Column(
         children: [
@@ -47,6 +48,7 @@ class ChangePasswordScreen extends GetView<ChangePasswordController>{
           ),
           Form
           (
+            key: controller.formKey,
             child: Expanded(
               child: Container(
                 color: AppStyles.backgroundSecondary,
@@ -55,6 +57,7 @@ class ChangePasswordScreen extends GetView<ChangePasswordController>{
                   child: Column(
                     children: [
                       TextFormField(
+                        validator: controller.validateCurrentPassword,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
@@ -67,6 +70,7 @@ class ChangePasswordScreen extends GetView<ChangePasswordController>{
                       ),
                       const SizedBox(height: 20,),
                       TextFormField(
+                        validator: controller.validateNewPassword,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
@@ -79,6 +83,7 @@ class ChangePasswordScreen extends GetView<ChangePasswordController>{
                       ),
                       const SizedBox(height: 20,),
                       TextFormField(
+                        validator: controller.validateRetypePassword,
                         decoration: InputDecoration(
                            filled: true,
                           fillColor: Colors.white,
