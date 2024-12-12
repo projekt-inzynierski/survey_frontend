@@ -15,6 +15,10 @@ class SettingsController extends ControllerBase {
     Get.toNamed(Routes.sensors);
   }
 
+  void changePassword(){
+    Get.toNamed(Routes.changePassword);
+  }
+
   void logout(){
     Get.toNamed(Routes.logoutConfirmation);
   }

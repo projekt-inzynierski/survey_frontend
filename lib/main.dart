@@ -1,5 +1,7 @@
+import 'package:background_fetch/background_fetch.dart';
 import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -8,6 +10,7 @@ import 'package:survey_frontend/domain/local_services/notification_service.dart'
 import 'package:survey_frontend/presentation/backgroud.dart';
 import 'package:survey_frontend/presentation/app_styles.dart';
 import 'package:survey_frontend/presentation/bindings/bindings_options.dart';
+import 'package:survey_frontend/presentation/bindings/change_password_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/home_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/initial_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/initial_survey_bindings.dart';
@@ -23,12 +26,14 @@ import 'package:survey_frontend/presentation/bindings/settings_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/survey_end_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/survey_start_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/welcome_screen_bindings.dart';
+import 'package:survey_frontend/presentation/screens/change_password_screen.dart';
 import 'package:survey_frontend/presentation/screens/home/home_screen.dart';
 import 'package:survey_frontend/presentation/screens/initial_survey/initial_survey_screen.dart';
 import 'package:survey_frontend/presentation/screens/loading_screen.dart';
 import 'package:survey_frontend/presentation/screens/login_screen.dart';
 import 'package:survey_frontend/presentation/screens/logout_confirmation_screen.dart';
 import 'package:survey_frontend/presentation/screens/notifications_settings_screen.dart';
+import 'package:survey_frontend/presentation/screens/password_change_confirmation_screen.dart';
 import 'package:survey_frontend/presentation/screens/privacy_settings_screen.dart';
 import 'package:survey_frontend/presentation/screens/profile_screen.dart';
 import 'package:survey_frontend/presentation/screens/reinsert_credentials_screen.dart';
@@ -39,28 +44,29 @@ import 'package:survey_frontend/presentation/screens/survey/survey_start_screen.
 import 'package:survey_frontend/presentation/screens/welcome_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey_frontend/presentation/static/routes.dart';
-import 'package:workmanager/workmanager.dart';
 
 class StaticVariables {
   static String lang = 'en';
 }
 
 void main() async {
-
-  final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
   WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
+  final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
+  InitialBindings().dependencies();
   await askForPermissions();
   await prepareWorkManager();
-  await GetStorage.init();
   StaticVariables.lang = await _getCurrentLocale();
-  final bindingOptions = await _getBindingOptions();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(GetMaterialApp(
     title: 'UrbEaT',
     navigatorObservers: [routeObserver],
+    debugShowCheckedModeBanner: false,
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
     locale: Locale(StaticVariables.lang, ''),
-    initialBinding: InitialBindings(bindingOptions),
+    initialBinding: InitialBindings(),
     theme: AppStyles.lightTheme,
     initialRoute: Routes.loading,
     getPages: [
@@ -117,15 +123,20 @@ void main() async {
         binding: ProfileBindings(),
       ),
       GetPage(
-        name: Routes.privacySettings, 
-        page: () => const PrivacySettingsScreen(),
-        binding: PrivacySettingsBindings()
-      ),
+          name: Routes.privacySettings,
+          page: () => const PrivacySettingsScreen(),
+          binding: PrivacySettingsBindings()),
       GetPage(
-        name: Routes.notifications, 
-        page: () => const NotificationsSettingsScreen(),
-        binding: NotificationsSettingsBindings()
-      )
+          name: Routes.notifications,
+          page: () => const NotificationsSettingsScreen(),
+          binding: NotificationsSettingsBindings()),
+      GetPage(
+          name: Routes.changePassword,
+          page: () => const ChangePasswordScreen(),
+          binding: ChangePasswordBindings()),
+      GetPage(
+          name: Routes.changePasswordConfirmation,
+          page: () => const PasswordChangeConfirmationScreen())
     ],
   ));
 }
@@ -148,11 +159,13 @@ Future<String> _getCurrentLocale() async {
 }
 
 Future<void> prepareWorkManager() async {
-  await Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
-
-  await Workmanager().registerPeriodicTask(
-      BackgroundTasks.sensorsDataId, BackgroundTasks.sensorsData,
-      frequency: const Duration(minutes: 20), inputData: {});
+  await BackgroundFetch.configure(
+      BackgroundFetchConfig(
+          minimumFetchInterval: 20,
+          stopOnTerminate: false,
+          startOnBoot: true,
+          enableHeadless: true),
+      backgroundTask);
 }
 
 Future<void> askForPermissions() async {

@@ -14,7 +14,6 @@ class SurveyEndBindings extends Bindings {
     Get.lazyPut<SurveyResponseService>(() => SurveyResponseServiceImpl(
         Get.find(),
         tokenProvider: Get.find<TokenProvider>()));
-    Get.lazyPut<LocalizationService>(() => LocalizationServiceImpl(Get.find()));
     Get.lazyPut(() =>
         SurveyEndController(Get.find(), Get.find(), Get.find(), Get.find()));
     Get.lazyPut<SurveyParticipationService>(

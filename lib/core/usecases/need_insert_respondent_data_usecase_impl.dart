@@ -21,8 +21,11 @@ class NeedInsertRespondentDataUseCaseImpl
 
     var respondentDataApiResponse =
         await _respondentDataService.getMyResponse();
+    final surveyResult = await _respondentDataService.getInitialSurvey();
 
-    if (respondentDataApiResponse.statusCode == 200) {
+
+    if (respondentDataApiResponse.statusCode == 200 && surveyResult.statusCode == 200) {
+      await _storage.write('initialSurvey', surveyResult.body!);
       await _storage.write("respondentData", respondentDataApiResponse.body);
       return NeedInsertRespondentDataResult.noNeed;
     }
@@ -33,7 +36,6 @@ class NeedInsertRespondentDataUseCaseImpl
       return NeedInsertRespondentDataResult.error;
     }
 
-    final surveyResult = await _respondentDataService.getInitialSurvey();
 
     if (surveyResult.error != null ||
         (surveyResult.statusCode != 200 && surveyResult.statusCode != 404)) {
