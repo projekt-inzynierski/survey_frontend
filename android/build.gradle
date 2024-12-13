@@ -1,7 +1,17 @@
+ext {
+    compileSdkVersion = 34
+    targetSdkVersion = 34
+    appCompatVersion = "1.4.2"
+}
+
+
 allprojects {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url "${project(':background_fetch').projectDir}/libs"
+        }
     }
 }
 
