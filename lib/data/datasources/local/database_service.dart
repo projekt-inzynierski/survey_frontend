@@ -100,7 +100,7 @@ class DatabaseHelper {
     ''');
   }
 
-  Future<bool> upsertSurveys(
+  Future<void> upsertSurveys(
       List<SurveyWithTimeSlots> surveysWithTimeSlots) async {
     final db = await database;
     int maxRowVersion = 0;
@@ -203,11 +203,10 @@ class DatabaseHelper {
         }
       }
     });
-    updateMaxRowVersion(maxRowVersion);
-    return true;
+    _updateMaxRowVersion(maxRowVersion);
   }
 
-  bool updateMaxRowVersion(int newRawVersion) {
+  bool _updateMaxRowVersion(int newRawVersion) {
     final currentMax = _storage.read<int>('surveysRowVersion');
     var changed = false;
 
@@ -280,5 +279,10 @@ class DatabaseHelper {
     await db.delete('questions');
     await db.delete('options');
     await db.delete('number_ranges');
+  }
+
+  Future<void> clearTable(String tableName) async {
+    final db = await database;
+    await db.delete(tableName);
   }
 }

@@ -72,14 +72,16 @@ class HomeController extends ControllerBase {
     APIResponse<List<SurveyWithTimeSlots>> response =
         await _homeService.getSurveysWithTimeSlots();
 
-    if (response.error != null || response.statusCode != 200) {
+    if (response.error != null ||
+        response.statusCode != 200 ||
+        response.body!.isEmpty) {
       return;
     }
-    await _surveyImagesUseCase.saveImages(response.body!);
-    if (await _databaseHelper.upsertSurveys(response.body!)) {
-      pendingSurveys.clear();
-      await _loadFromDatabase();
-    }
+    await _surveyImagesUseCase.saveImages(response.body!);    
+    await _databaseHelper.clearTable('surveys');
+    await _databaseHelper.upsertSurveys(response.body!);
+    pendingSurveys.clear();
+    await _loadFromDatabase();
     return;
   }
 
@@ -196,6 +198,9 @@ class HomeController extends ControllerBase {
         ? respondentData.id
         : respondentData['id'];
     var groupsResponse = await _respondentGroupService.getAllForRespondent(id);
+    if (groupsResponse.error != null || groupsResponse.body == null) {
+      return null;
+    }
 
     return groupsResponse.body?.map((e) => (e.id)).toList();
   }
@@ -230,7 +235,8 @@ class HomeController extends ControllerBase {
   }
 
   Future<void> _loadFromDatabase() async {
-    pendingSurveys.addAll(await _databaseHelper.getSurveysCompletableNow());
+    final completableNow = await _databaseHelper.getSurveysCompletableNow();
+    pendingSurveys.addAll(completableNow);
     await _surveyNotificationUseCase.scheduleSurveysNotifications();
   }
 
