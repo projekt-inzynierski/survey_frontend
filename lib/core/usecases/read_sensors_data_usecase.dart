@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_blue/flutter_blue.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:survey_frontend/core/models/sensors_response.dart';
 
@@ -13,10 +13,10 @@ class ReadXiaomiSensorsDataUsecase implements ReadSensorsDataUsecase {
   Future<SensorsResponse?> getSensorsData() async {
     Completer<void> completer = Completer<void>();
     SensorsResponse? ret;
-    FlutterBlue.instance.scanResults.listen((results) async {
+    FlutterBluePlus.scanResults.listen((results) async {
       for (final result in results) {
-        if (result.device.name == "LYWSD03MMC") {
-          FlutterBlue.instance.stopScan();
+        if (result.device.platformName == "LYWSD03MMC") {
+          FlutterBluePlus.stopScan();
           if (!completer.isCompleted){
             ret = await _fromDevice(result.device);
             try{
@@ -29,7 +29,7 @@ class ReadXiaomiSensorsDataUsecase implements ReadSensorsDataUsecase {
         }
       }
     });
-    await FlutterBlue.instance.startScan(timeout: const Duration(seconds: 30));
+    await FlutterBluePlus.startScan(timeout: const Duration(seconds: 30));
 
 
     await completer.future;
