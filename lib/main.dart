@@ -9,6 +9,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:survey_frontend/domain/local_services/notification_service.dart';
 import 'package:survey_frontend/presentation/backgroud.dart';
 import 'package:survey_frontend/presentation/app_styles.dart';
+import 'package:survey_frontend/presentation/bindings/accept_privacy_policy_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/bindings_options.dart';
 import 'package:survey_frontend/presentation/bindings/change_password_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/home_bindings.dart';
@@ -34,6 +35,7 @@ import 'package:survey_frontend/presentation/screens/login_screen.dart';
 import 'package:survey_frontend/presentation/screens/logout_confirmation_screen.dart';
 import 'package:survey_frontend/presentation/screens/notifications_settings_screen.dart';
 import 'package:survey_frontend/presentation/screens/password_change_confirmation_screen.dart';
+import 'package:survey_frontend/presentation/screens/privacy_policy/screens/accept_privacy_policy_screen.dart';
 import 'package:survey_frontend/presentation/screens/privacy_settings_screen.dart';
 import 'package:survey_frontend/presentation/screens/profile_screen.dart';
 import 'package:survey_frontend/presentation/screens/reinsert_credentials_screen.dart';
@@ -136,7 +138,10 @@ void main() async {
           binding: ChangePasswordBindings()),
       GetPage(
           name: Routes.changePasswordConfirmation,
-          page: () => const PasswordChangeConfirmationScreen())
+          page: () => const PasswordChangeConfirmationScreen()),
+      GetPage(name: Routes.acceptPrivacyPolicy, 
+      page: () => const AcceptPrivacyPolicyScreen(),
+      binding: AcceptPrivacyPolicyBindings())
     ],
   ));
 }

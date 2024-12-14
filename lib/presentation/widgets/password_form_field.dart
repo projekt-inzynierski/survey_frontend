@@ -31,7 +31,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
       obscureText: _obscureText,
       decoration: widget.decoration?.copyWith(
           suffixIcon: IconButton(
-        icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+        icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility),
         onPressed: () {
           setState(() {
             _obscureText = !_obscureText;
