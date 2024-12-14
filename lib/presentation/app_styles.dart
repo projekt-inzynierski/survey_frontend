@@ -5,7 +5,12 @@ class AppStyles {
   static const Color onBackgroundSecondary = Colors.white;
   static final MaterialColor _primaryColor =
       MaterialColor(const Color.fromRGBO(165, 214, 35, 0.46).value, const {});
+  static final MaterialColor _primaryColorDisabled = MaterialColor(
+    const Color.fromRGBO(165, 214, 35, 0.2).value,
+    const {},
+  );
   static const Color _appNameColor = Color.fromARGB(255, 61, 68, 79);
+  static const Color _appNameColorDisabled = Color.fromARGB(150, 61, 68, 79);
   static const Color primaryDark = Color.fromARGB(255, 117, 161, 0);
   static const Color primary = Color.fromARGB(255, 165, 214, 35);
 
@@ -23,19 +28,24 @@ class AppStyles {
       shadowColor: Colors.black,
       textTheme: const TextTheme(bodyLarge: TextStyle(fontSize: 20)),
       dialogTheme: DialogTheme(
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        )
-      ),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          )),
+      checkboxTheme: CheckboxThemeData(
+          fillColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return primary;
+        }
+
+        return Colors.transparent;
+      })),
       textButtonTheme: TextButtonThemeData(
-        style: ButtonStyle(
-          foregroundColor: WidgetStateProperty.resolveWith((states){
-            return primaryDark;
-          }),
-          overlayColor: WidgetStatePropertyAll(_primaryColor)
-        )
-      ),
+          style: ButtonStyle(
+              foregroundColor: WidgetStateProperty.resolveWith((states) {
+                return primaryDark;
+              }),
+              overlayColor: WidgetStatePropertyAll(_primaryColor))),
       timePickerTheme: TimePickerThemeData(
         backgroundColor: onBackgroundSecondary,
         hourMinuteTextColor: _appNameColor,
@@ -44,31 +54,29 @@ class AppStyles {
         entryModeIconColor: primaryDark,
         hourMinuteColor: _primaryColor,
         cancelButtonStyle: ButtonStyle(
-          foregroundColor: WidgetStateProperty.resolveWith((states){
-            return primaryDark;
-          }),
-          overlayColor: WidgetStatePropertyAll(_primaryColor)
-        ),
-        confirmButtonStyle:  ButtonStyle(
-          foregroundColor: WidgetStateProperty.resolveWith((states){
-            return primaryDark;
-          }),
-          overlayColor: WidgetStatePropertyAll(_primaryColor)
-        ),
+            foregroundColor: WidgetStateProperty.resolveWith((states) {
+              return primaryDark;
+            }),
+            overlayColor: WidgetStatePropertyAll(_primaryColor)),
+        confirmButtonStyle: ButtonStyle(
+            foregroundColor: WidgetStateProperty.resolveWith((states) {
+              return primaryDark;
+            }),
+            overlayColor: WidgetStatePropertyAll(_primaryColor)),
       ),
       switchTheme: SwitchThemeData(
-      thumbColor: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.selected)) {
-          return primaryDark;
-        }
-        return Colors.grey;
-      }),
-      trackColor: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.selected)) {
-          return primary;
-        }
-        return Colors.grey.shade400;
-      }),
+        thumbColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return primaryDark;
+          }
+          return Colors.grey;
+        }),
+        trackColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return primary;
+          }
+          return Colors.grey.shade400;
+        }),
       ),
       appBarTheme: const AppBarTheme(
           color: Colors.white,
@@ -79,10 +87,16 @@ class AppStyles {
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
         backgroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.disabled)) {
+            return _primaryColorDisabled;
+          }
           return _primaryColor;
         }),
         foregroundColor: WidgetStateProperty.resolveWith((states) {
-          return _appNameColor; // Text color
+          if (states.contains(WidgetState.disabled)) {
+            return _appNameColorDisabled;
+          }
+          return _appNameColor;
         }),
         textStyle: WidgetStateProperty.resolveWith((states) {
           return const TextStyle(
@@ -93,6 +107,7 @@ class AppStyles {
         }),
       )),
       inputDecorationTheme: InputDecorationTheme(
+        labelStyle: const TextStyle(color: _appNameColor),
           enabledBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: Colors.black, width: 1.0),
               borderRadius: BorderRadius.circular(10)),
@@ -117,8 +132,8 @@ class AppStyles {
             ),
             borderRadius: BorderRadius.circular(10),
           )),
-      dropdownMenuTheme: DropdownMenuThemeData(menuStyle: MenuStyle(
-          backgroundColor: WidgetStateProperty.resolveWith((states) {
+      dropdownMenuTheme: DropdownMenuThemeData(menuStyle:
+          MenuStyle(backgroundColor: WidgetStateProperty.resolveWith((states) {
         return Colors.white;
       }))));
 }

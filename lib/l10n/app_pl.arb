@@ -87,5 +87,7 @@
     "ok": "Ok",
     "currentPasswordMustNotBeEmpty": "Aktualne hasło nie może być puste",
     "minNewPasswordLenError": "Minimalna długość wynosi 8 znaków",
-    "retypePasswordMustBeEqualToNewPassword": "Wartość nie jest równa polu nowe hasło"
+    "retypePasswordMustBeEqualToNewPassword": "Wartość nie jest równa polu nowe hasło",
+    "iAcceptPrivacyPolicy": "Akceptuję politykę prywatności",
+    "scrollToTheVeryBottom": "Przewiń na sam dół"
 }
