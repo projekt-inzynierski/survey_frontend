@@ -35,7 +35,7 @@ class ControllerBase extends GetxController {
 
   Future<void> popup(String title, String message) async {
     await Get.defaultDialog(
-        title: message,
+        title: title,
         middleText: message,
         confirm: ElevatedButton(
           onPressed: () {
