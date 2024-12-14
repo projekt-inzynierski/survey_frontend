@@ -90,7 +90,20 @@ abstract class APIServiceBase{
     }
   }
 
-
+  Future<APIResponse<T>> patch<T>(String url, Map<String, dynamic> body) async{
+    try{
+      Options? options = _getOptionsWithAuthorization();
+      Response<T> response = await _dio.patch(url, 
+      options: options, 
+      data: body);
+      return APIResponse<T>(statusCode: response.statusCode!, body: response.data);
+    } catch (error){
+      if (error is DioException){
+        return _fromDioException(error);
+      }
+      return APIResponse<T>(error: error);
+    }
+  }
   
   Options? _getOptionsWithAuthorization() {
     if (tokenProvider == null){
