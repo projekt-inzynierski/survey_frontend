@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/controllers/login_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey_frontend/presentation/widgets/app_logo.dart';
+import 'package:survey_frontend/presentation/widgets/password_form_field.dart';
 
 class LoginScreen extends GetView<LoginController> {
   const LoginScreen({super.key});
@@ -48,12 +49,11 @@ class LoginScreen extends GetView<LoginController> {
                       const SizedBox(
                         height: 20,
                       ),
-                      TextFormField(
+                      PasswordFormField(
                         decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.password,
                         ),
                         validator: controller.passwordValidator,
-                        obscureText: true,
                         onChanged: (value) {
                           controller.model.value.password = value;
                         },

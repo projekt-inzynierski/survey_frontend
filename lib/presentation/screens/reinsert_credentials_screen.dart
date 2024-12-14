@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/controllers/reinsert_credentials_controller.dart';
 import 'package:survey_frontend/presentation/widgets/app_logo.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:survey_frontend/presentation/widgets/password_form_field.dart';
 
 class ReinsertCredentialsScreen extends GetView<ReinsertCredentialsController> {
   const ReinsertCredentialsScreen({super.key});
@@ -44,12 +45,11 @@ class ReinsertCredentialsScreen extends GetView<ReinsertCredentialsController> {
                       const SizedBox(
                         height: 20,
                       ),
-                      TextFormField(
+                      PasswordFormField(
                         decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.password,
                         ),
                         validator: controller.passwordValidator,
-                        obscureText: true,
                         onChanged: (value) {
                           controller.model.value.password = value;
                         },

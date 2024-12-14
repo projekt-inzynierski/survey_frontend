@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:survey_frontend/l10n/get_localizations.dart';
 import 'package:survey_frontend/presentation/app_styles.dart';
 import 'package:survey_frontend/presentation/controllers/change_password_controller.dart';
+import 'package:survey_frontend/presentation/widgets/password_form_field.dart';
 
 class ChangePasswordScreen extends GetView<ChangePasswordController>{
   const ChangePasswordScreen({super.key});
@@ -56,7 +57,7 @@ class ChangePasswordScreen extends GetView<ChangePasswordController>{
                   padding: const EdgeInsets.all(10),
                   child: Column(
                     children: [
-                      TextFormField(
+                      PasswordFormField(
                         validator: controller.validateCurrentPassword,
                         decoration: InputDecoration(
                           filled: true,
@@ -69,7 +70,7 @@ class ChangePasswordScreen extends GetView<ChangePasswordController>{
                         },
                       ),
                       const SizedBox(height: 20,),
-                      TextFormField(
+                      PasswordFormField(
                         validator: controller.validateNewPassword,
                         decoration: InputDecoration(
                           filled: true,
@@ -82,7 +83,7 @@ class ChangePasswordScreen extends GetView<ChangePasswordController>{
                         },
                       ),
                       const SizedBox(height: 20,),
-                      TextFormField(
+                      PasswordFormField(
                         validator: controller.validateRetypePassword,
                         decoration: InputDecoration(
                            filled: true,
