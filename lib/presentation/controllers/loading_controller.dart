@@ -34,7 +34,7 @@ class LoadingController extends ControllerBase {
     var respondentData = _storage.read<dynamic>("respondentData");    
 
     if (respondentData != null) {
-      Get.offAllNamed(Routes.home);
+      goToNamedPrivacySave(Routes.home);
       return;
     }
 
