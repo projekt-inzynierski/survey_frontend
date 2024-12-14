@@ -65,11 +65,9 @@ class NotificationService {
 
     for (PendingNotificationRequest pendingNotificationRequest
         in pendingNotificationRequests) {
-      print(pendingNotificationRequest.id.toString() +
-          " " +
-          (pendingNotificationRequest.payload ?? ""));
+      print("${pendingNotificationRequest.id} ${pendingNotificationRequest.payload ?? ""}");
     }
-    print('NOW ' + tz.TZDateTime.now(tz.local).toString());
+    print('NOW ${tz.TZDateTime.now(tz.local)}');
   }
 
   static Future cancelAllNotifications() async {

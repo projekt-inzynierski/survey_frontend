@@ -52,7 +52,7 @@ Future<LocalizationData?> _getCurrentPosition(GetStorage storage) async{
   final timeTo = storage.read<TimeOfDay>('allowLocationTrackingTo') ??
         const TimeOfDay(hour: 22, minute: 0);
   final now = DateTime.now();
-  final nowTime = new TimeOfDay(hour: now.hour, minute: now.minute);
+  final nowTime = TimeOfDay(hour: now.hour, minute: now.minute);
 
   if (!_isBetween(nowTime, timeFrom, timeTo)){
     return null;

@@ -4,6 +4,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
 class PrivacyPolicyScreen extends StatefulWidget{
+  const PrivacyPolicyScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _PrivacyPolicyScreenState();

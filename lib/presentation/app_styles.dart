@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:survey_frontend/generated/l10n.dart';
 
 class AppStyles {
   static const Color backgroundSecondary = Color.fromARGB(255, 244, 244, 244);
