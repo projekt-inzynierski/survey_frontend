@@ -10,16 +10,13 @@ class LocalizationServiceImpl extends APIServiceBase
   @override
   Future<APIResponse<String>> submitLocation(
       String id, LocalizationData location) {
-    return postMany<String>('/api/localization', [
-      {
-        'surveyParticipationId': id,
-        ...location.toJson(),
-      }
-    ]);
+    location.id = id;
+    return postMany<String>('/api/localization', [location.toJson()]);
   }
 
   @override
   Future<APIResponse> submitLocations(List<LocalizationData> locations) {
-    return postMany('/api/localization', locations.map((e) => e.toJson()).toList());
+    return postMany(
+        '/api/localization', locations.map((e) => e.toJson()).toList());
   }
 }

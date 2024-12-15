@@ -7,7 +7,8 @@ import 'package:survey_frontend/domain/models/survey_with_time_slots.dart';
 class ShortSurveyServiceImpl extends APIServiceBase
     implements ShortSurveyService {
   final GetStorage _storage;
-  ShortSurveyServiceImpl(this._storage, super.dio, {required super.tokenProvider});
+  ShortSurveyServiceImpl(this._storage, super.dio,
+      {required super.tokenProvider});
 
   // Mocked Data
   // @override
@@ -28,7 +29,8 @@ class ShortSurveyServiceImpl extends APIServiceBase
           '/api/surveys/allwithtimeslots',
           (dynamic items) => items
               .map<SurveyWithTimeSlots>((e) => SurveyWithTimeSlots.fromJson(e))
-              .toList(), headers: {
-                'Row-Version': _storage.read<int>('surveysRowVersion') ?? 0
-              });
+              .toList(),
+          headers: {
+            'maxRowVersion': _storage.read<int>('surveysRowVersion') ?? 0
+          });
 }

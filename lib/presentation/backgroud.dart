@@ -59,6 +59,7 @@ Future<LocalizationData?> _getCurrentPosition(GetStorage storage) async{
   }
   Position currentLocation = await Geolocator.getCurrentPosition();
   final locationData = LocalizationData(
+        id: null,
         dateTime: now.toUtc().toIso8601String(),
         latitude: double.parse(currentLocation.latitude.toStringAsFixed(6)),
         longitude: double.parse(currentLocation.longitude.toStringAsFixed(6)));
