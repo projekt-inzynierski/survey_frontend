@@ -6,6 +6,7 @@ import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecas
 import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecase_impl.dart';
 import 'package:survey_frontend/core/usecases/read_sensors_data_usecase.dart';
 import 'package:survey_frontend/core/usecases/send_sensors_data_usecase.dart';
+import 'package:survey_frontend/core/usecases/survey_images_usecase.dart';
 import 'package:survey_frontend/core/usecases/survey_notification_usecase.dart';
 import 'package:survey_frontend/core/usecases/token_provider_impl.dart';
 import 'package:survey_frontend/core/usecases/token_validity_checker_impl.dart';
@@ -81,6 +82,7 @@ class InitialBindings extends Bindings {
     Get.put<ReadSensorsDataUsecase>(ReadXiaomiSensorsDataUsecase(),
         tag: SensorKind.xiaomi);
     Get.put<LocalizationService>(LocalizationServiceImpl(Get.find(), tokenProvider: Get.find<TokenProvider>()));
+    Get.put<SurveyImagesUseCase>(SurveyImagesUseCaseImpl(Get.find()));
 
   }
 
