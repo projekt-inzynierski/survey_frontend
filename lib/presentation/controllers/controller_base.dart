@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class ControllerBase extends GetxController {
   final Connectivity connectivity = Connectivity();
@@ -30,6 +31,7 @@ class ControllerBase extends GetxController {
           AppLocalizations.of(Get.context!)!.somethingWentWrong; 
     }
 
+    await Sentry.captureException(error);
     await popup(AppLocalizations.of(Get.context!)!.error, message);
   }
 

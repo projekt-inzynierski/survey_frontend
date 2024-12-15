@@ -20,7 +20,8 @@ class LoginScreen extends GetView<LoginController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const AppLogo(),
-              Expanded(
+              Flexible(
+                flex: 1,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [

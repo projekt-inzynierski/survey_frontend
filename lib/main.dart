@@ -1,11 +1,13 @@
 import 'package:background_fetch/background_fetch.dart';
 import 'package:devicelocale/devicelocale.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:survey_frontend/domain/local_services/notification_service.dart';
 import 'package:survey_frontend/presentation/backgroud.dart';
 import 'package:survey_frontend/presentation/app_styles.dart';
@@ -46,12 +48,14 @@ import 'package:survey_frontend/presentation/screens/survey/survey_start_screen.
 import 'package:survey_frontend/presentation/screens/welcome_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey_frontend/presentation/static/routes.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class StaticVariables {
   static String lang = 'en';
 }
 
 void main() async {
+  await _initSentry();
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
@@ -61,6 +65,7 @@ void main() async {
   StaticVariables.lang = await _getCurrentLocale();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  
   runApp(GetMaterialApp(
     title: 'UrbEaT',
     navigatorObservers: [routeObserver],
@@ -183,4 +188,13 @@ Future<void> askForPermissions() async {
     Permission.locationWhenInUse
   ].request();
   Geolocator.requestPermission();
+}
+
+Future<void> _initSentry() async {
+  if(!kReleaseMode){
+    await dotenv.load();
+    await SentryFlutter.init((options){
+      options.dsn = dotenv.env['SENTRY_DSN'];
+    });
+  }
 }

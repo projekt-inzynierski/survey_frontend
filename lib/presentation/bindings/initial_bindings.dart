@@ -93,6 +93,7 @@ class InitialBindings extends Bindings {
       dio.options.baseUrl = apiUrl; 
     }
     dio.options.headers["Accept-Lang"] = StaticVariables.lang;
+    dio.options.connectTimeout = const Duration(seconds: 30);
     return dio;
   }
 }
