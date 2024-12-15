@@ -94,6 +94,7 @@ class Option {
   final String label;
   final int? showSection;
   final int rowVersion;
+  final String? imagePath;
 
   Option({
     required this.id,
@@ -101,6 +102,7 @@ class Option {
     required this.label,
     this.showSection,
     required this.rowVersion,
+    this.imagePath
   });
 
   factory Option.fromJson(Map<String, dynamic> json) => _$OptionFromJson(json);

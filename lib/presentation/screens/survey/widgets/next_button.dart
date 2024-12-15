@@ -7,13 +7,24 @@ class NextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {
-          nextAction();
-        },
-        child: Text(text),
+    return Container(
+      decoration: BoxDecoration(color: Colors.white, boxShadow: [
+        BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 10,
+            offset: const Offset(0, -5))
+      ]),
+      child: Padding(
+        padding: const EdgeInsets.all(25),
+        child: SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () {
+              nextAction();
+            },
+            child: Text(text),
+          ),
+        ),
       ),
     );
   }

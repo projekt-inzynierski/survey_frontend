@@ -75,7 +75,9 @@ class QuestionNavigableController extends ControllerBase {
       //TODO: extend the cleanup when more question types are added
       responseModel.answers[i].numericAnswer = null;
       if (responseModel.answers[i].selectedOptions != null) {
-        responseModel.answers[i].selectedOptions![0].optionId = null;
+        for (final option in responseModel.answers[i].selectedOptions!){
+          option.optionId = null;
+        }
       }
       responseModel.answers[i].yesNoAnswer = null;
     }
