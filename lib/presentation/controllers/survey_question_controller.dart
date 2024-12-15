@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:survey_frontend/core/usecases/survey_images_usecase.dart';
 import 'package:survey_frontend/domain/models/question_type.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/discrete_single_option_type_question.dart';
 import 'package:survey_frontend/presentation/controllers/question_navigable_controller.dart';
+import 'package:survey_frontend/presentation/screens/survey/widgets/image_type_question.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/number_input_type_question.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/text_multiple_choice_type_question.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/text_single_choice_type_question.dart';
@@ -15,8 +17,9 @@ class SurveyQuestionController extends QuestionNavigableController {
   var answeredQuestionIndexStack = <int>[].obs;
   var showSection = <int>[].obs;
   Question get question => questions[questionIndex].question;
+  final SurveyImagesUseCase _surveyImagesUseCase;
 
-  SurveyQuestionController();
+  SurveyQuestionController(this._surveyImagesUseCase);
 
   Widget buildQuestionFromType(Question question) {
     switch (question.questionType) {
@@ -47,6 +50,10 @@ class SurveyQuestionController extends QuestionNavigableController {
       case QuestionType.numberInput:
         return NumberInputTypeQuestion(
             dto: responseModel.answers[questionIndex]);
+      case QuestionType.imageChoice:
+        return ImageTypeQuestion(question: question, 
+        selectedOption: responseModel.answers[questionIndex].selectedOptions![0], 
+        surveyImagesUseCase: _surveyImagesUseCase);
       default:
         //TODO decide what to do in this case (most likely skip this question)
         throw Exception('Unsupported question type: ${question.questionType}');

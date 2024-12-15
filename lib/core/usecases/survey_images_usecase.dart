@@ -11,6 +11,7 @@ import 'package:path/path.dart' as p;
 
 abstract class SurveyImagesUseCase {
   Future<void> saveImages(List<SurveyWithTimeSlots> surveys);
+  Future<File?> getImageFile(Option option);
 }
 
 class SurveyImagesUseCaseImpl implements SurveyImagesUseCase {
@@ -75,5 +76,22 @@ class SurveyImagesUseCaseImpl implements SurveyImagesUseCase {
     }
     final file = File(imagePath);
     await file.writeAsBytes(response.bodyBytes);
+  }
+
+  @override
+  Future<File?> getImageFile(Option option) async {
+    if (option.imagePath == null){
+      return null;
+    }   
+    
+    final docsDir = await getApplicationSupportDirectory();
+    final imagePath = p.join(docsDir.path, 'survey_images', option.imagePath!.substring(1));
+    final file = File(imagePath);
+
+    if (!await file.exists()){
+      return null;
+    }
+
+    return file;
   }
 }

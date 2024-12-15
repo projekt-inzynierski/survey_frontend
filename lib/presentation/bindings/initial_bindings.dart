@@ -58,7 +58,7 @@ class InitialBindings extends Bindings {
     Get.lazyPut(() => RespondentDataController());
     Get.lazyPut(() => ArchivedSurveysController());
     Get.create<SurveyService>(() => SurveyServiceImpl(Get.find()));
-    Get.create<SurveyQuestionController>(() => SurveyQuestionController());
+    Get.create<SurveyQuestionController>(() => SurveyQuestionController(Get.find()));
 
     TokenProvider tp = TokenProviderImpl(Get.find());
     Get.put<TokenProvider>(tp);
