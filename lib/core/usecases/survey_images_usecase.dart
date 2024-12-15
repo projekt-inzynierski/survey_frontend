@@ -12,6 +12,7 @@ import 'package:path/path.dart' as p;
 abstract class SurveyImagesUseCase {
   Future<void> saveImages(List<SurveyWithTimeSlots> surveys);
   Future<File?> getImageFile(Option option);
+  Future<void> clearImages();
 }
 
 class SurveyImagesUseCaseImpl implements SurveyImagesUseCase {
@@ -29,6 +30,14 @@ class SurveyImagesUseCaseImpl implements SurveyImagesUseCase {
     for (final survey in surveys){
       await _saveImagesForSurvey(survey, imagesDir);
     }
+  }
+
+  @override
+  Future<void> clearImages() async {
+    final docsDir = await getApplicationSupportDirectory();
+    final imagesDirPath = p.join(docsDir.path, 'survey_images');
+    final imagesDir = Directory(imagesDirPath);
+    await _clearDir(imagesDir);
   }
 
   Future<void> _clearDir(Directory dir) async{
