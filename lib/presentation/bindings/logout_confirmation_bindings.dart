@@ -4,6 +4,6 @@ import 'package:survey_frontend/presentation/controllers/logout_confirmation_con
 class LogoutConfirmationBindings  extends Bindings{
   @override
   void dependencies() {
-    Get.create(() => LogoutConfirmationController(Get.find(), Get.find()));
+    Get.create(() => LogoutConfirmationController(Get.find(), Get.find(), Get.find()));
   }
 }
