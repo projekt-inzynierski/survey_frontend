@@ -191,7 +191,7 @@ Future<void> askForPermissions() async {
 }
 
 Future<void> _initSentry() async {
-  if(!kReleaseMode){
+  if(kReleaseMode){
     await dotenv.load();
     await SentryFlutter.init((options){
       options.dsn = dotenv.env['SENTRY_DSN'];
