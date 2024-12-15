@@ -89,5 +89,6 @@
     "minNewPasswordLenError": "Minimalna długość wynosi 8 znaków",
     "retypePasswordMustBeEqualToNewPassword": "Wartość nie jest równa polu nowe hasło",
     "iAcceptPrivacyPolicy": "Akceptuję politykę prywatności",
-    "scrollToTheVeryBottom": "Przewiń na sam dół"
+    "scrollToTheVeryBottom": "Przewiń na sam dół",
+    "loadingImageFailed": "Nie udało się załadować zdjęcia"
 }

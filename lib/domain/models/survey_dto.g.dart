@@ -78,6 +78,7 @@ Option _$OptionFromJson(Map<String, dynamic> json) => Option(
       label: json['label'] as String,
       showSection: (json['showSection'] as num?)?.toInt(),
       rowVersion: (json['rowVersion'] as num).toInt(),
+      imagePath: json['imagePath'] as String?,
     );
 
 Map<String, dynamic> _$OptionToJson(Option instance) => <String, dynamic>{
@@ -86,6 +87,7 @@ Map<String, dynamic> _$OptionToJson(Option instance) => <String, dynamic>{
       'label': instance.label,
       'showSection': instance.showSection,
       'rowVersion': instance.rowVersion,
+      'imagePath': instance.imagePath,
     };
 
 NumberRange _$NumberRangeFromJson(Map<String, dynamic> json) => NumberRange(

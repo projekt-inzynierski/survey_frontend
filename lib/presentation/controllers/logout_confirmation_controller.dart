@@ -1,6 +1,7 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:survey_frontend/core/usecases/survey_images_usecase.dart';
 import 'package:survey_frontend/data/datasources/local/database_service.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:survey_frontend/presentation/static/routes.dart';
@@ -10,9 +11,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class LogoutConfirmationController extends ControllerBase {
   final GetStorage _storage;
   final DatabaseHelper _databaseHelper;
+  final SurveyImagesUseCase _surveyImagesUseCase;
   Rx<bool> isBusy = false.obs;
 
-  LogoutConfirmationController(this._storage, this._databaseHelper);
+  LogoutConfirmationController(this._storage, this._databaseHelper, this._surveyImagesUseCase);
 
   void logOut() async {
     if (isBusy.value) {

@@ -11,7 +11,7 @@ class CreateQuestionAnswerDtoFactoryImpl
     implements CreateQuestionAnswerDtoFactory {
   @override
   CreateQuestionAnswerDto getDto(Question question) {
-    if (question.questionType == QuestionType.singleChoiceText) {
+    if (question.questionType == QuestionType.singleChoiceText || question.questionType == QuestionType.imageChoice) {
       return CreateQuestionAnswerDto(
           questionId: question.id,
           selectedOptions: [CreateSelectedOptionDto()]);

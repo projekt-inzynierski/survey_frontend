@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:location/location.dart';
 import 'package:survey_frontend/core/usecases/create_question_answer_dto_factory.dart';
+import 'package:survey_frontend/core/usecases/survey_images_usecase.dart';
 import 'package:survey_frontend/core/usecases/survey_notification_usecase.dart';
 import 'package:survey_frontend/data/datasources/local/database_service.dart';
 import 'package:survey_frontend/data/models/short_survey.dart';
@@ -33,6 +34,7 @@ class HomeController extends ControllerBase {
   final RxInt minutes = 60.obs;
   final DatabaseHelper _databaseHelper;
   final SurveyNotificationUseCase _surveyNotificationUseCase;
+  final SurveyImagesUseCase _surveyImagesUseCase;
   bool _isBusy = false;
 
   HomeController(
@@ -42,7 +44,8 @@ class HomeController extends ControllerBase {
       this._respondentGroupService,
       this._storage,
       this._databaseHelper,
-      this._surveyNotificationUseCase);
+      this._surveyNotificationUseCase,
+      this._surveyImagesUseCase);
 
   Future<void> loadSurveys() async {
     if (_isBusy) {
@@ -72,7 +75,7 @@ class HomeController extends ControllerBase {
     if (response.error != null || response.statusCode != 200) {
       return;
     }
-
+    await _surveyImagesUseCase.saveImages(response.body!);
     if (await _databaseHelper.upsertSurveys(response.body!)) {
       pendingSurveys.clear();
       await _loadFromDatabase();

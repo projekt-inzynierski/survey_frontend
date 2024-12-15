@@ -105,5 +105,6 @@
     "minNewPasswordLenError": "The minimum length is 8 characters",
     "retypePasswordMustBeEqualToNewPassword": "The value must be equal to new password",
     "iAcceptPrivacyPolicy": "I accept privacy policy",
-    "scrollToTheVeryBottom": "Scroll to the very bottom"
+    "scrollToTheVeryBottom": "Scroll to the very bottom",
+    "loadingImageFailed": "Could not load the image"
 }
