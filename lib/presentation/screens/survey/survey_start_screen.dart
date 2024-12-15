@@ -4,7 +4,6 @@ import 'package:survey_frontend/presentation/controllers/question_navigable_cont
 import 'package:survey_frontend/presentation/screens/survey/widgets/next_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class SurveyStartScreen extends GetView<QuestionNavigableController> {
   final QuestionNavigableController _controller;
 
@@ -20,7 +19,6 @@ class SurveyStartScreen extends GetView<QuestionNavigableController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Spacer(),
             Center(
               child: Text(
                 AppLocalizations.of(context)!.initializeSurveyQuestion,
@@ -28,14 +26,14 @@ class SurveyStartScreen extends GetView<QuestionNavigableController> {
                 style: const TextStyle(fontSize: 24),
               ),
             ),
-            const Spacer(),
-            NextButton(nextAction: (){
-              _controller.navigateToNextQuestion(QuestionNavigationMode.off);
-            }, 
-                text: AppLocalizations.of(context)!.start),
           ],
         ),
       ),
+      bottomNavigationBar: NextButton(
+          nextAction: () {
+            _controller.navigateToNextQuestion(QuestionNavigationMode.off);
+          },
+          text: AppLocalizations.of(context)!.start),
     );
   }
 }

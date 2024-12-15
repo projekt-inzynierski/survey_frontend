@@ -25,23 +25,19 @@ class ImageTypeQuestion extends StatefulWidget {
 class _ImageTypeQuestionState extends State<ImageTypeQuestion> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Expanded(
-        child: Column(
-          children: List<Widget>.from(widget.question.options!.map((option) =>
-              RadioListTile(
-                  title: _ImageWidget(
-                      option: option,
-                      surveyImagesUseCase: widget.surveyImagesUseCase),
-                  value: option.id,
-                  groupValue: widget.selectedOption.optionId,
-                  onChanged: (v) {
-                    setState(() {
-                      widget.selectedOption.optionId = v;
-                    });
-                  }))),
-        ),
-      ),
+    return Column(
+      children: List<Widget>.from(widget.question.options!.map((option) =>
+          RadioListTile(
+              title: _ImageWidget(
+                  option: option,
+                  surveyImagesUseCase: widget.surveyImagesUseCase),
+              value: option.id,
+              groupValue: widget.selectedOption.optionId,
+              onChanged: (v) {
+                setState(() {
+                  widget.selectedOption.optionId = v;
+                });
+              }))),
     );
   }
 }

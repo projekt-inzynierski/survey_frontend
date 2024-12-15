@@ -43,17 +43,18 @@ class SurveyQuestionScreen extends GetView<SurveyQuestionController> {
               ),
             ),
             const SizedBox(height: 30),
-            _controller.buildQuestionFromType(_controller.question),
-            const Spacer(),
-            NextButton(
-                nextAction: () {
-                  _controller
-                      .navigateToNextQuestion(QuestionNavigationMode.top);
-                },
-                text: AppLocalizations.of(context)!.next),
+            Expanded(
+                child: SingleChildScrollView(
+                    child: _controller
+                        .buildQuestionFromType(_controller.question))),
           ],
         ),
       ),
+      bottomNavigationBar: NextButton(
+          nextAction: () {
+            _controller.navigateToNextQuestion(QuestionNavigationMode.top);
+          },
+          text: AppLocalizations.of(context)!.next),
     );
   }
 }
