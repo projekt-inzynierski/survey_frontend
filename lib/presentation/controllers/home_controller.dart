@@ -20,7 +20,7 @@ import 'package:survey_frontend/domain/models/survey_with_time_slots.dart';
 import 'package:survey_frontend/domain/models/visibility_type.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:survey_frontend/presentation/screens/home/widgets/location_request.dart';
+import 'package:survey_frontend/presentation/screens/home/widgets/request.dart';
 import 'package:survey_frontend/presentation/static/routes.dart';
 
 class HomeController extends ControllerBase {
@@ -77,7 +77,7 @@ class HomeController extends ControllerBase {
         response.body!.isEmpty) {
       return;
     }
-    await _surveyImagesUseCase.saveImages(response.body!);    
+    await _surveyImagesUseCase.saveImages(response.body!);
     await _databaseHelper.clearTable('surveys');
     await _databaseHelper.upsertSurveys(response.body!);
     pendingSurveys.clear();
@@ -166,7 +166,7 @@ class HomeController extends ControllerBase {
       locationPermission = await Geolocator.requestPermission();
       if (locationPermission != LocationPermission.always &&
           locationPermission != LocationPermission.whileInUse) {
-        await buildDenyDialog();
+        await buildLocationDenyDialog();
         return false;
       }
     }

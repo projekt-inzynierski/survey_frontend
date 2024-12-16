@@ -106,5 +106,7 @@
     "retypePasswordMustBeEqualToNewPassword": "The value must be equal to new password",
     "iAcceptPrivacyPolicy": "I accept privacy policy",
     "scrollToTheVeryBottom": "Scroll to the very bottom",
-    "loadingImageFailed": "Could not load the image"
+    "loadingImageFailed": "Could not load the image",
+    "multiplePermissionsDenied": "Permissions missing",
+    "multiplePermissionsDeniedMessage": "Please enable denied permissions in your device settings by going to Permissions in settings."
 }

@@ -90,5 +90,7 @@
     "retypePasswordMustBeEqualToNewPassword": "Wartość nie jest równa polu nowe hasło",
     "iAcceptPrivacyPolicy": "Akceptuję politykę prywatności",
     "scrollToTheVeryBottom": "Przewiń na sam dół",
-    "loadingImageFailed": "Nie udało się załadować zdjęcia"
+    "loadingImageFailed": "Nie udało się załadować zdjęcia",
+    "multiplePermissionsDenied": "Brakuje uprawnień",
+    "multiplePermissionsDeniedMessage": "Włacz brakujące uprawnienia w ustawieniach urządzenia. Przejdź do Uprawnienia i włącz odrzucone."
 }

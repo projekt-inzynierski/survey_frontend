@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/controllers/login_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:survey_frontend/presentation/functions/handle_need_insert_respondent_data.dart';
 import 'package:survey_frontend/presentation/widgets/app_logo.dart';
 import 'package:survey_frontend/presentation/widgets/password_form_field.dart';
 
@@ -10,6 +11,7 @@ class LoginScreen extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
+    askForPermissions();
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(25.0),
@@ -25,7 +27,9 @@ class LoginScreen extends GetView<LoginController> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       TextFormField(
                         decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.apiUrl,
