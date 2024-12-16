@@ -11,7 +11,6 @@ class LoginScreen extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
-    askForPermissions();
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(25.0),

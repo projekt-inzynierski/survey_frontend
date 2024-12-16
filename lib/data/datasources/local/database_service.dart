@@ -1,12 +1,14 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:survey_frontend/data/models/short_survey.dart';
+import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/domain/models/survey_with_time_slots.dart';
 
 class DatabaseHelper {
@@ -59,6 +61,7 @@ class DatabaseHelper {
         visibility TEXT,
         groupId TEXT,
         rowVersion INTEGER,
+        displayOnOneScreen BIT,
         FOREIGN KEY (surveyId) REFERENCES surveys (id) ON DELETE CASCADE
       )
     ''');
@@ -84,6 +87,7 @@ class DatabaseHelper {
         label TEXT,
         showSection INTEGER,
         rowVersion INTEGER,
+        imagePath TEXT,
         FOREIGN KEY (questionId) REFERENCES questions (id) ON DELETE CASCADE
       )
     ''');
@@ -91,6 +95,7 @@ class DatabaseHelper {
     await db.execute('''
       CREATE TABLE number_ranges (
         id TEXT PRIMARY KEY,
+        questionId TEXT,
         "from" INTEGER,
         "to" INTEGER,
         fromLabel TEXT,
@@ -144,6 +149,7 @@ class DatabaseHelper {
               'visibility': section.visibility,
               'groupId': section.groupId,
               'rowVersion': section.rowVersion,
+              'displayOnOneScreen': section.displayOnOneScreen
             },
             conflictAlgorithm: ConflictAlgorithm.replace,
           );
@@ -176,6 +182,7 @@ class DatabaseHelper {
                     'label': option.label,
                     'showSection': option.showSection,
                     'rowVersion': option.rowVersion,
+                    'imagePath': option.imagePath
                   },
                   conflictAlgorithm: ConflictAlgorithm.replace,
                 );
@@ -190,6 +197,7 @@ class DatabaseHelper {
                   'id': question.numberRange!.id,
                   'from': question.numberRange!.from,
                   'to': question.numberRange!.to,
+                  'questionId': question.id,
                   'fromLabel': question.numberRange!.fromLabel,
                   'toLabel': question.numberRange!.toLabel,
                   'rowVersion': question.numberRange!.rowVersion,
@@ -284,5 +292,99 @@ class DatabaseHelper {
   Future<void> clearTable(String tableName) async {
     final db = await database;
     await db.delete(tableName);
+  }
+
+  Future<SurveyDto> getSurveyById(String id) async {
+    final db = await database;
+    final Map<String, dynamic> surveyMap = Map.from((await db.rawQuery('''
+      SELECT id, name, rowVersion
+      FROM surveys
+      WHERE id = ?
+      ''', [id])).first);
+    surveyMap['sections'] = await _getSections(id, db);
+
+    return SurveyDto.fromJson(surveyMap);
+  }
+
+  Future<List<Map<String, dynamic>>> _getSections(
+      String surveyId, Database db) async {
+    final List<Map<String, dynamic>> sections = (await db.rawQuery('''
+      SELECT id, "order", name, visibility, groupId, rowVersion, displayOnOneScreen
+      FROM sections 
+      WHERE surveyId = ?
+      ''', [surveyId])).map((e) {
+      final Map<String, dynamic> res = Map.from(e);
+      return res;
+    }).toList();
+
+    final List<String> sectionsIds =
+        sections.map((e) => e['id'] as String).toList();
+    final questionsMap = await _getQuestionsToSectionMappings(sectionsIds, db);
+
+    final questionsIds = questionsMap.values
+        .expand((e) => e)
+        .map((e) => e['id'] as String)
+        .toList();
+    final optionsMap = await _getOptionsToQuestionsMappings(questionsIds, db);
+    final numberRangesMap =
+        await _getNumberRangesToQuestionsMappings(questionsIds, db);
+
+    for (final section in sections) {
+      section['displayOnOneScreen'] = section['displayOnOneScreen'] == 1;
+      section['questions'] = questionsMap[section['id']];
+
+      for (final question in section['questions']) {
+        question['required'] = question['required'] == 1;
+        final questionId = question['id'];
+        if (optionsMap.containsKey(questionId)) {
+          question['options'] = optionsMap[questionId]!.toList();
+        }
+
+        if (numberRangesMap.containsKey(questionId)) {
+          question['numberRange'] =
+              numberRangesMap[questionId] as Map<String, dynamic>;
+        }
+      }
+    }
+
+    return sections;
+  }
+
+  Future<Map<String, List<Map<String, dynamic>>>>
+      _getQuestionsToSectionMappings(
+          List<String> sectionsIds, Database db) async {
+    final List<Map<String, dynamic>> questions = (await db.rawQuery('''
+      SELECT id, "order", content, questionType, required, rowVersion, sectionId
+      FROM questions
+      WHERE sectionId IN (${List.filled(sectionsIds.length, '?').join(', ')})
+      ''', sectionsIds)).map((e) {
+      final Map<String, dynamic> res = Map.from(e);
+      return res;
+    }).toList();
+
+    return groupBy(questions, (map) => map['sectionId'] as String);
+  }
+
+  Future<Map<String, List<Map<String, dynamic>>>>
+      _getOptionsToQuestionsMappings(
+          List<String> questionsIds, Database db) async {
+    final List<Map<String, dynamic>> options = (await db.rawQuery('''
+      SELECT id, "order", label, showSection, rowVersion, imagePath, questionId
+      FROM options
+      WHERE questionId IN (${List.filled(questionsIds.length, '?').join(', ')})
+      ''', questionsIds));
+
+    return groupBy(options, (map) => map['questionId'] as String);
+  }
+
+  Future<Map<String, Map<String, dynamic>>> _getNumberRangesToQuestionsMappings(
+      List<String> questionsIds, Database db) async {
+    final List<Map<String, dynamic>> numberRanges = (await db.rawQuery('''
+      SELECT id, "from", "to", fromLabel, toLabel, rowVersion, questionId
+      FROM number_ranges
+      WHERE questionId IN (${List.filled(questionsIds.length, '?').join(', ')})
+      ''', questionsIds));
+
+    return {for (var e in numberRanges) e['questionId']: e};
   }
 }
