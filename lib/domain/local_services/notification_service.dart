@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -22,11 +24,11 @@ class NotificationService {
     await Permission.scheduleExactAlarm.request();
   }
 
-  static Future scheduleNotification(DateTime scheduledDate,
-      {String? title, String? body}) async {
+  static Future scheduleNotification(
+      DateTime scheduledDate, int id, String title, String body) async {
     const androidDetails = AndroidNotificationDetails(
-      'your_channel_id',
-      'your_channel_name',
+      'Reminder',
+      'Reminder',
       importance: Importance.max,
       priority: Priority.high,
     );
@@ -42,11 +44,9 @@ class NotificationService {
       //TODO LOG IT
       return;
     }
-    title ??= 'Notification';
-    body ??= 'Body';
 
     await _flutterLocalNotificationsPlugin.zonedSchedule(
-      DateTime.now().millisecondsSinceEpoch.remainder(10000), //TODO make it sensible
+      id as int,
       title,
       body,
       tz.TZDateTime.from(scheduledDate, tz.local),
@@ -65,7 +65,8 @@ class NotificationService {
 
     for (PendingNotificationRequest pendingNotificationRequest
         in pendingNotificationRequests) {
-      print("${pendingNotificationRequest.id} ${pendingNotificationRequest.payload ?? ""}");
+      print(
+          "${pendingNotificationRequest.id} ${pendingNotificationRequest.payload ?? ""}");
     }
     print('NOW ${tz.TZDateTime.now(tz.local)}');
   }

@@ -108,5 +108,7 @@
     "scrollToTheVeryBottom": "Scroll to the very bottom",
     "loadingImageFailed": "Could not load the image",
     "multiplePermissionsDenied": "Permissions missing",
-    "multiplePermissionsDeniedMessage": "Please enable denied permissions in your device settings by going to Permissions in settings."
+    "multiplePermissionsDeniedMessage": "Please enable denied permissions in your device settings by going to Permissions in settings.",
+    "surveyFinishTitle": "Finishing Survey",
+    "surveyStartTitle": "New Survey"
 }
