@@ -66,6 +66,7 @@ dependencies:
   flutter_html: ^3.0.0-beta.2
   sentry_flutter: ^8.11.0
   flutter_dotenv: ^5.2.1
+  collection: ^1.18.0
 
 dev_dependencies:
   flutter_test:

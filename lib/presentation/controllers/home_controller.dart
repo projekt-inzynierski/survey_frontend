@@ -127,7 +127,7 @@ class HomeController extends ControllerBase {
       if (!await isLocationWorking()) {
         return;
       }
-      final futures = [_loadSurvey(surveyId), _getGroupsIds()];
+      final futures = [_databaseHelper.getSurveyById(surveyId), _getGroupsIds()];
       final results = await Future.wait(futures);
       SurveyDto? survey = results[0] as SurveyDto?;
       var respondentGroups = results[1];
@@ -179,14 +179,6 @@ class HomeController extends ControllerBase {
       }
     }
     return true;
-  }
-
-  Future<SurveyDto?> _loadSurvey(String surveyId) async {
-    APIResponse<SurveyDto> response = await _surveyService.getSurvey(surveyId);
-    if (response.error != null || response.body == null) {
-      return null;
-    }
-    return response.body!;
   }
 
   Future<List<String>?> _getGroupsIds() async {
