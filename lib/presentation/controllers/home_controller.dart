@@ -20,7 +20,7 @@ import 'package:survey_frontend/domain/models/survey_with_time_slots.dart';
 import 'package:survey_frontend/domain/models/visibility_type.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:survey_frontend/presentation/screens/home/widgets/location_request.dart';
+import 'package:survey_frontend/presentation/screens/home/widgets/request.dart';
 import 'package:survey_frontend/presentation/static/routes.dart';
 
 class HomeController extends ControllerBase {
@@ -72,14 +72,16 @@ class HomeController extends ControllerBase {
     APIResponse<List<SurveyWithTimeSlots>> response =
         await _homeService.getSurveysWithTimeSlots();
 
-    if (response.error != null || response.statusCode != 200) {
+    if (response.error != null ||
+        response.statusCode != 200 ||
+        response.body!.isEmpty) {
       return;
     }
     await _surveyImagesUseCase.saveImages(response.body!);
-    if (await _databaseHelper.upsertSurveys(response.body!)) {
-      pendingSurveys.clear();
-      await _loadFromDatabase();
-    }
+    await _databaseHelper.clearAllTables();
+    await _databaseHelper.upsertSurveys(response.body!);
+    pendingSurveys.clear();
+    await _loadFromDatabase();
     return;
   }
 
@@ -164,7 +166,7 @@ class HomeController extends ControllerBase {
       locationPermission = await Geolocator.requestPermission();
       if (locationPermission != LocationPermission.always &&
           locationPermission != LocationPermission.whileInUse) {
-        await buildDenyDialog();
+        await buildLocationDenyDialog();
         return false;
       }
     }
@@ -196,6 +198,9 @@ class HomeController extends ControllerBase {
         ? respondentData.id
         : respondentData['id'];
     var groupsResponse = await _respondentGroupService.getAllForRespondent(id);
+    if (groupsResponse.error != null || groupsResponse.body == null) {
+      return null;
+    }
 
     return groupsResponse.body?.map((e) => (e.id)).toList();
   }
@@ -230,7 +235,8 @@ class HomeController extends ControllerBase {
   }
 
   Future<void> _loadFromDatabase() async {
-    pendingSurveys.addAll(await _databaseHelper.getSurveysCompletableNow());
+    final completableNow = await _databaseHelper.getSurveysCompletableNow();
+    pendingSurveys.addAll(completableNow);
     await _surveyNotificationUseCase.scheduleSurveysNotifications();
   }
 
@@ -246,8 +252,8 @@ class HomeController extends ControllerBase {
     Position currentLocation = await Geolocator.getCurrentPosition();
     return LocalizationData(
         dateTime: DateTime.now().toUtc().toIso8601String(),
-        latitude: currentLocation.latitude,
-        longitude: currentLocation.longitude);
+        latitude: double.parse(currentLocation.latitude.toStringAsFixed(6)),
+        longitude: double.parse(currentLocation.longitude.toStringAsFixed(6)));
   }
 }
 

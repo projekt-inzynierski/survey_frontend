@@ -68,7 +68,7 @@
     "couldNotReachTheServer": "Nie udało się wysłać żądania, spróbuj ponownie później.",
     "somethingWentWrong": "Coś poszło nie tak, spróbuj ponownie później.",
     "locationPermissionDenied": "Odmowa dostępu do lokalizacji",
-    "locationPermissionDeniedMessage": "Dostęp do lokalizacji jest wymagany do wypełnienia ankiet. Włacz go w ustawieniach urządzenia. \nIdz do Uprawnienia -> Lokalizacja \nWybierz Zezwól",
+    "locationPermissionDeniedMessage": "Stały dostęp do lokalizacji jest wymagany do wypełnienia ankiet. Proszę wyłączyć je w ustawieniach urządzenia. \nProszę wybierać \"Zezwól przez cały czas\"",
     "openSettings": "Otwórz ustawienia",
     "close": "Zamknij",
     "notifications": "Powiadomienia",
@@ -90,5 +90,9 @@
     "retypePasswordMustBeEqualToNewPassword": "Wartość nie jest równa polu nowe hasło",
     "iAcceptPrivacyPolicy": "Akceptuję politykę prywatności",
     "scrollToTheVeryBottom": "Przewiń na sam dół",
-    "loadingImageFailed": "Nie udało się załadować zdjęcia"
+    "loadingImageFailed": "Nie udało się załadować zdjęcia",
+    "multiplePermissionsDenied": "Brakuje uprawnień",
+    "multiplePermissionsDeniedMessage": "Włacz brakujące uprawnienia w ustawieniach urządzenia. Przejdź do Uprawnienia i włącz odrzucone.",
+    "surveyFinishTitle": "Koniec Ankiety",
+    "surveyStartTitle": "Nowa Ankieta"
 }

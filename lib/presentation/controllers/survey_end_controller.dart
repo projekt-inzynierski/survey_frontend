@@ -34,8 +34,11 @@ class SurveyEndController extends ControllerBase {
             AppLocalizations.of(Get.context!)!.answerSubmitError);
       } else {
         await _surveyParticipationService.addParticipation(participation);
-        final apiResponse = await _locationService.submitLocation(
+        final response = await _locationService.submitLocation(
             participation.id, await localizationData);
+        if (response.statusCode != 200) {
+          //TODO log it
+        }
         await _databaseHelper.removeSurveyTimeSlot(participation.surveyId);
       }
 
@@ -67,6 +70,4 @@ class SurveyEndController extends ControllerBase {
     dto = Get.arguments['responseModel'];
     localizationData = Get.arguments['localizationData'];
   }
-
-  void _sendLocalizationData(String id, LocalizationData localizationData) {}
 }
