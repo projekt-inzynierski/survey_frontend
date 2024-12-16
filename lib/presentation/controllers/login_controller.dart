@@ -25,12 +25,12 @@ class LoginController extends ControllerBase {
   final Dio _dio;
 
   LoginController(this._loginService, this._storage,
-      this._needInsertRespondentDataUseCase, this._dio){
-        if (kDebugMode){
-          apiUrlRegex = RegExp(
+      this._needInsertRespondentDataUseCase, this._dio) {
+    if (kDebugMode) {
+      apiUrlRegex = RegExp(
           r'(https?)?:\/\/(www\\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)(:\d+)?');
-        }
-      }
+    }
+  }
 
   void login() async {
     if (isBusy) {
@@ -147,7 +147,7 @@ class LoginController extends ControllerBase {
   }
 
   void _saveUrl() {
-    if (!apiUrl!.startsWith('http')){
+    if (!apiUrl!.startsWith('http')) {
       apiUrl = 'https://${apiUrl!}';
     }
     _storage.write('apiUrl', apiUrl);

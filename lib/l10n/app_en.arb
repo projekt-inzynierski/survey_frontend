@@ -84,7 +84,7 @@
     "couldNotReachTheServer": "Failed to send the request, please try again later.",
     "somethingWentWrong": "Something went wrong, please try again later.",
     "locationPermissionDenied": "Location permission denied",
-    "locationPermissionDeniedMessage": "Location permission is required to fill the survey. Please enable it in your device settings.\nGo to Permissions -> Location \nSelect Allow",
+    "locationPermissionDeniedMessage": "Constant location permission is required to fill the surveys. Please enable it in your device settings. \nPlease select \"Allow all the time\"",
     "openSettings": "Open settings",
     "close": "Close",
     "notifications": "Notifications",
@@ -106,5 +106,9 @@
     "retypePasswordMustBeEqualToNewPassword": "The value must be equal to new password",
     "iAcceptPrivacyPolicy": "I accept privacy policy",
     "scrollToTheVeryBottom": "Scroll to the very bottom",
-    "loadingImageFailed": "Could not load the image"
+    "loadingImageFailed": "Could not load the image",
+    "multiplePermissionsDenied": "Permissions missing",
+    "multiplePermissionsDeniedMessage": "Please enable denied permissions in your device settings by going to Permissions in settings.",
+    "surveyFinishTitle": "Finishing Survey",
+    "surveyStartTitle": "New Survey"
 }

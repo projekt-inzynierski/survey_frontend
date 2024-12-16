@@ -109,7 +109,7 @@ class PrivacySettingsScreen extends GetView<PrivacySettingsController> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (ctx) => PrivacyPolicyScreen()));
+                            builder: (ctx) => const PrivacyPolicyScreen()));
                   },
                   child: RichText(
                       text: TextSpan(

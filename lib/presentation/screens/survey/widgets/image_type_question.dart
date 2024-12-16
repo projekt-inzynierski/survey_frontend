@@ -47,7 +47,7 @@ class _ImageWidget extends StatefulWidget {
   final SurveyImagesUseCase surveyImagesUseCase;
 
   const _ImageWidget(
-      {super.key, required this.option, required this.surveyImagesUseCase});
+      {required this.option, required this.surveyImagesUseCase});
 
   @override
   State<StatefulWidget> createState() {

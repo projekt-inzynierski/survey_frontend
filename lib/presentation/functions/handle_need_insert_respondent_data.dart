@@ -5,8 +5,8 @@ import 'package:survey_frontend/core/models/need_insert_respondent_data_result.d
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey_frontend/presentation/static/routes.dart';
 
-void handle(NeedInsertRespondentDataResult result){
-  switch (result){
+void handle(NeedInsertRespondentDataResult result) {
+  switch (result) {
     case NeedInsertRespondentDataResult.need:
       goToNamedPrivacySave(Routes.welcome);
       break;
@@ -15,27 +15,26 @@ void handle(NeedInsertRespondentDataResult result){
       break;
     case NeedInsertRespondentDataResult.error:
       Get.defaultDialog(
-        title: AppLocalizations.of(Get.context!)!.error,
-        middleText: AppLocalizations.of(Get.context!)!.error,
-        confirm: ElevatedButton(
-          onPressed: () {
-            Get.back();
-          },
-          child: const Text("Ok"),
-        ));
+          title: AppLocalizations.of(Get.context!)!.error,
+          middleText: AppLocalizations.of(Get.context!)!.error,
+          confirm: ElevatedButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text("Ok"),
+          ));
       break;
   }
 }
 
-void goToNamedPrivacySave(String path) async{
+void goToNamedPrivacySave(String path) async {
   final storage = GetStorage();
-  final privacyPolicyAccepted = storage.read<bool>('privacyPolicyAccepted') ?? false;
-  if (privacyPolicyAccepted){
+  final privacyPolicyAccepted =
+      storage.read<bool>('privacyPolicyAccepted') ?? false;
+  if (privacyPolicyAccepted) {
     Get.toNamed(path);
     return;
   }
 
-  Get.toNamed(Routes.acceptPrivacyPolicy, arguments: {
-    'nextPage': path
-  });
+  Get.toNamed(Routes.acceptPrivacyPolicy, arguments: {'nextPage': path});
 }
