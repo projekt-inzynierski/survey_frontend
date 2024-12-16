@@ -45,11 +45,6 @@ class InitialBindings extends Bindings {
     }
     _registered = true;
     final location = Location();
-    try{
-      location.enableBackgroundMode(enable: true);
-    } catch (e){
-      //ignore for now
-    }
     Get.put(location);
     final storage = GetStorage();
     Get.put(storage);

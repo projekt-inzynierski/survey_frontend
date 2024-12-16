@@ -53,7 +53,7 @@ class StaticVariables {
 }
 
 void main() async {
-  await _initSentry();
+  await initSentry();
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
@@ -167,7 +167,6 @@ Future<String> _getCurrentLocale() async {
 }
 
 Future<void> prepareWorkManager() async {
-  BackgroundFetch.registerHeadlessTask(backgroundHeadlessTask);
   await BackgroundFetch.configure(
       BackgroundFetchConfig(
           minimumFetchInterval: 20,
@@ -175,17 +174,9 @@ Future<void> prepareWorkManager() async {
           startOnBoot: true,
           enableHeadless: true),
       backgroundTask);
+  await BackgroundFetch.registerHeadlessTask(backgroundHeadlessTask);
 }
 
 void backgroundHeadlessTask(HeadlessTask task) async {
   backgroundTask(task.taskId);
-}
-
-Future<void> _initSentry() async {
-  if(kReleaseMode){
-    await dotenv.load();
-    await SentryFlutter.init((options){
-      options.dsn = dotenv.env['SENTRY_DSN'];
-    });
-  }
 }
