@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:survey_frontend/l10n/get_localizations.dart';
 
 Future<void> buildLocationDenyDialog() async {
@@ -20,7 +21,7 @@ Future<void> buildLocationDenyDialog() async {
           TextButton(
             onPressed: () async {
               Navigator.of(context).pop();
-              await Geolocator.openAppSettings();
+              Permission.locationAlways.request();
             },
             child: Text(getAppLocalizations().openSettings),
           )
