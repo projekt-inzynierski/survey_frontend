@@ -11,12 +11,12 @@ Future<void> askForPermissions() async {
     // Permission.locationAlways,
     // Permission.locationWhenInUse
   ].request();
-  if (statuses.values.any((status) => !status.isGranted)) {
-    await buildManyDenyDialog();
-  }
-  if (!await Permission.locationAlways.isGranted) {
-    await buildLocationDenyDialog();
-  }
+  // if (statuses.values.any((status) => !status.isGranted)) {
+  //   await buildManyDenyDialog();
+  // }
+  // if (!await Permission.locationAlways.isGranted) {
+  //   await buildLocationDenyDialog();
+  // }
 
   await Geolocator.requestPermission();
   await NotificationService.initialize();
