@@ -78,7 +78,7 @@ class HomeController extends ControllerBase {
       return;
     }
     await _surveyImagesUseCase.saveImages(response.body!);
-    await _databaseHelper.clearTable('surveys');
+    await _databaseHelper.clearAllTables();
     await _databaseHelper.upsertSurveys(response.body!);
     pendingSurveys.clear();
     await _loadFromDatabase();
@@ -252,8 +252,8 @@ class HomeController extends ControllerBase {
     Position currentLocation = await Geolocator.getCurrentPosition();
     return LocalizationData(
         dateTime: DateTime.now().toUtc().toIso8601String(),
-        latitude: currentLocation.latitude,
-        longitude: currentLocation.longitude);
+        latitude: double.parse(currentLocation.latitude.toStringAsFixed(6)),
+        longitude: double.parse(currentLocation.longitude.toStringAsFixed(6)));
   }
 }
 
