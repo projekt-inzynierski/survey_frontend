@@ -167,6 +167,7 @@ Future<String> _getCurrentLocale() async {
 }
 
 Future<void> prepareWorkManager() async {
+  BackgroundFetch.registerHeadlessTask(backgroundHeadlessTask);
   await BackgroundFetch.configure(
       BackgroundFetchConfig(
           minimumFetchInterval: 20,
@@ -174,6 +175,10 @@ Future<void> prepareWorkManager() async {
           startOnBoot: true,
           enableHeadless: true),
       backgroundTask);
+}
+
+void backgroundHeadlessTask(HeadlessTask task) async {
+  backgroundTask(task.taskId);
 }
 
 Future<void> _initSentry() async {

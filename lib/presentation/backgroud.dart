@@ -87,6 +87,8 @@ void backgroundTask(String taskId) async{
   } catch(e){ 
     //TODO: log the error
   } finally {
-    BackgroundFetch.finish(taskId);
+    if (taskId.isNotEmpty){
+      BackgroundFetch.finish(taskId);
+    }
   }
 }
