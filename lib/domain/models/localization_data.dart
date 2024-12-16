@@ -10,7 +10,6 @@ class LocalizationData {
   final double longitude;
 
   LocalizationData({
-    this.id,
     required this.dateTime,
     required this.latitude,
     required this.longitude,

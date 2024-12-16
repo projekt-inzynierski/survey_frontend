@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:survey_frontend/domain/local_services/notification_service.dart';
@@ -31,7 +29,6 @@ class SurveyShortInfo {
     final finishIDTimeComponent =
         finishTime.millisecondsSinceEpoch.milliseconds.inMinutes % timeResidue;
     final finishID = int.parse("$finishIDTimeComponent${hashID}1").toSigned(32);
-    print(startTime.toLocal());
 
     NotificationService.scheduleNotification(
         startTime.toLocal(),

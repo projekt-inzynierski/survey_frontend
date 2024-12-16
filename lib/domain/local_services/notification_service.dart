@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
@@ -46,7 +45,7 @@ class NotificationService {
     }
 
     await _flutterLocalNotificationsPlugin.zonedSchedule(
-      id as int,
+      id,
       title,
       body,
       tz.TZDateTime.from(scheduledDate, tz.local),
