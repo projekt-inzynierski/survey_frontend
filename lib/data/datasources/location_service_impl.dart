@@ -8,9 +8,7 @@ class LocalizationServiceImpl extends APIServiceBase
   LocalizationServiceImpl(super.dio, {required super.tokenProvider});
 
   @override
-  Future<APIResponse<String>> submitLocation(
-      String id, LocalizationData location) {
-    location.id = id;
+  Future<APIResponse<String>> submitLocation(LocalizationData location) {
     return postMany<String>('/api/localization', [location.toJson()]);
   }
 

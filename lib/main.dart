@@ -1,12 +1,10 @@
 import 'package:background_fetch/background_fetch.dart';
 import 'package:devicelocale/devicelocale.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:survey_frontend/presentation/backgroud.dart';
 import 'package:survey_frontend/presentation/app_styles.dart';
 import 'package:survey_frontend/presentation/bindings/accept_privacy_policy_bindings.dart';
@@ -53,7 +51,7 @@ class StaticVariables {
 }
 
 void main() async {
-  await _initSentry();
+  await initSentry();
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
@@ -174,13 +172,9 @@ Future<void> prepareWorkManager() async {
           startOnBoot: true,
           enableHeadless: true),
       backgroundTask);
+  await BackgroundFetch.registerHeadlessTask(backgroundHeadlessTask);
 }
 
-Future<void> _initSentry() async {
-  if(kReleaseMode){
-    await dotenv.load();
-    await SentryFlutter.init((options){
-      options.dsn = dotenv.env['SENTRY_DSN'];
-    });
-  }
+void backgroundHeadlessTask(HeadlessTask task) async {
+  backgroundTask(task.taskId);
 }

@@ -34,8 +34,9 @@ class SurveyEndController extends ControllerBase {
             AppLocalizations.of(Get.context!)!.answerSubmitError);
       } else {
         await _surveyParticipationService.addParticipation(participation);
-        final response = await _locationService.submitLocation(
-            participation.id, await localizationData);
+        final location = await localizationData;
+        location.id = participation.id;
+        final response = await _locationService.submitLocation(location);
         if (response.statusCode != 200) {
           //TODO log it
         }
