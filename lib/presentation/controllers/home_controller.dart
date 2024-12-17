@@ -53,6 +53,7 @@ class HomeController extends ControllerBase {
     }
 
     try {
+      //TODO if offline then skip this step
       _isBusy = true;
       await _loadFromApi();
     } catch (e) {
@@ -127,7 +128,10 @@ class HomeController extends ControllerBase {
       if (!await isLocationWorking()) {
         return;
       }
-      final futures = [_databaseHelper.getSurveyById(surveyId), _getGroupsIds()];
+      final futures = [
+        _databaseHelper.getSurveyById(surveyId),
+        _getGroupsIds()
+      ];
       final results = await Future.wait(futures);
       SurveyDto? survey = results[0] as SurveyDto?;
       var respondentGroups = results[1];

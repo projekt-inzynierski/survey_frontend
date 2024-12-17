@@ -8,14 +8,15 @@ part of 'localization_data.dart';
 
 LocalizationData _$LocalizationDataFromJson(Map<String, dynamic> json) =>
     LocalizationData(
+      surveyParticipationId: json['surveyParticipationId'] as String?,
       dateTime: json['dateTime'] as String,
       latitude: (json['latitude'] as num).toDouble(),
       longitude: (json['longitude'] as num).toDouble(),
-    )..id = json['id'] as String?;
+    );
 
 Map<String, dynamic> _$LocalizationDataToJson(LocalizationData instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'surveyParticipationId': instance.surveyParticipationId,
       'dateTime': instance.dateTime,
       'latitude': instance.latitude,
       'longitude': instance.longitude,

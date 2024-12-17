@@ -4,13 +4,13 @@ part 'localization_data.g.dart';
 
 @JsonSerializable()
 class LocalizationData {
-  String? id;
+  String? surveyParticipationId;
   final String dateTime;
   final double latitude;
   final double longitude;
 
   LocalizationData({
-    this.id,
+    this.surveyParticipationId,
     required this.dateTime,
     required this.latitude,
     required this.longitude,
