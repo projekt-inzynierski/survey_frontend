@@ -8,7 +8,7 @@ class CreateSurveyResponseDto {
   final String surveyId;
   final String startDate;
   late final String finishDate;
-  final List<CreateQuestionAnswerDto> answers;
+  List<CreateQuestionAnswerDto> answers;
 
   CreateSurveyResponseDto(
       {required this.surveyId, required this.startDate, required this.answers});

@@ -9,6 +9,7 @@ class ProfileController extends ControllerBase {
   late List<InitialSurveyQuestion> initialSurveyQuestions;
 
   ProfileController(GetStorage storage)
+  //TODO: crashes, where there is no initial survey
       : respondentData = storage.read("respondentData")! {
     initialSurveyQuestions = (storage
         .read<List<dynamic>>('initialSurvey') ?? [])

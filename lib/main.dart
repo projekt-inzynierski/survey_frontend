@@ -44,7 +44,6 @@ import 'package:survey_frontend/presentation/screens/survey/survey_start_screen.
 import 'package:survey_frontend/presentation/screens/welcome_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey_frontend/presentation/static/routes.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class StaticVariables {
   static String lang = 'en';

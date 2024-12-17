@@ -1,20 +1,17 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:location/location.dart';
 import 'package:survey_frontend/core/usecases/create_question_answer_dto_factory.dart';
+import 'package:survey_frontend/core/usecases/read_respondent_groups_usecase.dart';
 import 'package:survey_frontend/core/usecases/survey_images_usecase.dart';
 import 'package:survey_frontend/core/usecases/survey_notification_usecase.dart';
 import 'package:survey_frontend/data/datasources/local/database_service.dart';
 import 'package:survey_frontend/data/models/short_survey.dart';
 import 'package:survey_frontend/domain/external_services/api_response.dart';
-import 'package:survey_frontend/domain/external_services/respondent_group_service.dart';
 import 'package:survey_frontend/domain/external_services/short_survey_service.dart';
-import 'package:survey_frontend/domain/external_services/survey_service.dart';
 import 'package:survey_frontend/domain/models/create_survey_response_dto.dart';
 import 'package:survey_frontend/domain/models/localization_data.dart';
-import 'package:survey_frontend/domain/models/respondent_data_dto.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
 import 'package:survey_frontend/domain/models/survey_with_time_slots.dart';
 import 'package:survey_frontend/domain/models/visibility_type.dart';
@@ -25,10 +22,8 @@ import 'package:survey_frontend/presentation/static/routes.dart';
 
 class HomeController extends ControllerBase {
   final ShortSurveyService _homeService;
-  final SurveyService _surveyService;
   final CreateQuestionAnswerDtoFactory _createQuestionAnswerDtoFactory;
-  final RespondentGroupService _respondentGroupService;
-  final GetStorage _storage;
+  final ReadResopndentGroupdUseCase _readResopndentGroupdUseCase;
   RxList<SurveyShortInfo> pendingSurveys = <SurveyShortInfo>[].obs;
   final RxInt hours = 23.obs;
   final RxInt minutes = 60.obs;
@@ -39,10 +34,8 @@ class HomeController extends ControllerBase {
 
   HomeController(
       this._homeService,
-      this._surveyService,
       this._createQuestionAnswerDtoFactory,
-      this._respondentGroupService,
-      this._storage,
+      this._readResopndentGroupdUseCase,
       this._databaseHelper,
       this._surveyNotificationUseCase,
       this._surveyImagesUseCase);
@@ -186,19 +179,9 @@ class HomeController extends ControllerBase {
   }
 
   Future<List<String>?> _getGroupsIds() async {
-    var respondentData = _storage.read("respondentData");
-    if (respondentData == null) {
-      return [];
-    }
-    final String id = respondentData is RespondentDataDto
-        ? respondentData.id
-        : respondentData['id'];
-    var groupsResponse = await _respondentGroupService.getAllForRespondent(id);
-    if (groupsResponse.error != null || groupsResponse.body == null) {
-      return null;
-    }
-
-    return groupsResponse.body?.map((e) => (e.id)).toList();
+    return (await _readResopndentGroupdUseCase.getAll())
+        .map((e) => e.id)
+        .toList();
   }
 
   List<QuestionWithSection> _getQuestionsFromSurvey(SurveyDto surveyObj) {

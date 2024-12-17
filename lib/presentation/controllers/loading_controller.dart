@@ -34,6 +34,7 @@ class LoadingController extends ControllerBase {
     var respondentData = _storage.read<dynamic>("respondentData");    
 
     if (respondentData != null) {
+      _needInsertRespondentDataUseCase.update(respondentData['id']);
       goToNamedPrivacySave(Routes.home);
       return;
     }
