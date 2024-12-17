@@ -1,6 +1,7 @@
 import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/core/models/need_insert_respondent_data_result.dart';
 import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecase.dart';
+import 'package:survey_frontend/domain/external_services/api_response.dart';
 import 'package:survey_frontend/domain/external_services/initial_survey_service.dart';
 import 'package:survey_frontend/domain/external_services/respondent_group_service.dart';
 
@@ -18,6 +19,7 @@ class NeedInsertRespondentDataUseCaseImpl
     var respondentData = _storage.read("respondentData");
 
     if (respondentData != null) {
+      await update(respondentData['id']);
       return NeedInsertRespondentDataResult.noNeed;
     }
 
@@ -57,6 +59,16 @@ class NeedInsertRespondentDataUseCaseImpl
 
     if (groupsResult.statusCode == 200) {
       await _storage.write('groups', groupsResult.body);
+    }
+  }
+
+  @override
+  Future<void> update(String respondentId) async {
+    final results = await Future.wait([_trySaveResopndentsGroups(respondentId), _respondentDataService.getMyResponse()]);
+    final respondentDataResult = results[1] as APIResponse<Map<String, dynamic>>;
+
+    if (respondentDataResult.statusCode == 200){
+      await _storage.write('respondentData', respondentDataResult.body);
     }
   }
 }

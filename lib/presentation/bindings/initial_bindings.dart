@@ -67,7 +67,7 @@ class InitialBindings extends Bindings {
     Get.lazyPut<SurveyParticipationService>(
         () => SurveyParticipationServiceImpl(Get.find()));
     Get.lazyPut<RespondentGroupService>(
-        () => RespondentGroupServiceImpl(Get.find()));
+        () => RespondentGroupServiceImpl(Get.find(), tokenProvider: Get.find<TokenProvider>()));
     Get.put<NeedInsertRespondentDataUseCase>(
         NeedInsertRespondentDataUseCaseImpl(
             Get.find(), Get.find(), Get.find()));
