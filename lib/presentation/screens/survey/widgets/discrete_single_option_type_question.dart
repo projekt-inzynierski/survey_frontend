@@ -26,34 +26,28 @@ class _DiscreteSingleOptionTypeQuestionState
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(widget.fromLabel ?? ''),
-            Text(widget.toLabel ?? ''),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: List<Widget>.generate(widget.to - widget.from + 1, (index) {
-            final value = widget.from + index;
-            return Column(
-              children: [
-                Text(value.toString()),
-                Radio(
-                  value: value,
-                  groupValue: widget.dto.numericAnswer,
-                  onChanged: (val) {
-                    setState(() {
-                      widget.dto.numericAnswer = val;
-                    });
-                  },
-                ),
-              ],
-            );
-          }),
-        ),
+        Text(widget.fromLabel ?? ''),
+        ...List<Widget>.generate(widget.to - widget.from + 1, (index) {
+          final value = widget.from + index;
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(value.toString()),
+              Radio(
+                value: value,
+                groupValue: widget.dto.numericAnswer,
+                onChanged: (val) {
+                  setState(() {
+                    widget.dto.numericAnswer = val;
+                  });
+                },
+              ),
+            ],
+          );
+        }),
+        Text(widget.toLabel ?? ''),
       ],
     );
   }
