@@ -5,7 +5,7 @@ import 'package:survey_frontend/domain/models/respondent_group_dto.dart';
 
 class RespondentGroupServiceImpl extends APIServiceBase
     implements RespondentGroupService {
-  RespondentGroupServiceImpl(super.dio);
+  RespondentGroupServiceImpl(super.dio, {required super.tokenProvider});
 
   @override
   Future<APIResponse<List<RespondentGroupDto>>> getAllForRespondent(

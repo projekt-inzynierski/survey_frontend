@@ -19,7 +19,7 @@ class _NumberInputTypeQuestion extends State<NumberInputTypeQuestion> {
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(labelText: getAppLocalizations().enterNumber),
-      keyboardType: TextInputType.number,
+      keyboardType: const TextInputType.numberWithOptions(signed: true),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return getAppLocalizations().pleaseEnterNumber;

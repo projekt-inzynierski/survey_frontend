@@ -14,9 +14,7 @@ class HomeBindings extends Bindings {
         tokenProvider: Get.find()));
     Get.lazyPut<CreateQuestionAnswerDtoFactory>(
         () => CreateQuestionAnswerDtoFactoryImpl());
-    Get.lazyPut<RespondentGroupService>(
-        () => RespondentGroupServiceImpl(Get.find()));
     Get.lazyPut<HomeController>(() => HomeController(Get.find(), Get.find(),
-        Get.find(), Get.find(), Get.find(), Get.find(), Get.find(), Get.find()));
+        Get.find(), Get.find(), Get.find(), Get.find()));
   }
 }
