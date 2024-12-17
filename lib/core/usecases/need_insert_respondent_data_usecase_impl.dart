@@ -2,14 +2,16 @@ import 'package:get_storage/get_storage.dart';
 import 'package:survey_frontend/core/models/need_insert_respondent_data_result.dart';
 import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecase.dart';
 import 'package:survey_frontend/domain/external_services/initial_survey_service.dart';
+import 'package:survey_frontend/domain/external_services/respondent_group_service.dart';
 
 class NeedInsertRespondentDataUseCaseImpl
     implements NeedInsertRespondentDataUseCase {
   final InitialSurveyService _respondentDataService;
   final GetStorage _storage;
+  final RespondentGroupService _respondentGroupService;
 
   NeedInsertRespondentDataUseCaseImpl(
-      this._respondentDataService, this._storage);
+      this._respondentDataService, this._storage, this._respondentGroupService);
 
   @override
   Future<NeedInsertRespondentDataResult> needInsertRespondentData() async {
@@ -23,10 +25,11 @@ class NeedInsertRespondentDataUseCaseImpl
         await _respondentDataService.getMyResponse();
     final surveyResult = await _respondentDataService.getInitialSurvey();
 
-
-    if (respondentDataApiResponse.statusCode == 200 && surveyResult.statusCode == 200) {
+    if (respondentDataApiResponse.statusCode == 200 &&
+        surveyResult.statusCode == 200) {
       await _storage.write('initialSurvey', surveyResult.body!);
       await _storage.write("respondentData", respondentDataApiResponse.body);
+      await _trySaveResopndentsGroups(respondentDataApiResponse.body!['id']);
       return NeedInsertRespondentDataResult.noNeed;
     }
 
@@ -35,7 +38,6 @@ class NeedInsertRespondentDataUseCaseImpl
             respondentDataApiResponse.statusCode != 404)) {
       return NeedInsertRespondentDataResult.error;
     }
-
 
     if (surveyResult.error != null ||
         (surveyResult.statusCode != 200 && surveyResult.statusCode != 404)) {
@@ -47,5 +49,14 @@ class NeedInsertRespondentDataUseCaseImpl
     }
 
     return NeedInsertRespondentDataResult.need;
+  }
+
+  Future<void> _trySaveResopndentsGroups(String respondentId) async {
+    final groupsResult =
+        await _respondentGroupService.getAllForRespondent(respondentId);
+
+    if (groupsResult.statusCode == 200) {
+      await _storage.write('groups', groupsResult.body);
+    }
   }
 }

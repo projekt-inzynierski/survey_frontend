@@ -56,6 +56,7 @@ class SurveyEndController extends ControllerBase {
 
   Future<SurveyParticipationDto?> _submitToServer() async {
     try {
+      _clearDto();
       dto.finishDate = DateTime.now().toUtc().toIso8601String();
       final apiResponse = await _surveyService.submitResponse(dto);
       return apiResponse.body;
@@ -65,6 +66,16 @@ class SurveyEndController extends ControllerBase {
       //TODO: log the error
       return null;
     }
+  }
+
+  void _clearDto() {
+    dto.answers = dto.answers.where((e) {
+      //TODO: extend this, when we have a new text input question type
+      return e.yesNoAnswer != null ||
+          e.numericAnswer != null ||
+          (e.selectedOptions != null &&
+              e.selectedOptions!.every((e) => e.optionId != null));
+    }).toList();
   }
 
   void readGetArgs() {

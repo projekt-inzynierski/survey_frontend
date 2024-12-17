@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:location/location.dart';
 import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecase.dart';
 import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecase_impl.dart';
+import 'package:survey_frontend/core/usecases/read_respondent_groups_usecase.dart';
 import 'package:survey_frontend/core/usecases/read_sensors_data_usecase.dart';
 import 'package:survey_frontend/core/usecases/send_sensors_data_usecase.dart';
 import 'package:survey_frontend/core/usecases/survey_images_usecase.dart';
@@ -16,6 +17,7 @@ import 'package:survey_frontend/data/datasources/local/survey_participation_serv
 import 'package:survey_frontend/data/datasources/location_service_impl.dart';
 import 'package:survey_frontend/data/datasources/login_service_impl.dart';
 import 'package:survey_frontend/data/datasources/respondent_data_service_impl.dart';
+import 'package:survey_frontend/data/datasources/respondent_group_service_impl.dart';
 import 'package:survey_frontend/data/datasources/sensors_data_service_impl.dart';
 import 'package:survey_frontend/data/datasources/survey_service_impl.dart';
 import 'package:survey_frontend/data/models/sensor_kind.dart';
@@ -23,6 +25,7 @@ import 'package:survey_frontend/domain/external_services/initial_survey_service.
 import 'package:survey_frontend/domain/external_services/location_service.dart';
 import 'package:survey_frontend/domain/external_services/login_service.dart';
 import 'package:survey_frontend/domain/external_services/respondent_date_service.dart';
+import 'package:survey_frontend/domain/external_services/respondent_group_service.dart';
 import 'package:survey_frontend/domain/external_services/sensors_data_service.dart';
 import 'package:survey_frontend/domain/external_services/survey_service.dart';
 import 'package:survey_frontend/domain/local_services/survey_participation_service.dart';
@@ -53,7 +56,8 @@ class InitialBindings extends Bindings {
     Get.lazyPut(() => RespondentDataController());
     Get.lazyPut(() => ArchivedSurveysController());
     Get.create<SurveyService>(() => SurveyServiceImpl(Get.find()));
-    Get.create<SurveyQuestionController>(() => SurveyQuestionController(Get.find()));
+    Get.create<SurveyQuestionController>(
+        () => SurveyQuestionController(Get.find()));
 
     TokenProvider tp = TokenProviderImpl(Get.find());
     Get.put<TokenProvider>(tp);
@@ -62,30 +66,36 @@ class InitialBindings extends Bindings {
         InitialSurveyServiceImpl(Get.find(), tokenProvider: Get.find()));
     Get.lazyPut<SurveyParticipationService>(
         () => SurveyParticipationServiceImpl(Get.find()));
+    Get.lazyPut<RespondentGroupService>(
+        () => RespondentGroupServiceImpl(Get.find()));
     Get.put<NeedInsertRespondentDataUseCase>(
-        NeedInsertRespondentDataUseCaseImpl(Get.find(), Get.find()));
+        NeedInsertRespondentDataUseCaseImpl(
+            Get.find(), Get.find(), Get.find()));
     Get.put<TokenValidityChecker>(TokenValidityCheckerImpl());
     Get.lazyPut<RespondentDataService>(() => RespondentDataServiceImpl(
         Get.find(),
         tokenProvider: Get.find<TokenProvider>()));
     Get.put(DatabaseHelper());
-    Get.put<SurveyNotificationUseCase>(SurveyNotificationUseCaseImpl(Get.find()));
+    Get.put<SurveyNotificationUseCase>(
+        SurveyNotificationUseCaseImpl(Get.find()));
     Get.put<SensorsDataService>(
         SensorsDataServiceImpl(Get.find(), tokenProvider: Get.find()));
     Get.put<SendSensorsDataUsecase>(
         SendSensorsDataUsecaseImpl(Get.find(), Get.find()));
     Get.put<ReadSensorsDataUsecase>(ReadXiaomiSensorsDataUsecase(),
         tag: SensorKind.xiaomi);
-    Get.put<LocalizationService>(LocalizationServiceImpl(Get.find(), tokenProvider: Get.find<TokenProvider>()));
+    Get.put<LocalizationService>(LocalizationServiceImpl(Get.find(),
+        tokenProvider: Get.find<TokenProvider>()));
     Get.put<SurveyImagesUseCase>(SurveyImagesUseCaseImpl(Get.find()));
-
+    Get.put<ReadResopndentGroupdUseCase>(
+        ReadResopndentGroupdUseCaseImpl(Get.find()));
   }
 
   Dio _getDio(GetStorage storage) {
     var dio = Dio();
     final apiUrl = storage.read<String>('apiUrl');
     if (apiUrl != null) {
-      dio.options.baseUrl = apiUrl; 
+      dio.options.baseUrl = apiUrl;
     }
     dio.options.headers["Accept-Lang"] = StaticVariables.lang;
     dio.options.connectTimeout = const Duration(seconds: 30);
