@@ -5,4 +5,5 @@ import 'package:survey_frontend/domain/models/survey_participation_dto.dart';
 abstract class SurveyResponseService {
   Future<APIResponse<SurveyParticipationDto>> submitResponse(
       CreateSurveyResponseDto response);
+  Future<APIResponse<List<SurveyParticipationDto>>> submitResponses(List<CreateSurveyResponseDto> responses);
 }
