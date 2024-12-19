@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -7,6 +8,7 @@ import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecas
 import 'package:survey_frontend/core/usecases/read_respondent_groups_usecase.dart';
 import 'package:survey_frontend/core/usecases/read_sensors_data_usecase.dart';
 import 'package:survey_frontend/core/usecases/send_sensors_data_usecase.dart';
+import 'package:survey_frontend/core/usecases/submit_survey_usecase.dart';
 import 'package:survey_frontend/core/usecases/survey_images_usecase.dart';
 import 'package:survey_frontend/core/usecases/survey_notification_usecase.dart';
 import 'package:survey_frontend/core/usecases/token_provider_impl.dart';
@@ -19,6 +21,7 @@ import 'package:survey_frontend/data/datasources/login_service_impl.dart';
 import 'package:survey_frontend/data/datasources/respondent_data_service_impl.dart';
 import 'package:survey_frontend/data/datasources/respondent_group_service_impl.dart';
 import 'package:survey_frontend/data/datasources/sensors_data_service_impl.dart';
+import 'package:survey_frontend/data/datasources/survey_response_service_impl.dart';
 import 'package:survey_frontend/data/datasources/survey_service_impl.dart';
 import 'package:survey_frontend/data/models/sensor_kind.dart';
 import 'package:survey_frontend/domain/external_services/initial_survey_service.dart';
@@ -27,6 +30,7 @@ import 'package:survey_frontend/domain/external_services/login_service.dart';
 import 'package:survey_frontend/domain/external_services/respondent_date_service.dart';
 import 'package:survey_frontend/domain/external_services/respondent_group_service.dart';
 import 'package:survey_frontend/domain/external_services/sensors_data_service.dart';
+import 'package:survey_frontend/domain/external_services/survey_response_service.dart';
 import 'package:survey_frontend/domain/external_services/survey_service.dart';
 import 'package:survey_frontend/domain/local_services/survey_participation_service.dart';
 import 'package:survey_frontend/domain/usecases/token_provider.dart';
@@ -66,8 +70,9 @@ class InitialBindings extends Bindings {
         InitialSurveyServiceImpl(Get.find(), tokenProvider: Get.find()));
     Get.lazyPut<SurveyParticipationService>(
         () => SurveyParticipationServiceImpl(Get.find()));
-    Get.lazyPut<RespondentGroupService>(
-        () => RespondentGroupServiceImpl(Get.find(), tokenProvider: Get.find<TokenProvider>()));
+    Get.lazyPut<RespondentGroupService>(() => RespondentGroupServiceImpl(
+        Get.find(),
+        tokenProvider: Get.find<TokenProvider>()));
     Get.put<NeedInsertRespondentDataUseCase>(
         NeedInsertRespondentDataUseCaseImpl(
             Get.find(), Get.find(), Get.find()));
@@ -89,6 +94,11 @@ class InitialBindings extends Bindings {
     Get.put<SurveyImagesUseCase>(SurveyImagesUseCaseImpl(Get.find()));
     Get.put<ReadResopndentGroupdUseCase>(
         ReadResopndentGroupdUseCaseImpl(Get.find()));
+    Get.put<SurveyResponseService>(SurveyResponseServiceImpl(Get.find(),
+        tokenProvider: Get.find<TokenProvider>()));
+    Get.put(Connectivity());
+    Get.put<SubmitSurveyUsecase>(
+        SubmitSurveyUsecaseImpl(Get.find(), Get.find(), Get.find()));
   }
 
   Dio _getDio(GetStorage storage) {

@@ -13,7 +13,7 @@ class HomeScreen extends GetView<HomeController> implements RouteAware {
   @override
   Widget build(BuildContext context) {
     askForPermissions();
-    controller.loadSurveys();
+    controller.refreshData();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -78,7 +78,7 @@ class HomeScreen extends GetView<HomeController> implements RouteAware {
 
   Widget _buildSurveyList() {
     return Obx(() => RefreshIndicator(
-          onRefresh: controller.loadSurveys,
+          onRefresh: controller.refreshData,
           child: ListView.builder(
             itemCount: controller.pendingSurveys.length,
             itemBuilder: (context, index) {
@@ -108,11 +108,11 @@ class HomeScreen extends GetView<HomeController> implements RouteAware {
 
   @override
   void didPush() {
-    controller.loadSurveys();
+    controller.refreshData();
   }
 
   @override
   void didPushNext() {
-    controller.loadSurveys();
+    controller.refreshData();
   }
 }

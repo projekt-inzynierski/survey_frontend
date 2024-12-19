@@ -2,8 +2,10 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:survey_frontend/core/usecases/create_question_answer_dto_factory.dart';
 import 'package:survey_frontend/core/usecases/read_respondent_groups_usecase.dart';
+import 'package:survey_frontend/core/usecases/submit_survey_usecase.dart';
 import 'package:survey_frontend/core/usecases/survey_images_usecase.dart';
 import 'package:survey_frontend/core/usecases/survey_notification_usecase.dart';
 import 'package:survey_frontend/data/datasources/local/database_service.dart';
@@ -30,6 +32,7 @@ class HomeController extends ControllerBase {
   final DatabaseHelper _databaseHelper;
   final SurveyNotificationUseCase _surveyNotificationUseCase;
   final SurveyImagesUseCase _surveyImagesUseCase;
+  final SubmitSurveyUsecase _submitSurveyUsecase;
   bool _isBusy = false;
 
   HomeController(
@@ -38,28 +41,34 @@ class HomeController extends ControllerBase {
       this._readResopndentGroupdUseCase,
       this._databaseHelper,
       this._surveyNotificationUseCase,
-      this._surveyImagesUseCase);
+      this._surveyImagesUseCase,
+      this._submitSurveyUsecase);
 
-  Future<void> loadSurveys() async {
+  Future<void> refreshData() async {
     if (_isBusy) {
       return;
     }
 
     try {
-      //TODO if offline then skip this step
       _isBusy = true;
-      await _loadFromApi();
+      await syncWithServer();
+      pendingSurveys.clear();
+      await _loadFromDatabase();
     } catch (e) {
-      //TODO: log the exception
-      await popup(AppLocalizations.of(Get.context!)!.error,
-          AppLocalizations.of(Get.context!)!.loadingSurveyErrorTryAgainLater);
+      Sentry.captureException(e);
     } finally {
       _isBusy = false;
     }
   }
 
-  Future<void> _loadFromApi() async {
-    if (await connectivity.checkConnectivity() == ConnectivityResult.none) {
+  Future<void> syncWithServer() async {
+    if (!await hasInternetConnectionNoDialog()) {
+      return;
+    }
+
+    if (!await _submitSurveyUsecase.submitAllLocallySaved()) {
+      //we can go further only if the submition of old resopnses is succeded, otherwise, there may be
+      //some data inconsistency leading to respondent being asked for filling the same survey more than one in one time slot
       return;
     }
 
@@ -74,9 +83,6 @@ class HomeController extends ControllerBase {
     await _surveyImagesUseCase.saveImages(response.body!);
     await _databaseHelper.clearAllTables();
     await _databaseHelper.upsertSurveys(response.body!);
-    pendingSurveys.clear();
-    await _loadFromDatabase();
-    return;
   }
 
   int hoursLeft() {

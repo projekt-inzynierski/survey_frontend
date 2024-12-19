@@ -10,5 +10,12 @@ class SurveyResponseServiceImpl extends APIServiceBase implements SurveyResponse
   @override
   Future<APIResponse<SurveyParticipationDto>> submitResponse(CreateSurveyResponseDto response) 
    => postAndDeserialize<SurveyParticipationDto>('/api/surveyresponses', response.toJson(), (dynamic obj) => SurveyParticipationDto.fromJson(obj));
+   
+     @override
+     Future<APIResponse<List<SurveyParticipationDto>>> submitResponses(List<CreateSurveyResponseDto> responses) {
+      final responsesJson = responses.map((e) => e.toJson()).toList();
+      return postManyAndDeserializeMany('/api/surveyresponses/offline', responsesJson, 
+      (dynamic obj) => obj.map<SurveyParticipationDto>((e) => SurveyParticipationDto.fromJson(e)).toList());
+     }
   
 }
