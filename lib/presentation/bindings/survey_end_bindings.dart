@@ -9,11 +9,8 @@ import 'package:survey_frontend/presentation/controllers/survey_end_controller.d
 class SurveyEndBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<SurveyResponseService>(() => SurveyResponseServiceImpl(
-        Get.find(),
-        tokenProvider: Get.find<TokenProvider>()));
-    Get.lazyPut(() =>
-        SurveyEndController(Get.find(), Get.find(), Get.find(), Get.find()));
+    Get.lazyPut(() => SurveyEndController(
+        Get.find(), Get.find(), Get.find(), Get.find(), Get.find()));
     Get.lazyPut<SurveyParticipationService>(
         () => SurveyParticipationServiceImpl(Get.find()));
   }

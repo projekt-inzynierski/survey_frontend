@@ -48,8 +48,7 @@ class ControllerBase extends GetxController {
   }
 
   Future<bool> hasInternetConnection() async {
-    var connectivityResult = await connectivity.checkConnectivity();
-    if (connectivityResult == ConnectivityResult.none) {
+    if (!await hasInternetConnectionNoDialog()) {
       await Get.defaultDialog(
           title: AppLocalizations.of(Get.context!)!.error,
           middleText: AppLocalizations.of(Get.context!)!.noInternetConnection,
@@ -58,5 +57,12 @@ class ControllerBase extends GetxController {
     }
 
     return true;
+  }
+
+  Future<bool> hasInternetConnectionNoDialog() async {
+    var connectivityResult = await connectivity.checkConnectivity();
+    return connectivityResult.contains(ConnectivityResult.ethernet)
+    || connectivityResult.contains(ConnectivityResult.mobile)
+    || connectivityResult.contains(ConnectivityResult.wifi);
   }
 }
