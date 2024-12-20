@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:survey_frontend/core/models/sensors_response.dart';
 import 'package:survey_frontend/l10n/get_localizations.dart';
 import 'package:survey_frontend/presentation/app_styles.dart';
 import 'package:survey_frontend/presentation/controllers/sensor_data_controller.dart';
 import 'package:survey_frontend/presentation/screens/sensor_data/widgets/sensor_scanning_circle.dart';
 import 'package:survey_frontend/presentation/screens/sensor_data/widgets/sensor_scanning_error_circle.dart';
+import 'package:survey_frontend/presentation/screens/sensor_data/widgets/sensor_scanning_result_circle.dart';
 
 class SensorDataScreen extends GetView<SensorDataController> {
   const SensorDataScreen({super.key});
@@ -48,7 +50,14 @@ class SensorDataScreen extends GetView<SensorDataController> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 250, width: double.infinity, child: SensorScanningErrorCircle(errorMessage: getAppLocalizations().sensorNotFound,))
+                  SizedBox(
+                      height: 250,
+                      width: double.infinity,
+                      child: SensorScanningResultCircle(
+                        sensorResponse:
+                            SensorsResponse(temperature: 21.5, humidity: 80.0)
+                                .obs,
+                      ))
                 ],
               ),
             ),
