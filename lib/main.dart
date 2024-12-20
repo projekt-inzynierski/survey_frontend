@@ -20,6 +20,7 @@ import 'package:survey_frontend/presentation/bindings/notifications_settings_bin
 import 'package:survey_frontend/presentation/bindings/privacy_settings_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/profile_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/reinsert_credentials_bindings.dart';
+import 'package:survey_frontend/presentation/bindings/sensor_data_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/sensors_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/settings_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/survey_end_bindings.dart';
@@ -37,6 +38,7 @@ import 'package:survey_frontend/presentation/screens/privacy_policy/screens/acce
 import 'package:survey_frontend/presentation/screens/privacy_settings_screen.dart';
 import 'package:survey_frontend/presentation/screens/profile_screen.dart';
 import 'package:survey_frontend/presentation/screens/reinsert_credentials_screen.dart';
+import 'package:survey_frontend/presentation/screens/sensor_data/sensor_data_screen.dart';
 import 'package:survey_frontend/presentation/screens/sensors_screen.dart';
 import 'package:survey_frontend/presentation/screens/settings/settings_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_end_screen.dart';
@@ -59,7 +61,7 @@ void main() async {
   StaticVariables.lang = await _getCurrentLocale();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  
+
   runApp(GetMaterialApp(
     title: 'UrbEaT',
     navigatorObservers: [routeObserver],
@@ -69,7 +71,7 @@ void main() async {
     locale: Locale(StaticVariables.lang, ''),
     initialBinding: InitialBindings(),
     theme: AppStyles.lightTheme,
-    initialRoute: Routes.loading,
+    initialRoute: Routes.sensorDataScreen,
     getPages: [
       GetPage(
           name: Routes.login,
@@ -141,7 +143,11 @@ void main() async {
       GetPage(
           name: Routes.acceptPrivacyPolicy,
           page: () => const AcceptPrivacyPolicyScreen(),
-          binding: AcceptPrivacyPolicyBindings())
+          binding: AcceptPrivacyPolicyBindings()),
+      GetPage(
+          name: Routes.sensorDataScreen,
+          page: () => const SensorDataScreen(),
+          binding: SensorDataBindings())
     ],
   ));
 }
