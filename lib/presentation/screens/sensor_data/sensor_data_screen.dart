@@ -82,13 +82,7 @@ class SensorDataScreen extends GetView<SensorDataController> {
                 const SizedBox(
                   height: 10,
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text(getAppLocalizations().saveReading),
-                  ),
-                ),
+                _buildSendReadingButton(),
               ],
             ),
           )),
@@ -126,5 +120,23 @@ class SensorDataScreen extends GetView<SensorDataController> {
       errorMessage: errorMessage,
       onRetry: controller.startScanning,
     );
+  }
+
+  Widget _buildSendReadingButton() {
+    return Obx(() => SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: controller.sensorResponse.value == null
+                ? null
+                : controller.sendSensorData,
+            child: Obx(() {
+              if (controller.isSendingData.value) {
+                return const CircularProgressIndicator();
+              }
+
+              return Text(getAppLocalizations().saveReading);
+            }),
+          ),
+        ));
   }
 }

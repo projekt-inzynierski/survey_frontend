@@ -7,8 +7,8 @@ import 'package:survey_frontend/domain/external_services/sensors_data_service.da
 import 'package:survey_frontend/domain/models/sensor_data.dart';
 
 abstract class SendSensorsDataUsecase {
-  Future<bool> sendSensorsDataToTheServer();
-  Future<bool> sendSensorData(SensorsResponse sensorResponse);
+  Future<bool> readAndSendSensorData();
+  Future<bool> sendSensorData(SensorsResponse? sensorResponse);
 }
 
 class SendSensorsDataUsecaseImpl extends SendSensorsDataUsecase {
@@ -20,7 +20,7 @@ class SendSensorsDataUsecaseImpl extends SendSensorsDataUsecase {
       this._storage, this._service, this._sensorConnectionFactory);
 
   @override
-  Future<bool> sendSensorsDataToTheServer() async {
+  Future<bool> readAndSendSensorData() async {
     try {
       final sensorConnection = await _sensorConnectionFactory.getSensorConnection(const Duration(seconds: 60));
       return _sendSensorDataFromConnection(sensorConnection);
