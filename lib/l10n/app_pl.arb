@@ -100,5 +100,6 @@
     "scanning": "Skanowanie",
     "bluetoothTurnedOff": "Bluetooth jest wyłączone",
     "sensorNotFound": "Nie znaleziono czujnika",
-    "sensorNotSpecified": "Nie wybrano czujnika"
+    "sensorNotSpecified": "Nie wybrano czujnika",
+    "sensorData": "Dane z czujnika"
 }

@@ -12,7 +12,6 @@ class SensorConnectionFactory {
 
   Future<SensorConnection> getSensorConnection(Duration scanningDuration) async {
     final selectedSensor = _storage.read<String>('selectedSensor');
-
     if ((await FlutterBluePlus.adapterState.first) != BluetoothAdapterState.on){
       throw BluetoothTurnedOffException();
     }
@@ -76,6 +75,7 @@ class SensorConnectionFactory {
   }
 }
 
-class SensorNotSpecifiedExeption implements Exception{}
-class SensorNotFoundExcetion implements Exception{}
-class BluetoothTurnedOffException implements Exception {}
+class GetSensorConnectionException implements Exception {}
+class SensorNotSpecifiedExeption implements GetSensorConnectionException{}
+class SensorNotFoundExcetion implements GetSensorConnectionException{}
+class BluetoothTurnedOffException implements GetSensorConnectionException {}

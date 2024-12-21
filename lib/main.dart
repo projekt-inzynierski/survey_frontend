@@ -2,6 +2,7 @@ import 'package:background_fetch/background_fetch.dart';
 import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -55,6 +56,8 @@ class StaticVariables {
 void main() async {
   await initSentry();
   WidgetsFlutterBinding.ensureInitialized();
+  await FlutterBluePlus.isSupported;
+  await FlutterBluePlus.adapterState.first;
   await GetStorage.init();
   final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
   InitialBindings().dependencies();
