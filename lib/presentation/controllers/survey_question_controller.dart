@@ -13,10 +13,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/yes_no_type_question.dart';
 
 class SurveyQuestionController extends QuestionNavigableController {
-  RxMap<String, String> answer = <String, String>{}.obs;
   var answeredQuestionIndexStack = <int>[].obs;
   var showSection = <int>[].obs;
-  Question get question => questions[questionIndex].question;
   final SurveyImagesUseCase _surveyImagesUseCase;
 
   SurveyQuestionController(this._surveyImagesUseCase);
@@ -51,9 +49,11 @@ class SurveyQuestionController extends QuestionNavigableController {
         return NumberInputTypeQuestion(
             dto: responseModel.answers[questionIndex]);
       case QuestionType.imageChoice:
-        return ImageTypeQuestion(question: question, 
-        selectedOption: responseModel.answers[questionIndex].selectedOptions![0], 
-        surveyImagesUseCase: _surveyImagesUseCase);
+        return ImageTypeQuestion(
+            question: question,
+            selectedOption:
+                responseModel.answers[questionIndex].selectedOptions![0],
+            surveyImagesUseCase: _surveyImagesUseCase);
       default:
         //TODO decide what to do in this case (most likely skip this question)
         throw Exception('Unsupported question type: ${question.questionType}');
@@ -64,42 +64,44 @@ class SurveyQuestionController extends QuestionNavigableController {
   void readGetArguments() {
     super.readGetArguments();
     questionIndex = Get.arguments['questionIndex'];
+    questionsCount = Get.arguments['questionsCount'];
   }
 
   @override
   bool canGoFurther() {
     //TODO: REMEMBER ABOUT OTHER QUESTION TYPES IN THE FUTURE
-    if (question.questionType == QuestionType.singleChoiceLinearScale) {
-      if (responseModel.answers[questionIndex].numericAnswer == null) {
-        popup("", AppLocalizations.of(Get.context!)!.selectOneOption);
-        return false;
-      }
+    // if (question.questionType == QuestionType.singleChoiceLinearScale) {
+    //   if (responseModel.answers[questionIndex].numericAnswer == null) {
+    //     popup("", AppLocalizations.of(Get.context!)!.selectOneOption);
+    //     return false;
+    //   }
 
-      return true;
-    }
+    //   return true;
+    // }
 
-    if (question.questionType == QuestionType.yesNo) {
-      if (responseModel.answers[questionIndex].yesNoAnswer == null) {
-        popup("", AppLocalizations.of(Get.context!)!.selectOneOption);
-        return false;
-      }
+    // if (question.questionType == QuestionType.yesNo) {
+    //   if (responseModel.answers[questionIndex].yesNoAnswer == null) {
+    //     popup("", AppLocalizations.of(Get.context!)!.selectOneOption);
+    //     return false;
+    //   }
 
-      return true;
-    }
-    if (question.questionType == QuestionType.singleChoiceText) {
-      if (responseModel.answers[questionIndex].selectedOptions![0].optionId ==
-          null) {
-        popup("", AppLocalizations.of(Get.context!)!.selectOneOption);
-        return false;
-      }
-    }
-    if (question.questionType == QuestionType.numberInput) {
-      var number = responseModel.answers[questionIndex].numericAnswer;
-      if (number == null || number < 0 || number > 1000) {
-        return false;
-      }
-      return true;
-    }
+    //   return true;
+    // }
+    // if (question.questionType == QuestionType.singleChoiceText ||
+    //     question.questionType == QuestionType.imageChoice) {
+    //   if (responseModel.answers[questionIndex].selectedOptions![0].optionId ==
+    //       null) {
+    //     popup("", AppLocalizations.of(Get.context!)!.selectOneOption);
+    //     return false;
+    //   }
+    // }
+    // if (question.questionType == QuestionType.numberInput) {
+    //   var number = responseModel.answers[questionIndex].numericAnswer;
+    //   if (number == null || number < 0 || number > 1000) {
+    //     return false;
+    //   }
+    //   return true;
+    // }
 
     return true;
   }
