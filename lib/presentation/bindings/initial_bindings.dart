@@ -8,6 +8,7 @@ import 'package:survey_frontend/core/usecases/need_insert_respondent_data_usecas
 import 'package:survey_frontend/core/usecases/read_respondent_groups_usecase.dart';
 import 'package:survey_frontend/core/usecases/read_sensors_data_usecase.dart';
 import 'package:survey_frontend/core/usecases/send_sensors_data_usecase.dart';
+import 'package:survey_frontend/core/usecases/sensor_connection_factory.dart';
 import 'package:survey_frontend/core/usecases/submit_survey_usecase.dart';
 import 'package:survey_frontend/core/usecases/survey_images_usecase.dart';
 import 'package:survey_frontend/core/usecases/survey_notification_usecase.dart';
@@ -99,6 +100,7 @@ class InitialBindings extends Bindings {
     Get.put(Connectivity());
     Get.put<SubmitSurveyUsecase>(
         SubmitSurveyUsecaseImpl(Get.find(), Get.find(), Get.find()));
+    Get.put(SensorConnectionFactory(Get.find()));
   }
 
   Dio _getDio(GetStorage storage) {

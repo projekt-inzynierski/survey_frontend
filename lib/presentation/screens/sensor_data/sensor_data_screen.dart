@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:survey_frontend/core/models/sensors_response.dart';
 import 'package:survey_frontend/l10n/get_localizations.dart';
 import 'package:survey_frontend/presentation/app_styles.dart';
 import 'package:survey_frontend/presentation/controllers/sensor_data_controller.dart';
@@ -14,6 +12,7 @@ class SensorDataScreen extends GetView<SensorDataController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.startScanning();
     return Scaffold(
       body: Column(
         children: [
@@ -53,11 +52,7 @@ class SensorDataScreen extends GetView<SensorDataController> {
                   SizedBox(
                       height: 250,
                       width: double.infinity,
-                      child: SensorScanningResultCircle(
-                        sensorResponse:
-                            SensorsResponse(temperature: 21.5, humidity: 80.0)
-                                .obs,
-                      ))
+                      child: Obx(_circleBuilder))
                 ],
               ),
             ),
@@ -96,6 +91,39 @@ class SensorDataScreen extends GetView<SensorDataController> {
               ],
             ),
           )),
+    );
+  }
+
+  Widget _circleBuilder() {
+    if (controller.state.value == SensorDataState.scanning ||
+        controller.state.value == SensorDataState.initial) {
+      return const SensorScanningCircle();
+    }
+
+    if (controller.state.value == SensorDataState.bluetoothTurnedOff) {
+      return _buildErrorCircle(getAppLocalizations().bluetoothTurnedOff);
+    }
+
+    if (controller.state.value == SensorDataState.sensorNotFound) {
+      return _buildErrorCircle(getAppLocalizations().sensorNotFound);
+    }
+
+    if (controller.state.value == SensorDataState.error) {
+      return _buildErrorCircle(getAppLocalizations().error);
+    }
+
+    if (controller.state.value == SensorDataState.sensorNotSpecified) {
+      return _buildErrorCircle(getAppLocalizations().sensorNotSpecified);
+    }
+
+    return SensorScanningResultCircle(
+        sensorResponse: controller.sensorResponse);
+  }
+
+  Widget _buildErrorCircle(String errorMessage) {
+    return SensorScanningErrorCircle(
+      errorMessage: errorMessage,
+      onRetry: controller.startScanning,
     );
   }
 }

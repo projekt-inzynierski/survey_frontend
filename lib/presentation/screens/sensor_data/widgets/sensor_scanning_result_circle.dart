@@ -29,7 +29,7 @@ class SensorScanningResultCircle extends StatelessWidget {
               child: Text(
                 '${sensorResponse.value!.temperature} °C',
                 style: const TextStyle(
-                    fontSize: 40,
+                    fontSize: 35,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,),
                 textAlign: TextAlign.center,

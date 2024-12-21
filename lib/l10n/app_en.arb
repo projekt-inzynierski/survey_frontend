@@ -115,5 +115,6 @@
     "saveReading": "Save reading",
     "scanning": "Scannig",
     "bluetoothTurnedOff": "Bluetooth is turned off",
-    "sensorNotFound": "Could not detect sensor"
+    "sensorNotFound": "Could not detect sensor",
+    "sensorNotSpecified": "Sensor not specified"
 }

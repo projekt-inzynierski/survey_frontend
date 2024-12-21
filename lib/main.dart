@@ -38,6 +38,7 @@ import 'package:survey_frontend/presentation/screens/privacy_policy/screens/acce
 import 'package:survey_frontend/presentation/screens/privacy_settings_screen.dart';
 import 'package:survey_frontend/presentation/screens/profile_screen.dart';
 import 'package:survey_frontend/presentation/screens/reinsert_credentials_screen.dart';
+import 'package:survey_frontend/presentation/screens/sensor_data/navigation/sensor_navigator_observer.dart';
 import 'package:survey_frontend/presentation/screens/sensor_data/sensor_data_screen.dart';
 import 'package:survey_frontend/presentation/screens/sensors_screen.dart';
 import 'package:survey_frontend/presentation/screens/settings/settings_screen.dart';
@@ -64,14 +65,14 @@ void main() async {
 
   runApp(GetMaterialApp(
     title: 'UrbEaT',
-    navigatorObservers: [routeObserver],
+    navigatorObservers: [routeObserver, SensorNavigatorObserver()],
     debugShowCheckedModeBanner: false,
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
     locale: Locale(StaticVariables.lang, ''),
     initialBinding: InitialBindings(),
     theme: AppStyles.lightTheme,
-    initialRoute: Routes.sensorDataScreen,
+    initialRoute: Routes.loading,
     getPages: [
       GetPage(
           name: Routes.login,
