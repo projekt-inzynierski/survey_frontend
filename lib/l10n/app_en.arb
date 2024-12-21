@@ -120,5 +120,8 @@
     "sensorData": "Sensor data",
     "calendar": "Calendar",
     "day": "Day",
-    "week": "Week"
+    "week": "Week",
+    "surveyName": "Survey name",
+    "start": "Start",
+    "end": "Finish"
 }

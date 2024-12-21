@@ -12,7 +12,6 @@ class CalendarScreen extends GetView<CalendarController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.loadEvents();
     return Scaffold(
         body: Column(
       children: [
@@ -88,11 +87,16 @@ class CalendarScreen extends GetView<CalendarController> {
         return EventTile(
             calendarEvent: events.first.event as SurveyCalendarEvent);
       },
+      onEventTap: _eventTap,
       showLiveTimeLineInAllDays: true,
       eventArranger: const SideEventArranger(),
       headerStyle: HeaderStyle(
           decoration: BoxDecoration(color: Theme.of(context).primaryColor)),
     );
+  }
+
+  _eventTap(List<CalendarEventData<Object?>> events, DateTime date){
+    controller.onEventTap(events.first.event as SurveyCalendarEvent);
   }
 
   Widget _buildWeekView(BuildContext context) {
@@ -102,6 +106,7 @@ class CalendarScreen extends GetView<CalendarController> {
         return EventTile(
             calendarEvent: events.first.event as SurveyCalendarEvent);
       },
+      onEventTap: _eventTap,
       showLiveTimeLineInAllDays: true,
       eventArranger: const SideEventArranger(),
       headerStyle: HeaderStyle(

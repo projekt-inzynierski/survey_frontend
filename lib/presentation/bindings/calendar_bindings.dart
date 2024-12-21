@@ -5,7 +5,6 @@ import 'package:survey_frontend/presentation/controllers/calendar_controller.dar
 class CalendarBindings extends Bindings{
   @override
   void dependencies() {
-    Get.lazyPut<CalendarEventUsecase>(() => CalendarEventUsecaseImpl(Get.find()));
-    Get.lazyPut(() => CalendarController(Get.find()));
+    
   }
 }

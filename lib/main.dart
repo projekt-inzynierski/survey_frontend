@@ -29,6 +29,7 @@ import 'package:survey_frontend/presentation/bindings/survey_end_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/survey_start_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/welcome_screen_bindings.dart';
 import 'package:survey_frontend/presentation/screens/calendar/calendar_screen.dart';
+import 'package:survey_frontend/presentation/screens/calendar/navigation/calendar_navigator_observer.dart';
 import 'package:survey_frontend/presentation/screens/change_password_screen.dart';
 import 'package:survey_frontend/presentation/screens/home/home_screen.dart';
 import 'package:survey_frontend/presentation/screens/initial_survey/initial_survey_screen.dart';
@@ -50,10 +51,7 @@ import 'package:survey_frontend/presentation/screens/survey/survey_start_screen.
 import 'package:survey_frontend/presentation/screens/welcome_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey_frontend/presentation/static/routes.dart';
-
-class StaticVariables {
-  static String lang = 'en';
-}
+import 'package:survey_frontend/presentation/static/static_variables.dart';
 
 void main() async {
   await initSentry();
@@ -70,7 +68,7 @@ void main() async {
 
   runApp(GetMaterialApp(
     title: 'UrbEaT',
-    navigatorObservers: [routeObserver, SensorNavigatorObserver()],
+    navigatorObservers: [routeObserver, SensorNavigatorObserver(), CalendarNavigatorObserver()],
     debugShowCheckedModeBanner: false,
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,

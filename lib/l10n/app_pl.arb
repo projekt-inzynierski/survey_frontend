@@ -104,5 +104,8 @@
     "sensorData": "Dane z czujnika",
     "calendar": "Kalendarz",
     "day": "Dzień",
-    "week": "Tydzień"
+    "week": "Tydzień",
+    "surveyName": "Nazwa ankiety",
+    "start": "Rozpoczęcie",
+    "end": "Zakończenie"
 }

@@ -1,9 +1,11 @@
 import 'package:calendar_view/calendar_view.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:get/get.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:survey_frontend/core/usecases/calendar_event_usecase.dart';
+import 'package:survey_frontend/data/models/survey_calendar_event.dart';
 import 'package:survey_frontend/l10n/get_localizations.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
+import 'package:survey_frontend/presentation/screens/calendar/widgets/event_details.dart';
 
 class CalendarController extends ControllerBase {
   final eventController = EventController();
@@ -18,9 +20,9 @@ class CalendarController extends ControllerBase {
       final calendarEventDatas = events
           .map((e) => CalendarEventData(
               title: e.surveyName,
-              date: e.from,
-              startTime: e.from,
-              endTime: e.to,
+              date: e.from.toLocal(),
+              startTime: e.from.toLocal(),
+              endTime: e.to.toLocal(),
               event: e))
           .toList();
       eventController.addAll(calendarEventDatas);
@@ -29,11 +31,19 @@ class CalendarController extends ControllerBase {
     }
   }
 
-  String getCalendarViewDisplay(CalendarView view){
-    return view == CalendarView.day ? getAppLocalizations().day : getAppLocalizations().week;
+  void clear() {
+    eventController.removeWhere((_) => true);
+  }
+
+  String getCalendarViewDisplay(CalendarView view) {
+    return view == CalendarView.day
+        ? getAppLocalizations().day
+        : getAppLocalizations().week;
+  }
+
+  void onEventTap(SurveyCalendarEvent event) {
+    Get.to(EventDetails(event: event));
   }
 }
 
-enum CalendarView {
-  day, week
-}
+enum CalendarView { day, week }
