@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/controllers/question_navigable_controller.dart';
 import 'package:survey_frontend/presentation/controllers/survey_question_controller.dart';
+import 'package:survey_frontend/presentation/screens/survey/widgets/multiple_questions.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/next_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/single_question.dart';
@@ -40,9 +41,18 @@ class SurveyQuestionScreen extends GetView<SurveyQuestionController> {
       return SingleQuestion(
           question: _controller.questions[_controller.questionIndex].question,
           questionWidgetBuilder: _controller.buildQuestionFromType,
-          surveyName: _controller.survey.name);
+          surveyName: _controller.survey.name,
+          questionIndex: _controller.questionIndex,);
     }
 
-    throw UnimplementedError();
+    return MultipleQuestions(
+        questions: _controller.questions
+            .sublist(_controller.questionIndex,
+                _controller.questionIndex + _controller.questionsCount)
+            .map((e) => e.question)
+            .toList(),
+        questionWidgetBuilder: _controller.buildQuestionFromType,
+        surveyName: _controller.survey.name,
+        firstQuestionIndex: _controller.questionIndex,);
   }
 }

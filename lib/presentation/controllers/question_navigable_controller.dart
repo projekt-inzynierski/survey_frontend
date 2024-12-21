@@ -75,7 +75,7 @@ class QuestionNavigableController extends ControllerBase {
       return -1;
     }
 
-    for (int i = questionIndex + questionsCount + 1; i < questions.length; i++) {
+    for (int i = questionIndex + questionsCount; i < questions.length; i++) {
       if (questions[i]
           .canQuestionBeShown(groupsIds, triggerableSectionActivationsCounts)) {
         return i;
