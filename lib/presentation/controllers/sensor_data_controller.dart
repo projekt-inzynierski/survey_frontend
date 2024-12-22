@@ -23,9 +23,9 @@ class SensorDataController extends ControllerBase {
     }
 
     try {
-      disconnected = false;
       state.value = SensorDataState.scanning;
       await disconnect();
+      disconnected = false;
       _currentConnection = await _sensorConnectionFactory
           .getSensorConnection(const Duration(seconds: 60));
       state.value = SensorDataState.sensorFound;
