@@ -63,6 +63,10 @@ class SettingsScreen extends GetView<SettingsController> {
                         icon: Icons.wb_sunny_outlined,
                         label: getAppLocalizations().sensorData,
                         onTap: controller.sensorData),
+                    NavItem(
+                        icon: Icons.manage_search,
+                        label: getAppLocalizations().sensorHistory,
+                        onTap: controller.sensorHistory),
                     const SizedBox(
                       height: 10,
                     ),

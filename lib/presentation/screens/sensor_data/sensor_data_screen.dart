@@ -77,7 +77,7 @@ class SensorDataScreen extends GetView<SensorDataController> {
                 SizedBox(
                     width: double.infinity,
                     child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: controller.sensorHistory,
                         child: Text(getAppLocalizations().sensorDataHistory))),
                 const SizedBox(
                   height: 10,

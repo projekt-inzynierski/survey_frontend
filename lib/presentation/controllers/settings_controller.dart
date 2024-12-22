@@ -30,4 +30,8 @@ class SettingsController extends ControllerBase {
   void calendar() {
     Get.toNamed(Routes.calendar);
   }
+
+  void sensorHistory(){
+    Get.toNamed(Routes.sensorDataHistory);
+  }
 }

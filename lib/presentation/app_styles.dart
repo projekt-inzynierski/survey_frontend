@@ -42,6 +42,29 @@ class AppStyles {
 
         return Colors.transparent;
       })),
+      datePickerTheme: DatePickerThemeData(
+          backgroundColor: onBackgroundSecondary,
+          todayForegroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) {
+              return Colors.white;
+            }
+
+            return _appNameColor;
+          }),
+          todayBackgroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) {
+              return _primaryColor;
+            }
+
+            return Colors.transparent;
+          }),
+          dayBackgroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) {
+              return _primaryColor;
+            }
+
+            return Colors.transparent;
+          })),
       textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
               foregroundColor: WidgetStateProperty.resolveWith((states) {

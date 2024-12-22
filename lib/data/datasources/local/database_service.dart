@@ -452,7 +452,7 @@ class DatabaseHelper {
     final results = await db.rawQuery('''
     SELECT "dateTime", temperature, humidity, sentToServer
     FROM sensor_data 
-    WHERE "dateTime" >= ? AND "dateTime" <= to
+    WHERE "dateTime" >= ? AND "dateTime" <= ?
     ''', [from.toIso8601String(), to.toIso8601String()]);
 
     return results
