@@ -119,5 +119,6 @@
     "date": "Data",
     "temperature": "Temperatura",
     "humidity": "Wilgotność",
-    "sentToServer": "Przesłano na serwer"
+    "sentToServer": "Przesłano na serwer",
+    "men": "Menu"
 }

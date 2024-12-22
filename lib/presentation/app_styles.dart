@@ -42,6 +42,9 @@ class AppStyles {
 
         return Colors.transparent;
       })),
+      progressIndicatorTheme: const ProgressIndicatorThemeData(
+        color: _appNameColor
+      ),
       datePickerTheme: DatePickerThemeData(
           backgroundColor: onBackgroundSecondary,
           todayForegroundColor: WidgetStateProperty.resolveWith((states) {

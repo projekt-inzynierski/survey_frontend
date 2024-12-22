@@ -135,5 +135,6 @@
     "date": "Date",
     "temperature": "Temperature",
     "humidity": "Humidity",
-    "sentToServer": "Sent to the server"
+    "sentToServer": "Sent to the server",
+    "menu": "Menu"
 }

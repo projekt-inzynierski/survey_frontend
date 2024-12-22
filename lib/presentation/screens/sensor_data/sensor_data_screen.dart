@@ -13,7 +13,6 @@ class SensorDataScreen extends GetView<SensorDataController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.startScanning();
     return Scaffold(
       body: Column(
         children: [
