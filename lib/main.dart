@@ -25,7 +25,7 @@ import 'package:survey_frontend/presentation/bindings/reinsert_credentials_bindi
 import 'package:survey_frontend/presentation/bindings/sensor_data_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/sensor_data_history_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/sensors_bindings.dart';
-import 'package:survey_frontend/presentation/bindings/settings_bindings.dart';
+import 'package:survey_frontend/presentation/bindings/menu_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/survey_end_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/survey_start_bindings.dart';
 import 'package:survey_frontend/presentation/bindings/welcome_screen_bindings.dart';
@@ -48,7 +48,7 @@ import 'package:survey_frontend/presentation/screens/sensor_data/sensor_data_scr
 import 'package:survey_frontend/presentation/screens/sensor_data_history/navigation/sensor_data_history_navigator_observer.dart';
 import 'package:survey_frontend/presentation/screens/sensor_data_history/sensor_data_history_screen.dart';
 import 'package:survey_frontend/presentation/screens/sensors_screen.dart';
-import 'package:survey_frontend/presentation/screens/settings/settings_screen.dart';
+import 'package:survey_frontend/presentation/screens/menu/menu_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_end_screen.dart';
 import 'package:survey_frontend/presentation/screens/survey/survey_start_screen.dart';
 import 'package:survey_frontend/presentation/screens/welcome_screen.dart';
@@ -115,8 +115,8 @@ void main() async {
           binding: SensorsBindings()),
       GetPage(
           name: Routes.settings,
-          page: () => const SettingsScreen(),
-          binding: SettingsBindings()),
+          page: () => const MenuScreen(),
+          binding: MenuBindings()),
       GetPage(
         name: Routes.logoutConfirmation,
         page: () => LogoutConfirmationScreen(),
