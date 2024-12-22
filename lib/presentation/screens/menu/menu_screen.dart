@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/l10n/get_localizations.dart';
 import 'package:survey_frontend/presentation/controllers/menu_controller.dart';
-import 'package:survey_frontend/presentation/screens/manu/widgets/nav_item.dart';
+import 'package:survey_frontend/presentation/screens/menu/widgets/nav_item.dart';
 
 class MenuScreen extends GetView<ManuController> {
   const MenuScreen({super.key});
