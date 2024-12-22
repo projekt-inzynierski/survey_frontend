@@ -58,6 +58,7 @@ class SurveyQuestionScreen extends GetView<SurveyQuestionController> {
       questionWidgetBuilder: _controller.buildQuestionFromType,
       surveyName: _controller.survey.name,
       firstQuestionIndex: _controller.questionIndex,
+      onScrolledDown: _controller.scrolled,
     );
   }
 }

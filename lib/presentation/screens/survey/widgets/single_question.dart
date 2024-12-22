@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
+import 'package:survey_frontend/presentation/screens/survey/widgets/require_scroll_down_view.dart';
 
 class SingleQuestion extends StatelessWidget {
   final Question question;
@@ -37,69 +38,11 @@ class SingleQuestion extends StatelessWidget {
         ),
         const SizedBox(height: 30),
         Expanded(
-            child: _SingleQuestionScroll(
-          question: question,
-          questionWidgetBuilder: questionWidgetBuilder,
-          questionIndex: questionIndex,
+            child: RequireScrollDownView(
           onScrolledDown: onScrolledDown,
+          child: questionWidgetBuilder(question, questionIndex),
         ))
       ],
     );
-  }
-}
-
-class _SingleQuestionScroll extends StatefulWidget {
-  final Question question;
-  final Widget Function(Question, int) questionWidgetBuilder;
-  final int questionIndex;
-  final void Function()? onScrolledDown;
-
-  const _SingleQuestionScroll(
-      {required this.question,
-      required this.questionWidgetBuilder,
-      required this.questionIndex,
-      this.onScrolledDown});
-
-  @override
-  State<StatefulWidget> createState() {
-    return _SingleQuestionScrollState();
-  }
-}
-
-class _SingleQuestionScrollState extends State<_SingleQuestionScroll> {
-  final ScrollController _scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_scrollController.position.maxScrollExtent == 0 &&
-          widget.onScrolledDown != null) {
-        widget.onScrolledDown!();
-      }
-    });
-
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-              _scrollController.position.maxScrollExtent &&
-          widget.onScrolledDown != null) {
-        widget.onScrolledDown!();
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        controller: _scrollController,
-        child: widget.questionWidgetBuilder(
-            widget.question, widget.questionIndex));
   }
 }
