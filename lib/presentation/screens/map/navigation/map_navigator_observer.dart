@@ -7,7 +7,8 @@ class MapNavigatorObserver extends NavigatorObserver{
  @override
   void didPop(Route route, Route? previousRoute) {
     if (previousRoute != null &&
-        previousRoute.settings.name == Routes.map) {
+        previousRoute.settings.name == Routes.map
+        && route.settings.name == "/DateFiltersScreen") {
       final controller = Get.find<MapScreenController>();
       controller.from.value = controller.filters.from;
       controller.to.value = controller.filters.to;
