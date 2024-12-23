@@ -9,6 +9,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:survey_frontend/data/models/location_model.dart';
+import 'package:survey_frontend/data/models/location_with_pending_survey_participation.dart';
 import 'package:survey_frontend/data/models/sensor_data_model.dart';
 import 'package:survey_frontend/data/models/short_survey.dart';
 import 'package:survey_frontend/data/models/survey_calendar_event.dart';
@@ -541,27 +542,42 @@ class DatabaseHelper {
     ''');
   }
 
-  Future<List<LocationModel>> getAllLocationsBetween(DateTime from, DateTime to) async {
+  Future<List<LocationModel>> getAllLocationsBetween(
+      DateTime from, DateTime to) async {
     final db = await database;
 
-    final results = await db.rawQuery(
-      '''
+    final results = await db.rawQuery('''
       SELECT surveyParticipationId, "dateTime",
       relatedToSurvey, sentToServer,
       latitude, longitude
       FROM locations
       WHERE "dateTime" >= ? AND "dateTime" <= ?
-      ''',
-      [from.toIso8601String(), to.toIso8601String()]
-    );
+      ''', [from.toIso8601String(), to.toIso8601String()]);
 
-    return results.map((e) => LocationModel(
-      dateTime: DateTime.parse(e['dateTime'] as String), 
-      longitude: e['longitude'] as double, 
-      latitude: e['latitude'] as double,
-      sentToServer: e['sentToServer'] == 1,
-      relatedToSurvey: e['relatedToSurvey'] == 1,
-      surveyParticipationId: e['surveyParticipationId'] as String?
-      )).toList();
+    return results
+        .map((e) => LocationModel(
+            dateTime: DateTime.parse(e['dateTime'] as String),
+            longitude: e['longitude'] as double,
+            latitude: e['latitude'] as double,
+            sentToServer: e['sentToServer'] == 1,
+            relatedToSurvey: e['relatedToSurvey'] == 1,
+            surveyParticipationId: e['surveyParticipationId'] as String?))
+        .toList();
+  }
+
+  Future<List<LocationWithPendingSurveyParticipation>>
+      getLocationsWithPendingSurveyParticipations() async {
+    final db = await database;
+    final results = await db.rawQuery('''
+      SELECT id, "dateTime"
+      FROM locations
+      WHERE relatedToSurvey = 1 AND surveyParticipationId IS NULL
+      ''');
+
+    return results
+        .map((e) => LocationWithPendingSurveyParticipation(
+            id: e['id'] as int,
+            dateTime: DateTime.parse(e['dateTime'] as String)))
+        .toList();
   }
 }
