@@ -10,6 +10,7 @@ import 'package:survey_frontend/data/datasources/local/database_service.dart';
 import 'package:survey_frontend/data/models/location_model.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:survey_frontend/presentation/screens/date_filters/date_filters_screen.dart';
+import 'package:survey_frontend/presentation/screens/map/location_details_screen.dart';
 
 class MapScreenController extends ControllerBase {
   final String mapUrlTemplate =
@@ -32,8 +33,8 @@ class MapScreenController extends ControllerBase {
           await _databaseHelper.getAllLocationsBetween(actualFrom, actualTo);
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         await _setBounds(results);
+        locations.addAll(results);
       });
-      locations.addAll(results);
     } catch (e) {
       Sentry.captureException(e);
     }
@@ -90,5 +91,9 @@ class MapScreenController extends ControllerBase {
     final lngDiff = bounds.east - bounds.west;
     final zoom = 16 - (latDiff + lngDiff);
     return zoom.clamp(minZoom, maxZoom);
+  }
+
+  void openDetails(LocationModel model) {
+    Get.to(LocationDetailsScreen(model: model));
   }
 }

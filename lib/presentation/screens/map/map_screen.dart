@@ -122,9 +122,13 @@ class MapScreen extends GetView<MapScreenController> {
   Marker _getMarkerForLocation(LocationModel model) {
     return Marker(
         point: LatLng(model.latitude, model.longitude),
-        child: Icon(
-          Icons.circle,
-          color: model.sentToServer ? Colors.blue : Colors.red,
+        child: GestureDetector(
+          onTap: () => controller.openDetails(model),
+            child: Icon(
+              Icons.circle,
+              color: model.sentToServer ? Colors.blue : Colors.red,
+              size: 40,
+            ),
         ));
   }
 }
