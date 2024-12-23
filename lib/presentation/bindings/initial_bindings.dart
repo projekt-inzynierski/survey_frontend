@@ -101,7 +101,7 @@ class InitialBindings extends Bindings {
         tokenProvider: Get.find<TokenProvider>()));
     Get.put(Connectivity());
     Get.put<SubmitSurveyUsecase>(
-        SubmitSurveyUsecaseImpl(Get.find(), Get.find(), Get.find()));
+        SubmitSurveyUsecaseImpl(Get.find(), Get.find(), Get.find(), Get.find()));
     Get.lazyPut<CalendarEventUsecase>(
         () => CalendarEventUsecaseImpl(Get.find()),
         fenix: true);
