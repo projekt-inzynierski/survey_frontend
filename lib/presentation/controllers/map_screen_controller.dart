@@ -26,6 +26,11 @@ class MapScreenController extends ControllerBase {
 
   void loadData() async {
     try {
+      //TODO: can this be done cleaner?
+      //it looks very dirty to me, but so far I have not found a better solution
+      //if not deleayed, the map sometimes throws some exception, because I try to add pins, when it's not ready yet
+      //this small delay seems to do the trick
+      await Future.delayed(const Duration(milliseconds: 200));
       locations.clear();
       final actualFrom = _getActualFromUtc();
       final actualTo = _getActualToUtc();
