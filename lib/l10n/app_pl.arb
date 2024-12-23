@@ -120,5 +120,6 @@
     "temperature": "Temperatura",
     "humidity": "Wilgotność",
     "sentToServer": "Przesłano na serwer",
-    "men": "Menu"
+    "men": "Menu",
+    "map": "Mapa"
 }

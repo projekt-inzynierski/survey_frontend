@@ -37,6 +37,7 @@ import 'package:survey_frontend/presentation/screens/initial_survey/initial_surv
 import 'package:survey_frontend/presentation/screens/loading_screen.dart';
 import 'package:survey_frontend/presentation/screens/login_screen.dart';
 import 'package:survey_frontend/presentation/screens/logout_confirmation_screen.dart';
+import 'package:survey_frontend/presentation/screens/map/map_screen.dart';
 import 'package:survey_frontend/presentation/screens/notifications_settings_screen.dart';
 import 'package:survey_frontend/presentation/screens/password_change_confirmation_screen.dart';
 import 'package:survey_frontend/presentation/screens/privacy_policy/screens/accept_privacy_policy_screen.dart';
@@ -71,7 +72,12 @@ void main() async {
 
   runApp(GetMaterialApp(
     title: 'UrbEaT',
-    navigatorObservers: [routeObserver, SensorNavigatorObserver(), CalendarNavigatorObserver(), SensorDataHistoryNavigatorObserver()],
+    navigatorObservers: [
+      routeObserver,
+      SensorNavigatorObserver(),
+      CalendarNavigatorObserver(),
+      SensorDataHistoryNavigatorObserver()
+    ],
     debugShowCheckedModeBanner: false,
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
@@ -159,10 +165,11 @@ void main() async {
           name: Routes.calendar,
           page: () => const CalendarScreen(),
           binding: CalendarBindings()),
-                GetPage(
+      GetPage(
           name: Routes.sensorDataHistory,
           page: () => const SensorDataHistoryScreen(),
-          binding: SensorDataHistoryBindings())
+          binding: SensorDataHistoryBindings()),
+      GetPage(name: Routes.map, page: () => const MapScreen())
     ],
   ));
 }
@@ -185,6 +192,7 @@ Future<String> _getCurrentLocale() async {
 }
 
 Future<void> prepareWorkManager() async {
+  backgroundTask('');
   await BackgroundFetch.configure(
       BackgroundFetchConfig(
           minimumFetchInterval: 20,
