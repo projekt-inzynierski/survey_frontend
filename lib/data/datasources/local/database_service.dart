@@ -540,4 +540,28 @@ class DatabaseHelper {
     UPDATE locations set sentToServer = 1 WHERE sentToServer = 0 AND (relatedToSurvey = 0 OR surveyParticipationId IS NOT NULL);
     ''');
   }
+
+  Future<List<LocationModel>> getAllLocationsBetween(DateTime from, DateTime to) async {
+    final db = await database;
+
+    final results = await db.rawQuery(
+      '''
+      SELECT surveyParticipationId, "dateTime",
+      relatedToSurvey, sentToServer,
+      latitude, longitude
+      FROM locations
+      WHERE "dateTime" >= ? AND "dateTime" <= ?
+      ''',
+      [from.toIso8601String(), to.toIso8601String()]
+    );
+
+    return results.map((e) => LocationModel(
+      dateTime: DateTime.parse(e['dateTime'] as String), 
+      longitude: e['longitude'] as double, 
+      latitude: e['latitude'] as double,
+      sentToServer: e['sentToServer'] == 1,
+      relatedToSurvey: e['relatedToSurvey'] == 1,
+      surveyParticipationId: e['surveyParticipationId'] as String?
+      )).toList();
+  }
 }

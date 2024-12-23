@@ -121,5 +121,6 @@
     "humidity": "Wilgotność",
     "sentToServer": "Przesłano na serwer",
     "men": "Menu",
-    "map": "Mapa"
+    "map": "Mapa",
+    "today": "Dzisiaj"
 }

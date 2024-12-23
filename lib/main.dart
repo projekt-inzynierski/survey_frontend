@@ -38,6 +38,7 @@ import 'package:survey_frontend/presentation/screens/loading_screen.dart';
 import 'package:survey_frontend/presentation/screens/login_screen.dart';
 import 'package:survey_frontend/presentation/screens/logout_confirmation_screen.dart';
 import 'package:survey_frontend/presentation/screens/map/map_screen.dart';
+import 'package:survey_frontend/presentation/screens/map/navigation/map_navigator_observer.dart';
 import 'package:survey_frontend/presentation/screens/notifications_settings_screen.dart';
 import 'package:survey_frontend/presentation/screens/password_change_confirmation_screen.dart';
 import 'package:survey_frontend/presentation/screens/privacy_policy/screens/accept_privacy_policy_screen.dart';
@@ -76,7 +77,8 @@ void main() async {
       routeObserver,
       SensorNavigatorObserver(),
       CalendarNavigatorObserver(),
-      SensorDataHistoryNavigatorObserver()
+      SensorDataHistoryNavigatorObserver(),
+      MapNavigatorObserver()
     ],
     debugShowCheckedModeBanner: false,
     localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -192,7 +194,6 @@ Future<String> _getCurrentLocale() async {
 }
 
 Future<void> prepareWorkManager() async {
-  backgroundTask('');
   await BackgroundFetch.configure(
       BackgroundFetchConfig(
           minimumFetchInterval: 20,

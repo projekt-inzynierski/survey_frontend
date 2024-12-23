@@ -137,5 +137,6 @@
     "humidity": "Humidity",
     "sentToServer": "Sent to the server",
     "menu": "Menu",
-    "map": "Map"
+    "map": "Map",
+    "today": "Today"
 }
