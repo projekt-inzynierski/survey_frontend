@@ -9,7 +9,7 @@ import 'package:survey_frontend/domain/models/localization_data.dart';
 
 abstract class SendLocationDataUsecase {
   Future<bool> readAndSendLocationData();
-  Future<bool> sendLocatinData(LocationModel? location);
+  Future<bool> sendLocationData(LocationModel? location);
   Future<LocalizationData?> getCurrentLocation();
 }
 
@@ -31,11 +31,11 @@ class SendLocationDataUsecaseImpl implements SendLocationDataUsecase {
             longitude: localizationData.longitude,
             latitude: localizationData.latitude,
             sentToServer: false);
-    return await sendLocatinData(model);
+    return await sendLocationData(model);
   }
 
   @override
-  Future<bool> sendLocatinData(LocationModel? location) async {
+  Future<bool> sendLocationData(LocationModel? location) async {
     try {
       if (location != null) {
         await _databaseHelper.addLocation(location);
