@@ -88,7 +88,7 @@ void main() async {
     locale: Locale(StaticVariables.lang, ''),
     initialBinding: InitialBindings(),
     theme: AppStyles.lightTheme,
-    initialRoute: Routes.home,
+    initialRoute: Routes.loading,
     getPages: [
       GetPage(
           name: Routes.login,
