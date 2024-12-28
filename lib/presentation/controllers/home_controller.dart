@@ -5,6 +5,7 @@ import 'package:location/location.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:survey_frontend/core/usecases/create_question_answer_dto_factory.dart';
 import 'package:survey_frontend/core/usecases/read_respondent_groups_usecase.dart';
+import 'package:survey_frontend/core/usecases/send_location_data_usecase.dart';
 import 'package:survey_frontend/core/usecases/submit_survey_usecase.dart';
 import 'package:survey_frontend/core/usecases/survey_images_usecase.dart';
 import 'package:survey_frontend/core/usecases/survey_notification_usecase.dart';
@@ -207,6 +208,8 @@ class HomeController extends ControllerBase {
     final mostUrgentSurvey = _getMostUrgentSurvey();
 
     if (mostUrgentSurvey == null) {
+      hoursLeft.value = 0;
+      minutesLeft.value = 0;
       return;
     }
 
