@@ -114,6 +114,24 @@ class HomeController extends ControllerBase {
     }
 
     try {
+      // TODO check if survey still active
+
+      final shortSurveyInfo =
+          pendingSurveys.firstWhereOrNull((element) => element.id == surveyId);
+
+      if (shortSurveyInfo == null) {
+        await popup(AppLocalizations.of(Get.context!)!.error,
+            AppLocalizations.of(Get.context!)!.loadingSurveyError);
+        return;
+      }
+
+      if (shortSurveyInfo.finishTime.toLocal().isBefore(DateTime.now())) {
+        await popup(AppLocalizations.of(Get.context!)!.error,
+            AppLocalizations.of(Get.context!)!.surveyFinished);
+        refreshData();
+        return;
+      }
+
       _isBusy = true;
       if (!await isLocationWorking() || !await isBluetoothWorking()) {
         return;
