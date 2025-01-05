@@ -27,7 +27,7 @@ class NotificationService {
     );
   }
 
-  static Future scheduleNotification(DateTime scheduledDate, int id,
+  static Future scheduleNotification(DateTime scheduledDate, EncodedID id,
       String title, String body, String payload) async {
     const androidDetails = AndroidNotificationDetails(
       'Reminder',
@@ -50,7 +50,7 @@ class NotificationService {
     }
 
     await _flutterLocalNotificationsPlugin.zonedSchedule(
-      id,
+      id.value,
       title,
       body,
       tz.TZDateTime.from(scheduledDate, tz.local),
@@ -82,20 +82,28 @@ class NotificationService {
     await _flutterLocalNotificationsPlugin.cancelAll();
   }
 
-  static Future cancelNotification(int id) async {}
-  // TODO manage it when offline
+  static Future cancelNotification(EncodedID id) async {
+    // TODO manage it when offline
+    await _flutterLocalNotificationsPlugin.cancel(id.value);
+  }
 
   static void _onTapNotification(NotificationResponse notificationResponse) {
     onClickNotification.add(notificationResponse.payload!);
   }
 }
 
-int getSurveyNotificationID(String id, DateTime time) {
+EncodedID getSurveyNotificationID(String id, DateTime time) {
   const timeResidue = (Duration.minutesPerDay * 2 * 30); // 2 months
   final hashID = hash(id).toUnsigned(12).toInt();
   final timeComponentID =
       time.millisecondsSinceEpoch.milliseconds.inMinutes % timeResidue;
   final encodedID = int.parse("$timeComponentID${hashID}0").toSigned(32);
 
-  return encodedID;
+  return EncodedID(encodedID);
+}
+
+class EncodedID {
+  final int value;
+
+  EncodedID(this.value);
 }
