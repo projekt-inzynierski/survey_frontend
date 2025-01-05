@@ -1,4 +1,6 @@
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -47,7 +49,15 @@ class HomeController extends ControllerBase {
       this._surveyNotificationUseCase,
       this._surveyImagesUseCase,
       this._submitSurveyUsecase,
-      this._storage);
+      this._storage) {
+    listenToNotifications();
+  }
+
+  listenToNotifications() {
+    NotificationService.onClickNotification.listen((event) {
+      startCompletingSurvey(event);
+    });
+  }
 
   Future<void> refreshData() async {
     if (_isBusy) {
