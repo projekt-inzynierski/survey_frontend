@@ -79,7 +79,6 @@ class NotificationService {
   }
 
   static Future cancelAllNotifications() async {
-    return; //BUG delete later
     await _flutterLocalNotificationsPlugin.cancelAll();
   }
 

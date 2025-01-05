@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:path/path.dart';
 import 'package:survey_frontend/domain/local_services/notification_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -38,14 +36,6 @@ class SurveyShortInfo {
         getSurveyNotificationID(id, finishTime),
         AppLocalizations.of(Get.context!)!.surveyFinishTitle,
         AppLocalizations.of(Get.context!)!.surveyFinishBody,
-        id);
-
-    //TODO debug survey - DELETE LATER
-    NotificationService.scheduleNotification(
-        DateTime.now().add(const Duration(seconds: 3)),
-        getSurveyNotificationID(id, startTime) + 1,
-        AppLocalizations.of(Get.context!)!.surveyStartTitle,
-        AppLocalizations.of(Get.context!)!.surveyStartBody,
         id);
   }
 }
