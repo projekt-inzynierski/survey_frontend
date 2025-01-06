@@ -66,7 +66,7 @@ class SensorConnectionFactory {
     }
 
     if (sensorKind == SensorKind.kestrelDrop2) {
-      final id = _storage.read<int>('selectedSensorId');
+      final id = _storage.read<String>('selectedSensorId');
       if (id == null) {
         throw SensorNotSpecifiedExeption();
       }

@@ -75,26 +75,53 @@ class SensorsScreen extends GetView<SensorsController> {
 
   Widget _buildDeviceDetailsWidget() {
     return Obx(() {
-      if (controller.selectedSensor.value == SensorKind.xiaomi ||
-          controller.selectedSensor.value == SensorKind.none) {
-        return const SizedBox(
-          height: 0,
+      if (controller.selectedSensor.value == SensorKind.xiaomi) {
+        return Column(
+          children: [
+            TextFormField(
+              keyboardType: const TextInputType.numberWithOptions(signed: true),
+              decoration:
+                  InputDecoration(label: Text(getAppLocalizations().sensorId)),
+              initialValue: controller.xiaomiId.value?.toString(),
+              onChanged: (v) {
+                controller.xiaomiId.value = v;
+              },
+              onFieldSubmitted: (v) => controller.getXiaomiMac(),
+              focusNode: controller.xiaomiFocusNode,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              controller: controller.xiaomiMacController,
+              readOnly: true,
+              decoration:
+                  InputDecoration(label: Text(getAppLocalizations().sensorMac)),
+              style: const TextStyle(color: Colors.grey),
+            )
+          ],
         );
       }
 
-      return TextFormField(
-        keyboardType: const TextInputType.numberWithOptions(signed: true),
-        decoration:
-            InputDecoration(label: Text(getAppLocalizations().sensorId)),
-        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-        initialValue: controller.deviceId.value?.toString(),
-        onChanged: (v) {
-          if (v == '') {
-            controller.deviceId.value = null;
-          } else {
-            controller.deviceId.value = int.parse(v);
-          }
-        },
+      if (controller.selectedSensor.value == SensorKind.kestrelDrop2) {
+        return TextFormField(
+          keyboardType: const TextInputType.numberWithOptions(signed: true),
+          decoration:
+              InputDecoration(label: Text(getAppLocalizations().sensorId)),
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          initialValue: controller.kestrelId.value?.toString(),
+          onChanged: (v) {
+            if (v == '') {
+              controller.kestrelId.value = null;
+            } else {
+              controller.kestrelId.value = int.parse(v);
+            }
+          },
+        );
+      }
+
+      return const SizedBox(
+        height: 0,
       );
     });
   }

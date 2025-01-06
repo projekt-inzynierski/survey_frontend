@@ -151,5 +151,6 @@
     "serverNotResponding": "Server is not responding. Make sure, you have provided a correct API url. If so, try again later.",
     "bluetoothRequired": "Turn on bluetooth, to complete the survey.",
     "bluetooth": "Bluetooth",
-    "surveyFinished": "The survey has finished. You can't complete it anymore."
+    "surveyFinished": "The survey has finished. You can't complete it anymore.",
+    "sensorMac": "Sensor's MAC adres"
 }
