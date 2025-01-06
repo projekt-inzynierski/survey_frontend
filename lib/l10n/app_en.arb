@@ -79,7 +79,7 @@
     "logout": "Logout",
     "logountConfirmationQuestion": "Are you sure you want to log out? All data that has not been uploaded to the server will be lost.",
     "couldNotLogout": "Could not log out, try again later.",
-    "credentialsExpired": "Your token has expired, reenter passwor.",
+    "credentialsExpired": "Your token has expired, reenter password.",
     "profile": "Profile",
     "couldNotReachTheServer": "Failed to send the request, please try again later.",
     "somethingWentWrong": "Something went wrong, please try again later.",
