@@ -127,7 +127,7 @@ class SensorsController extends ControllerBase {
     }
     if (selectedSensor.value == SensorKind.xiaomi) {
       _storage.write('selectedSensorId', xiaomiId.value);
-      _storage.write('xiaomiMac', xiaomiId.value);
+      _storage.write('xiaomiMac', xiaomiMac.value);
     }
     Get.offAllNamed('/home');
   }
