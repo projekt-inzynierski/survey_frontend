@@ -111,11 +111,7 @@ class SensorsScreen extends GetView<SensorsController> {
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           initialValue: controller.kestrelId.value?.toString(),
           onChanged: (v) {
-            if (v == '') {
-              controller.kestrelId.value = null;
-            } else {
-              controller.kestrelId.value = v;
-            }
+            controller.xiaomiId.value = v;
           },
         );
       }
