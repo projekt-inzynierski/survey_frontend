@@ -9,7 +9,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SensorsController extends ControllerBase {
   final Rx<String> selectedSensor = Rx<String>(SensorKind.none);
-  Rx<int?> kestrelId = Rx<int?>(null);
+  Rx<String?> kestrelId = Rx<String?>(null);
   Rx<String?> xiaomiId = Rx<String?>(null);
   Rx<String?> xiaomiMac = Rx<String?>(null);
   final GetStorage _storage;
@@ -19,9 +19,6 @@ class SensorsController extends ControllerBase {
   final RxBool macNotFound = false.obs;
   late TextEditingController xiaomiMacController;
   late FocusNode xiaomiFocusNode;
-  bool get canSave =>
-      selectedSensor.value != SensorKind.xiaomi ||
-      (!loadingMac.value && !loadingMacFailed.value && macNotFound.value);
 
   SensorsController(this._storage, this._sensorService) {
     _loadSelectedSensor();
@@ -109,6 +106,17 @@ class SensorsController extends ControllerBase {
   }
 
   void saveSelectedSensor() {
+    bool noXiaomiID = xiaomiId.value == null;
+    bool foundXiaomiMac = (!loadingMac.value &&
+        !loadingMacFailed.value &&
+        !macNotFound.value &&
+        xiaomiId.value != null);
+    bool canSaveXiaomi = selectedSensor.value == SensorKind.xiaomi &&
+        (foundXiaomiMac || noXiaomiID);
+    bool canSaveKestrel = selectedSensor.value == SensorKind.kestrelDrop2 &&
+        (kestrelId.value != null);
+    bool canSaveNone = selectedSensor.value == SensorKind.none;
+    bool canSave = canSaveKestrel || canSaveXiaomi || canSaveNone;
     if (!canSave) {
       return;
     }
