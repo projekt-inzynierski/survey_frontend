@@ -114,7 +114,7 @@ class SensorsScreen extends GetView<SensorsController> {
             if (v == '') {
               controller.kestrelId.value = null;
             } else {
-              controller.kestrelId.value = int.parse(v);
+              controller.kestrelId.value = v;
             }
           },
         );
