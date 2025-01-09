@@ -152,5 +152,7 @@
     "bluetoothRequired": "Turn on bluetooth, to complete the survey.",
     "bluetooth": "Bluetooth",
     "surveyFinished": "The survey has finished. You can't complete it anymore.",
-    "sensorMac": "Sensor's MAC adres"
+    "sensorMac": "Sensor's MAC adres",
+    "sensorIdServerNotFound": "Sensor id not found on the server",
+    "loadingMacFailed": "Could not load MAC address"
 }

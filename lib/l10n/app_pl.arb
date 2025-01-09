@@ -136,5 +136,8 @@
     "bluetoothRequired": "Włącz bluetooth, aby wypełnić ankietę.",
     "bluetooth": "Bluetooth",
     "surveyFinished": "Ankieta zakończyła się. Nie można jej już wypełnić.",
-    "sensorMac": "Adres MAC czujnika"
+    "sensorMac": "Adres MAC czujnika",
+    "sensorIdServerNotFound": "Id czujnika nie zostało znalezione na serwerze",
+    "loadingMacFailed": "Błąd ładowania adresu MAC"
+
 }

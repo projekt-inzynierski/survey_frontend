@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:survey_frontend/data/models/sensor_kind.dart';
 import 'package:survey_frontend/domain/external_services/sensor_mac_service.dart';
+import 'package:survey_frontend/l10n/get_localizations.dart';
 import 'package:survey_frontend/presentation/controllers/controller_base.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -19,6 +20,20 @@ class SensorsController extends ControllerBase {
   final RxBool macNotFound = false.obs;
   late TextEditingController xiaomiMacController;
   late FocusNode xiaomiFocusNode;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  bool get noXiaomiID => xiaomiId.value == null;
+  bool get foundXiaomiMac => (!loadingMac.value &&
+      !loadingMacFailed.value &&
+      !macNotFound.value &&
+      xiaomiId.value != null);
+  bool get canSaveXiaomi =>
+      selectedSensor.value == SensorKind.xiaomi &&
+      (foundXiaomiMac || noXiaomiID);
+  bool get canSaveKestrel =>
+      selectedSensor.value == SensorKind.kestrelDrop2 &&
+      (kestrelId.value != null);
+  bool get canSaveNone => selectedSensor.value == SensorKind.none;
 
   SensorsController(this._storage, this._sensorService) {
     _loadSelectedSensor();
@@ -49,6 +64,7 @@ class SensorsController extends ControllerBase {
     xiaomiFocusNode.addListener(() {
       if (!xiaomiFocusNode.hasFocus) {
         getXiaomiMac();
+        formKey.currentState?.validate();
       }
     });
   }
@@ -106,16 +122,6 @@ class SensorsController extends ControllerBase {
   }
 
   void saveSelectedSensor() {
-    bool noXiaomiID = xiaomiId.value == null;
-    bool foundXiaomiMac = (!loadingMac.value &&
-        !loadingMacFailed.value &&
-        !macNotFound.value &&
-        xiaomiId.value != null);
-    bool canSaveXiaomi = selectedSensor.value == SensorKind.xiaomi &&
-        (foundXiaomiMac || noXiaomiID);
-    bool canSaveKestrel = selectedSensor.value == SensorKind.kestrelDrop2 &&
-        (kestrelId.value != null);
-    bool canSaveNone = selectedSensor.value == SensorKind.none;
     bool canSave = canSaveKestrel || canSaveXiaomi || canSaveNone;
     if (!canSave) {
       return;
@@ -130,5 +136,24 @@ class SensorsController extends ControllerBase {
       _storage.write('xiaomiMac', xiaomiMac.value);
     }
     Get.offAllNamed('/home');
+  }
+
+  String? validateKestrel(String? value) {
+    if (!canSaveKestrel) {
+      return getAppLocalizations().valueNotEmpty;
+    }
+
+    return null;
+  }
+
+  String? validateXiaomi(String? value) {
+    if (loadingMacFailed.value) {
+      return getAppLocalizations().loadingMacFailed;
+    }
+    if (macNotFound.value && !loadingMac.value && xiaomiId.value != null) {
+      return getAppLocalizations().sensorIdServerNotFound;
+    }
+
+    return null;
   }
 }
