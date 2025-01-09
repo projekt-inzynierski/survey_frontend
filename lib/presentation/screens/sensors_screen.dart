@@ -75,7 +75,8 @@ class SensorsScreen extends GetView<SensorsController> {
 
   Widget _buildDeviceDetailsWidget() {
     return Obx(() {
-      if (controller.selectedSensor.value == SensorKind.xiaomi) {
+      if (controller.selectedSensor.value == SensorKind.xiaomi &&
+          Platform.isAndroid) {
         return Column(
           children: [
             TextFormField(
