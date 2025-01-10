@@ -29,7 +29,7 @@ class LoginScreen extends GetView<LoginController> {
                         height: 10,
                       ),
                       TextFormField(
-                        //TODO dont show word suggestions in keyboard
+                        keyboardType: TextInputType.visiblePassword,
                         decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.apiUrl,
                         ),
