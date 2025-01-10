@@ -7,6 +7,6 @@ The `Profile` module provides an overview of your account details and initial su
 In this module, you can view:
 - Your username.
 - All answers provided during the initial survey (if one was completed).
-
+- 
 <img alt="alt_text" height="500" src="imgs/main_screen_profile.png"/>
 <img alt="alt_text" height="500" src="imgs/profile_screen.PNG"/>
