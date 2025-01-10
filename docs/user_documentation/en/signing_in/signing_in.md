@@ -8,12 +8,12 @@ On the login page, enter your credentials:
 
 Then, click the `Log In` button.
 
-![alt text](imgs/login_screen.PNG)
+<img alt="alt text" height="500" src="imgs/login_screen.PNG"/>
 
 ## Privacy Policy Agreement
 After logging in, you will be redirected to the Privacy Policy page. You must accept the policy to proceed further.
 
-![alt text](imgs/privacy_policy_screen.PNG)
+<img alt="alt text" height="500" src="imgs/privacy_policy_screen.PNG"/>
 
 Once completed, you will be redirected to the main page of the UrbEat app.
 
