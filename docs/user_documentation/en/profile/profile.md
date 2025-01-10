@@ -8,5 +8,4 @@ In this module, you can view:
 - Your username.
 - All answers provided during the initial survey (if one was completed).
 
-![alt_text](imgs/main_screen_profile.PNG)
-![alt_text](imgs/profile_screen.PNG)
+![alt_text](imgs/main_screen_profile.PNG)       ![alt_text](imgs/profile_screen.PNG)

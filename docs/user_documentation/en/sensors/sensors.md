@@ -6,16 +6,14 @@ The `Sensors Data` module allows you to monitor and manage temperature and humid
 1. Click the menu button on the right side of the screen.
 2. Select the appropriate tab from the menu sidebar.
 
-![alt_text](imgs/main_screen_arrow.png)
-![alt_text](imgs/menu_screen_sensor_data.png)
+![alt_text](imgs/main_screen_arrow.png)     ![alt_text](imgs/menu_screen_sensor_data.png)
 
 ## Specifying Your Sensor
 Before accessing sensor data, you must specify the sensor assigned to you at the start of the study:
 1. Go to the `Edit Sensor` module via the menu.
 2. Select and configure your sensor.
 
-![alt_text](imgs/menu_screen_edit_sensor.png)
-![alt_text](imgs/edit_sesnor_screen.PNG)
+![alt_text](imgs/menu_screen_edit_sensor.png)       ![alt_text](imgs/edit_sesnor_screen.PNG)
 
 If no sensor is specified, you'll see this notification in the `Sensors data` module
 
@@ -25,8 +23,7 @@ If no sensor is specified, you'll see this notification in the `Sensors data` mo
 In this module, you can view real-time temperature and humidity readings from your sensor.
 
 
-![alt_text](imgs/sensors_scanning_screen.PNG)
-![alt_text](imgs/sensors_temp_screen.PNG)
+![alt_text](imgs/sensors_scanning_screen.PNG)       ![alt_text](imgs/sensors_temp_screen.PNG)
 
 ### Saving Sensor Readings
 Click the `Save Reading` button to send the displayed data to the server.
