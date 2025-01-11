@@ -22,4 +22,4 @@ On the main screen, you will find:
 - A timer showing the remaining time until the most urgent survey expires.
 - Orange-colored surveys waiting for you to complete.
 
-![alt text](imgs/main_screen.PNG)
+<img alt="alt text" height="500" src="imgs/main_screen.PNG"/>
