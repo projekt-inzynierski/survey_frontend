@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:survey_frontend/core/usecases/survey_images_usecase.dart';
 import 'package:survey_frontend/domain/models/question_type.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
+import 'package:survey_frontend/l10n/get_localizations.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/discrete_single_option_type_question.dart';
 import 'package:survey_frontend/presentation/controllers/question_navigable_controller.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/image_type_question.dart';
@@ -52,7 +53,7 @@ class SurveyQuestionController extends QuestionNavigableController {
             selectedOption: responseModel.answers[index].selectedOptions![0],
             surveyImagesUseCase: _surveyImagesUseCase);
       case QuestionType.textInput:
-          return TextInputTypeQuestion(dto: responseModel.answers[index]);
+        return TextInputTypeQuestion(dto: responseModel.answers[index]);
       default:
         //TODO decide what to do in this case (most likely skip this question)
         throw Exception('Unsupported question type: ${question.questionType}');
@@ -74,6 +75,7 @@ class SurveyQuestionController extends QuestionNavigableController {
   bool canGoFurther() {
     //TODO: REMEMBER ABOUT OTHER QUESTION TYPES IN THE FUTURE
     //TODO: isRequired should be respected here
+    //TODO: move this logic to validator in each question
 
     for (int idx = questionIndex;
         idx < questionIndex + questionsCount && idx < questions.length;
@@ -106,13 +108,31 @@ class SurveyQuestionController extends QuestionNavigableController {
       }
       if (questions[idx].question.questionType == QuestionType.numberInput) {
         var number = responseModel.answers[idx].numericAnswer;
-        if (number == null || number < 0 || number > 1000) {
+        if (number == null) {
+          popup("", getAppLocalizations().pleaseEnterNumber);
+          return false;
+        }
+        if (number < 0) {
+          popup("", getAppLocalizations().pleaseEnterLeastZeroNumber);
+          return false;
+        }
+        if (number > 1000) {
+          popup("", getAppLocalizations().pleaseEnterNumberLessThan1000);
           return false;
         }
         return true;
       }
-      if (questions[idx].question.questionType == QuestionType.textInput){
-        return responseModel.answers[idx].textAnswer != null;
+      if (questions[idx].question.questionType == QuestionType.textInput) {
+        var text = responseModel.answers[idx].textAnswer;
+        if (text == null) {
+          popup("", getAppLocalizations().pleaseEnterAnyText);
+          return false;
+        }
+        if (text.length > 1000) {
+          popup("", getAppLocalizations().pleaseEnterShorterText);
+          return false;
+        }
+        return true;
       }
     }
 
