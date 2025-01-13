@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:survey_frontend/core/usecases/survey_images_usecase.dart';
 import 'package:survey_frontend/domain/models/question_type.dart';
 import 'package:survey_frontend/domain/models/survey_dto.dart';
-import 'package:survey_frontend/l10n/get_localizations.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/discrete_single_option_type_question.dart';
 import 'package:survey_frontend/presentation/controllers/question_navigable_controller.dart';
 import 'package:survey_frontend/presentation/screens/survey/widgets/image_type_question.dart';
