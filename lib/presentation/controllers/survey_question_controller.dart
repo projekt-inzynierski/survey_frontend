@@ -76,7 +76,7 @@ class SurveyQuestionController extends QuestionNavigableController {
     //TODO: isRequired should be respected here
 
     for (int idx = questionIndex;
-        idx < questionIndex + questionsCount - 1;
+        idx < questionIndex + questionsCount && idx < questions.length;
         idx++) {
       if (questions[idx].question.questionType ==
           QuestionType.singleChoiceLinearScale) {
