@@ -32,6 +32,6 @@ Użyj przycisku Filtr, aby zawęzić wyszukiwanie według:
 
 <img alt="alt_text" height="500" src="imgs/map_filters_screen.PNG"/>
 
-## Kodowanie kolorami dla statusu danych
-- Czerwony: Wskazuje dane lokalizacyjne, które nie zostały wysłane na serwer.
-- Niebieski: Wskazuje dane lokalizacyjne, które zostały wysłane na serwer.
+## Oznaczenie danych kolorami według statusu
+- **Czerwony**: Wskazuje dane lokalizacyjne, które nie zostały wysłane na serwer.
+- **Niebieski**: Wskazuje dane lokalizacyjne, które zostały wysłane na serwer.
