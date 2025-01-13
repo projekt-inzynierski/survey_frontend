@@ -1,6 +1,6 @@
 # Wstęp
 
-en dokument służy jako przewodnik użytkownika aplikacji mobilnej **UrbEaT**. Aplikacja umożliwia użytkownikom przesyłanie odpowiedzi na ankiety, zbieranie danych lokalizacyjnych od respondentów oraz odczytywanie danych z urządzeń sensorowych.
+Ten dokument służy jako przewodnik użytkownika aplikacji mobilnej **UrbEaT**. Aplikacja umożliwia użytkownikom przesyłanie odpowiedzi na ankiety, zbieranie danych lokalizacyjnych od respondentów oraz odczytywanie danych z urządzeń sensorowych.
 
 ## Uruchomienie Systemu
 Niniejsza dokumentacja zakłada, że aplikacja mobilna **UrbEaT** jest dostępna do pobrania w sklepach z aplikacjami. Kolejne sekcje poprowadzą Cię przez proces logowania, wypełniania ankiet, zarządzania ustawieniami oraz korzystania z różnych funkcji aplikacji.
