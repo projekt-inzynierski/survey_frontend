@@ -15,10 +15,10 @@ The calendar can be viewed in two modes:
 
 <img alt="alt_text" height="500" src="imgs/calendar_day_week_screen.PNG"/>
 <img alt="alt_text" height="500" src="imgs/calendar_week_screen.PNG"/>
+<img alt="alt_text" height="500" src="imgs/calendar_day_screen.PNG"/>
 
 ### Understanding Survey Status
 In the calendar, surveys are color-coded based on their status:
-- Orange: Surveys not yet completed.
 - Green: Surveys already completed.
-
-<img alt="alt_text" height="500" src="imgs/calendar_day_screen.PNG"/>
+- Orange: Surveys not yet completed.
+- Red: Surveys that were skipped (not completed)
