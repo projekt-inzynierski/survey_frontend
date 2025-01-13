@@ -20,6 +20,6 @@ Kalendarz można wyświetlać w dwóch trybach:
 
 ### Interpretacja statusu ankiet
 W kalendarzu ankiety są oznaczone kolorami w zależności od ich statusu:
-- Zielony: Ankiety wypełnione.
-- Pomarańczowy: Ankiety oczekujące na wypełnienie.
-- Czerwony: Ankiety pominięte (niewypełnione).
+- **Zielony**: Ankiety wypełnione.
+- **Pomarańczowy**: Ankiety oczekujące na wypełnienie.
+- **Czerwony**: Ankiety pominięte (niewypełnione).
