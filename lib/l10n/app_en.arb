@@ -75,6 +75,7 @@
     "pleaseEnterNumberLessThan1000": "Please enter a number less than 1000",
     "pleaseEnterAnyText": "Please write your answer",
     "pleaseEnterShorterText": "Please write your answer in less than 1000 characters",
+    "selectAtLeastOneOption": "Please select at least one option",
     "apiUrl": "API url",
     "apiUrlEmptyErrorMessage": "API url cannot be empty",
     "apiUrlInvalidFormatErrorMessage": "Invalid format",

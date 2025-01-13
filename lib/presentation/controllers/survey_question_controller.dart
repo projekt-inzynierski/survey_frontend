@@ -74,12 +74,25 @@ class SurveyQuestionController extends QuestionNavigableController {
   @override
   bool canGoFurther() {
     //TODO: REMEMBER ABOUT OTHER QUESTION TYPES IN THE FUTURE
-    //TODO: isRequired should be respected here
     //TODO: move this logic to validator in each question
 
     for (int idx = questionIndex;
         idx < questionIndex + questionsCount && idx < questions.length;
         idx++) {
+      if (!questions[idx].question.required) {
+        continue;
+      }
+
+      if (questions[idx].question.questionType ==
+          QuestionType.multipleChoiceText) {
+        if (responseModel.answers[idx].selectedOptions!.isEmpty) {
+          popup("", AppLocalizations.of(Get.context!)!.selectAtLeastOneOption);
+          return false;
+        }
+
+        continue;
+      }
+
       if (questions[idx].question.questionType ==
           QuestionType.singleChoiceLinearScale) {
         if (responseModel.answers[idx].numericAnswer == null) {
@@ -87,7 +100,7 @@ class SurveyQuestionController extends QuestionNavigableController {
           return false;
         }
 
-        return true;
+        continue;
       }
 
       if (questions[idx].question.questionType == QuestionType.yesNo) {
@@ -96,7 +109,7 @@ class SurveyQuestionController extends QuestionNavigableController {
           return false;
         }
 
-        return true;
+        continue;
       }
       if (questions[idx].question.questionType ==
               QuestionType.singleChoiceText ||
@@ -109,30 +122,25 @@ class SurveyQuestionController extends QuestionNavigableController {
       if (questions[idx].question.questionType == QuestionType.numberInput) {
         var number = responseModel.answers[idx].numericAnswer;
         if (number == null) {
-          popup("", getAppLocalizations().pleaseEnterNumber);
           return false;
         }
         if (number < 0) {
-          popup("", getAppLocalizations().pleaseEnterLeastZeroNumber);
           return false;
         }
         if (number > 1000) {
-          popup("", getAppLocalizations().pleaseEnterNumberLessThan1000);
           return false;
         }
-        return true;
+        continue;
       }
       if (questions[idx].question.questionType == QuestionType.textInput) {
         var text = responseModel.answers[idx].textAnswer;
-        if (text == null) {
-          popup("", getAppLocalizations().pleaseEnterAnyText);
+        if (text == null || text.isEmpty) {
           return false;
         }
         if (text.length > 1000) {
-          popup("", getAppLocalizations().pleaseEnterShorterText);
           return false;
         }
-        return true;
+        continue;
       }
     }
 
