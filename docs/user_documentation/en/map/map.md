@@ -33,5 +33,5 @@ Use the Filter button to refine your search by:
 <img alt="alt_text" height="500" src="imgs/map_filters_screen.PNG"/>
 
 ## Color-Coding for Data Status
-- Red: Indicates location data that has not been sent to the server.
-- Blue: Indicates location data that has been sent to the server.
+- **Red**: Indicates location data that has not been sent to the server.
+- **Blue**: Indicates location data that has been sent to the server.
