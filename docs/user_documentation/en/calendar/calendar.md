@@ -19,6 +19,6 @@ The calendar can be viewed in two modes:
 
 ### Understanding Survey Status
 In the calendar, surveys are color-coded based on their status:
-- Green: Surveys already completed.
-- Orange: Surveys not yet completed.
-- Red: Surveys that were skipped (not completed)
+- **Green**: Surveys already completed.
+- **Orange**: Surveys not yet completed.
+- **Red**: Surveys that were skipped (not completed)
