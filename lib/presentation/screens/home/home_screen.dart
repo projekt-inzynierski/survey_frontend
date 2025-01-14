@@ -12,7 +12,6 @@ class HomeScreen extends GetView<HomeController> implements RouteAware {
 
   @override
   Widget build(BuildContext context) {
-    askForPermissions();
     controller.listenToNotifications();
     controller.refreshData();
     return Scaffold(
