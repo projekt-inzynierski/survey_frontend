@@ -39,11 +39,6 @@ class LoadingController extends ControllerBase {
       return;
     }
 
-    if (!await hasInternetConnectionNoDialog()) {
-      retryButtonVisible.value = true;
-      return;
-    }
-
     final needResult =
         await _needInsertRespondentDataUseCase.needInsertRespondentData();
     handle(needResult);
