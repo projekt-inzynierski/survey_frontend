@@ -108,7 +108,6 @@ class SensorDataHistoryScreen extends GetView<SensorDataHistoryController> {
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
           child: Obx(() => DataTable(
                 columns: [
                   DataColumn(label: Text(getAppLocalizations().date)),
