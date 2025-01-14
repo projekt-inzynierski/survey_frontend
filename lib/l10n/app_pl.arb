@@ -28,7 +28,7 @@
     "answerSubmitError": "Nie udało się przesłać odpowiedzi",
     "mainPageTransitionError": "Pomyślnie przesłano odpowiedź na serwer, ale wystąpił błąd podczas powrotu na stronę główną. Spróbuj ponownie uruchomić aplikację.",
     "selectOneOption": "Wybierz jedną z opcji",
-    "noInternetConnection": "Nie masz połączenia z internetem. Spróbuj ponownie później.",
+    "noInternetTryAgain": "Nie masz połączenia z internetem. Spróbuj ponownie później.",
     "woman": "Kobieta",
     "man": "Mężczyzna",
     "invalidCredentials": "Nieprawidłowe dane logowania",
@@ -141,6 +141,8 @@
     "surveyFinished": "Ankieta zakończyła się. Nie można jej już wypełnić.",
     "sensorMac": "Adres MAC czujnika",
     "sensorIdServerNotFound": "Id czujnika nie zostało znalezione na serwerze",
+    "noInternetConnection": "Brak połączenia z internetem",
+    "betterExperienceTurnOnInternet": "Dla lepszego doświadczenia z użytkowania, proszę włączyć połączenie z internetem",
     "loadingMacFailed": "Błąd ładowania adresu MAC"
 
 }

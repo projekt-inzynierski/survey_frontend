@@ -28,7 +28,7 @@
     "answerSubmitError": "Failed to submit answer",
     "mainPageTransitionError": "The response was successfully sent to the server, but an error occurred while returning to the home page. Try restarting the application.",
     "selectOneOption": "Select one of the options",
-    "noInternetConnection": "You don't have an internet connection. Try again later",
+    "noInternetTryAgain": "You don't have an internet connection. Try again later",
     "woman": "Woman",
     "man": "Man",
     "invalidCredentials": "Invalid credentials",
@@ -157,5 +157,7 @@
     "surveyFinished": "The survey has finished. You can't complete it anymore.",
     "sensorMac": "Sensor's MAC adres",
     "sensorIdServerNotFound": "Sensor id not found on the server",
+    "noInternetConnection": "No internet connection",
+    "betterExperienceTurnOnInternet": "For better experience, turn on the internet connection",
     "loadingMacFailed": "Could not load MAC address"
 }
