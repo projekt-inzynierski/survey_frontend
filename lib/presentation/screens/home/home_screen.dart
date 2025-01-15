@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:survey_frontend/presentation/controllers/home_controller.dart';
-import 'package:survey_frontend/presentation/functions/ask_for_permissions.dart';
 import 'package:survey_frontend/presentation/screens/home/widgets/survey_tile.dart';
 import 'package:survey_frontend/presentation/screens/home/widgets/time_circle.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

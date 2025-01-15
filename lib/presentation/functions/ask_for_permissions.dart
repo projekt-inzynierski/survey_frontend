@@ -1,4 +1,3 @@
-import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:survey_frontend/presentation/screens/home/widgets/request.dart';
 
