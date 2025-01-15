@@ -24,7 +24,7 @@ Future<bool> readLocation() async {
     var service = Get.find<SendLocationDataUsecase>();
     final location = Get.find<Location>();
     if (!await location.isBackgroundModeEnabled()) {
-      return false;
+      return service.sendLocationData(null);
     }
     return await service.readAndSendLocationData();
   } catch (e) {
