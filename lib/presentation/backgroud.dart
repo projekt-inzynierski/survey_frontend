@@ -12,7 +12,6 @@ import 'package:survey_frontend/presentation/bindings/initial_bindings.dart';
 Future<bool> sendSensorsData() async {
   try {
     var service = Get.find<SendSensorsDataUsecase>();
-    final location = Get.find<Location>();
     return await service.readAndSendSensorData();
   } catch (e) {
     Sentry.captureException(e);
