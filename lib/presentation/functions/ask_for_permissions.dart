@@ -18,8 +18,7 @@ Future<void> askForPermissions() async {
 }
 
 Future<void> askForLocalizationInBackground() async {
-  var location = Location();
-  if (await location.isBackgroundModeEnabled()) {
+  if (await Permission.locationAlways.isGranted) {
     return;
   }
   buildLocationAlwaysDenyDialog();
