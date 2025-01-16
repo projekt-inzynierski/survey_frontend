@@ -47,9 +47,7 @@ class SurveyEndController extends ControllerBase {
       _saveLocation(participation?.id);
 
       await _databaseHelper.markAsSubmited(dto.surveyId);
-      await Get.offAllNamed(
-        Routes.home,
-      );
+      Get.until((route) => Get.currentRoute == Routes.home);
     } catch (e) {
       popup(AppLocalizations.of(Get.context!)!.error,
           AppLocalizations.of(Get.context!)!.mainPageTransitionError);
