@@ -1,3 +1,4 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -49,8 +50,7 @@ Future<void> buildLocationAlwaysDenyDialog() async {
           TextButton(
             onPressed: () async {
               Navigator.of(context).pop();
-              var location = Location();
-              location.enableBackgroundMode();
+              AppSettings.openAppSettings(type: AppSettingsType.location);
             },
             child: Text(getAppLocalizations().openSettings),
           )
